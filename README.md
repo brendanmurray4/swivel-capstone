@@ -4,5 +4,3 @@
 
 - [swivel-app](./swivel-app): Contains the source code for the React-Native mobile app.
 - [swivel-api](./swivel-api): Contains the source code for the Python Flask backend API.
-
-test
