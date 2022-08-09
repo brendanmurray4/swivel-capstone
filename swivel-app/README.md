@@ -20,6 +20,7 @@ To get started developing this project locally, open a terminal and enter the `s
 ## Set-ExecutionPolicy RemoteSigned -- To allow Windows to run scripts 
 ## Set-ExecutionPolicy Restricted -- To disable Windows to run scripts once you're done using yarn
 
+
 Install all of required dependencies
 ```
 yarn install
