@@ -16,9 +16,11 @@ This is a React-Native project built with Expo CLI. To set up your environment p
 
 To get started developing this project locally, open a terminal and enter the `swivel-app` root directory.
 
-## Pierre: To install yarn on windows 10, you may need to go to Powershell (Admin) and 
-## Set-ExecutionPolicy RemoteSigned -- To allow Windows to run scripts 
-## Set-ExecutionPolicy Restricted -- To disable Windows to run scripts once you're done using yarn
+Pierre: To install yarn on windows 10, you may need to go to Powershell (Admin) and 
+```
+Set-ExecutionPolicy RemoteSigned -- To allow Windows to run scripts 
+Set-ExecutionPolicy Restricted -- To disable Windows to run scripts once you're done using yarn
+```
 
 
 Install all of required dependencies
