@@ -10,30 +10,28 @@ export default function App() {
       <Text>Swivel App</Text>
       <StatusBar style="auto" />
 
-      {/* Adds button to unlock Delegator */}
       <Text style={[styles.title, styles.setColor]}>
         Please press this button to unlock the delegator
       </Text>
 
-      {/* This is the button */}      
+      {/* This is the delegator button */}      
       <TouchableOpacity
         style={[styles.delegator_button]}
-        onPress={buttonPress}
-        // onPress={() => setStatus('UNLOCKED')}
+        onPress={delegatorButtonPress}
+        // onPress={() => setStatus('UNLOCKED')} 
       >
-      <Text style={[styles.title, styles.setColorGreen]}>
-        Delegator {delegatorStatus} 
-      </Text>
+        <Text style={[styles.title, styles.setColorGreen]}>
+          Delegator {delegatorStatus} 
+        </Text>
       </TouchableOpacity>
 
     </View>
-
   );
 }
 
 
-
-const buttonPress = () => {
+// This will open the delegator if possible
+const delegatorButtonPress = () => {
   alert('Delegator Unlocked ')
   // Enter code to unlock delegator
 };
