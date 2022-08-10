@@ -130,7 +130,7 @@ export function DelegatorPage({ navigation }) {
       </Text>
 
       {/* This is the delegator button */}
-      <TouchableOpacity style={styles.delegator_button}>
+      <TouchableOpacity style={styles.delegator_button} onPress={() => delegatorButtonPress()}>
         <Text style={[styles.title, styles.setColorGreen]}>Unlock Delegator</Text>
       </TouchableOpacity>
 
