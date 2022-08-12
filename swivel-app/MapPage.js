@@ -14,34 +14,33 @@ import {
 // Map Page which will track bike location
 // export function MapPage({ navigation }) {
 //   const [delegatorStatus = 'LOCKED', setStatus] = useState('LOCKED');
-  
+
 //   const mymap = new MapContainer();
-  // return(
-  //   mymap.render()
-  // );
-  // return (
-  //   <View style={styles.container}>
-  //     <Text>Swivel Map</Text>
-  //     <StatusBar style="auto" />
+// return(
+//   mymap.render()
+// );
+// return (
+//   <View style={styles.container}>
+//     <Text>Swivel Map</Text>
+//     <StatusBar style="auto" />
 
-  //     <Text style={[styles.title, styles.setColor]}>Insert map tracking</Text>
+//     <Text style={[styles.title, styles.setColor]}>Insert map tracking</Text>
 
-  //     {/* This is the bike selection button */}
-  //     <TouchableOpacity style={styles.bike_button} onPress={() => navigation.navigate('Delegator')}>
-  //       <Text style={[styles.title, styles.setColorGreen]}>Select Bike</Text>
-  //     </TouchableOpacity>
+//     {/* This is the bike selection button */}
+//     <TouchableOpacity style={styles.bike_button} onPress={() => navigation.navigate('Delegator')}>
+//       <Text style={[styles.title, styles.setColorGreen]}>Select Bike</Text>
+//     </TouchableOpacity>
 
-  //     {/* BACK BUTTON */}
-  //     <TouchableOpacity style={styles.back_button} onPress={() => navigation.goBack()}>
-  //       <Text style={[styles.title, styles.setColorWhite]}>Back</Text>
-  //     </TouchableOpacity>
-  //   </View>
-  // );
+//     {/* BACK BUTTON */}
+//     <TouchableOpacity style={styles.back_button} onPress={() => navigation.goBack()}>
+//       <Text style={[styles.title, styles.setColorWhite]}>Back</Text>
+//     </TouchableOpacity>
+//   </View>
+// );
 // }
 
 // Generates MAP
 export class MapContainer extends Component {
-
   render() {
     return (
       <Map

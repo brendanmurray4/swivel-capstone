@@ -2,10 +2,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-
 import { DelegatorPage } from './DelegatorPage';
 import LoginPage from './LoginPage';
-import {MapContainer} from './MapPage';
+import { MapContainer } from './MapPage';
 
 export default function App() {
   return (
@@ -27,4 +26,3 @@ function MyStack() {
     </Stack.Navigator>
   );
 }
-
