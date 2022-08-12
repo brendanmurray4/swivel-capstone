@@ -9,7 +9,7 @@ import {
   TextInput,
   ImageBackground,
 } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 
 // Map Page which will track bike location
 export function MapPage({ navigation }) {
@@ -22,12 +22,15 @@ export function MapPage({ navigation }) {
         provider="google" // remove if not using Google Maps, perhaps apple maps?
         style={styles.map}
         initialRegion={{
-          latitude: parseFloat(49.277748),
-          longitude: parseFloat(-122.90905),
+          latitude: 49.277748,
+          longitude: -122.90905,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-      />
+      >
+        <Marker coordinate={{ latitude: 49.277748, longitude: -122.90905 }} pinColor="black" />
+      </MapView>
+
       <Text style={[styles.title, styles.setColor]}>Insert map tracking</Text>
 
       {/* This is the bike selection button */}
