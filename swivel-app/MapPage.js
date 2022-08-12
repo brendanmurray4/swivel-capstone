@@ -19,9 +19,9 @@ export function MapPage({ navigation }) {
       <Text>Swivel Map</Text>
       <StatusBar style="auto" />
       <MapView
-        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={styles.map}
-        region={{
+        initialRegion={{
           latitude: 37.78825,
           longitude: -122.4324,
           latitudeDelta: 0.015,
