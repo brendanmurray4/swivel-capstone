@@ -11,32 +11,37 @@ import {
   ImageBackground,
 } from 'react-native';
 
-// // Map Page which will track bike location
+// Map Page which will track bike location
 // export function MapPage({ navigation }) {
 //   const [delegatorStatus = 'LOCKED', setStatus] = useState('LOCKED');
-//   let mymap = new MapComponent.render
-//   // return (
-//   //   <View style={styles.container}>
-//   //     <Text>Swivel Map</Text>
-//   //     <StatusBar style="auto" />
+  
+//   const mymap = new MapContainer();
+  // return(
+  //   mymap.render()
+  // );
+  // return (
+  //   <View style={styles.container}>
+  //     <Text>Swivel Map</Text>
+  //     <StatusBar style="auto" />
 
-//   //     <Text style={[styles.title, styles.setColor]}>Insert map tracking</Text>
+  //     <Text style={[styles.title, styles.setColor]}>Insert map tracking</Text>
 
-//   //     {/* This is the bike selection button */}
-//   //     <TouchableOpacity style={styles.bike_button} onPress={() => navigation.navigate('Delegator')}>
-//   //       <Text style={[styles.title, styles.setColorGreen]}>Select Bike</Text>
-//   //     </TouchableOpacity>
+  //     {/* This is the bike selection button */}
+  //     <TouchableOpacity style={styles.bike_button} onPress={() => navigation.navigate('Delegator')}>
+  //       <Text style={[styles.title, styles.setColorGreen]}>Select Bike</Text>
+  //     </TouchableOpacity>
 
-//   //     {/* BACK BUTTON */}
-//   //     <TouchableOpacity style={styles.back_button} onPress={() => navigation.goBack()}>
-//   //       <Text style={[styles.title, styles.setColorWhite]}>Back</Text>
-//   //     </TouchableOpacity>
-//   //   </View>
-//   // );
+  //     {/* BACK BUTTON */}
+  //     <TouchableOpacity style={styles.back_button} onPress={() => navigation.goBack()}>
+  //       <Text style={[styles.title, styles.setColorWhite]}>Back</Text>
+  //     </TouchableOpacity>
+  //   </View>
+  // );
 // }
 
 // Generates MAP
-export class MapPage extends Component {
+export class MapContainer extends Component {
+
   render() {
     return (
       <Map
@@ -58,9 +63,9 @@ export class MapPage extends Component {
   }
 }
 
-MapPage = GoogleApiWrapper({
+MapContainer = GoogleApiWrapper({
   // apiKey: 'AIzaSyDQb2D3DmrvmViMIgHgvDAhPo1y9bB8zCM',
-})(MapPage);
+})(MapContainer);
 
 /* DEFAULT STYLES */
 const styles = StyleSheet.create({

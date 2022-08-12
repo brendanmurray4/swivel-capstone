@@ -5,7 +5,7 @@ import React from 'react';
 
 import { DelegatorPage } from './DelegatorPage';
 import LoginPage from './LoginPage';
-import { MapPage } from './MapPage';
+import {MapContainer} from './MapPage';
 
 export default function App() {
   return (
@@ -22,7 +22,7 @@ function MyStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginPage} />
-      <Stack.Screen name="Map" component={MapPage} />
+      <Stack.Screen name="Map" component={MapContainer} />
       <Stack.Screen name="Delegator" component={DelegatorPage} />
     </Stack.Navigator>
   );
