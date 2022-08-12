@@ -9,7 +9,7 @@ import {
   TextInput,
   ImageBackground,
 } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView from 'react-native-maps';
 
 // Map Page which will track bike location
 export function MapPage({ navigation }) {
@@ -19,13 +19,13 @@ export function MapPage({ navigation }) {
       <Text>Swivel Map</Text>
       <StatusBar style="auto" />
       <MapView
-        //provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        provider="google" // remove if not using Google Maps, perhaps apple maps?
         style={styles.map}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.0121,
+          latitude: parseFloat(49.277748),
+          longitude: parseFloat(-122.90905),
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
         }}
       />
       <Text style={[styles.title, styles.setColor]}>Insert map tracking</Text>
