@@ -1,20 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  ImageBackground,
-} from 'react-native';
+import React from 'react';
 
+
+import { DelegatorPage } from './DelegatorPage';
 import LoginPage from './LoginPage';
 import { MapPage } from './MapPage';
-import { DelegatorPage } from './DelegatorPage';
 
 export default function App() {
   return (
@@ -36,3 +27,4 @@ function MyStack() {
     </Stack.Navigator>
   );
 }
+
