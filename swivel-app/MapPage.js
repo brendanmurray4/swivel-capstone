@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import {
   Text,
   View,
@@ -9,6 +9,7 @@ import {
   TextInput,
   ImageBackground,
 } from 'react-native';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 // Map Page which will track bike location
 export function MapPage({ navigation }) {
@@ -17,7 +18,16 @@ export function MapPage({ navigation }) {
     <View style={styles.container}>
       <Text>Swivel Map</Text>
       <StatusBar style="auto" />
-
+      <MapView
+        provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+        style={styles.map}
+        region={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.0121,
+        }}
+      />
       <Text style={[styles.title, styles.setColor]}>Insert map tracking</Text>
 
       {/* This is the bike selection button */}
@@ -65,7 +75,6 @@ const styles = StyleSheet.create({
   },
   // End bike page
 
-
   // Navigation Menu
   back_button: {
     width: '80%',
@@ -80,5 +89,13 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   //  END navigation menu
-  
+
+  //MAP
+  map: {
+    height: '50%',
+    width: '80%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  //END MAP
 });
