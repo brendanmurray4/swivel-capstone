@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import {
   Text,
   View,
@@ -9,6 +9,7 @@ import {
   TextInput,
   ImageBackground,
 } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 
 // Map Page which will track bike location
 export function MapPage({ navigation }) {
@@ -17,6 +18,18 @@ export function MapPage({ navigation }) {
     <View style={styles.container}>
       <Text>Swivel Map</Text>
       <StatusBar style="auto" />
+      <MapView
+        provider="google" // remove if not using Google Maps, perhaps apple maps?
+        style={styles.map}
+        initialRegion={{
+          latitude: 49.277748,
+          longitude: -122.90905,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      >
+        <Marker coordinate={{ latitude: 49.277748, longitude: -122.90905 }} pinColor="black" />
+      </MapView>
 
       <Text style={[styles.title, styles.setColor]}>Insert map tracking</Text>
 
@@ -65,7 +78,6 @@ const styles = StyleSheet.create({
   },
   // End bike page
 
-
   // Navigation Menu
   back_button: {
     width: '80%',
@@ -80,5 +92,13 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   //  END navigation menu
-  
+
+  //MAP
+  map: {
+    height: '50%',
+    width: '80%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  //END MAP
 });
