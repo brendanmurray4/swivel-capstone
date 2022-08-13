@@ -9,11 +9,11 @@ export function gethttp() {
   const getDataFromServer = async () => {
     try {
       const response = await fetch('https://reactnative.dev/movies.json');
+      // const response = await fetch('https://iot.swivel.bike/status/ping');
       const json = await response.json();
       setData(json.movies); // From the JSON file we use the "movies header"
       setData2(json.description); // From the JSON file we use the "description header"
-      console.log(JSON.stringify(json.description));
-      console.log("Organizations is");
+
     } catch (error) { // Prints error if one occurs
       console.error(error);
     } finally { // We are no longer loading, the json file ahs loaded
@@ -43,3 +43,5 @@ export function gethttp() {
     </View>
   );
 }
+
+
