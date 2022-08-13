@@ -59,4 +59,3 @@ function MyStack() {
     </Stack.Navigator>
   );
 }
-
