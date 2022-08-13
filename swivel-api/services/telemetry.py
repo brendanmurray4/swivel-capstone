@@ -10,13 +10,6 @@ StatusService = Blueprint("status_service", __name__)
 # POST /telemetry/<DEVICE_ID>/
 # GET /state/current/<DEVICE_ID>/
 # POST /state/<DEVICE_ID>/
- 
-
-@StatusService.teardown_appcontext
-def close_db(error):
-    """Closes the database again at the end of the request."""
-    if hasattr(g, 'azure_db'):
-        g.azure_db.close()
 
 
 @StatusService.route("/telemetry/<device_id>", methods=['GET', 'POST'])
