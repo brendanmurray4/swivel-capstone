@@ -21,7 +21,7 @@ export function gethttp() {
     }
   };
 
-  useEffect(() => {
+  useEffect(() => { // This means that
     getDataFromServer();
   }, []);
 
