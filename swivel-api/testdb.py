@@ -9,12 +9,10 @@ import sqlite3
 import os
 TEST_DEVICE_ID = 1
 
-<<<<<<< HEAD
-# os.remove("swivel.db")
-=======
+os.remove("swivel.db")
 if os.path.exists("swivel.db"):
     os.remove("swivel.db")
->>>>>>> c81ef407f5a8ef2a21c0a0b791bd4002ee612f08
+
 conn = sqlite3.connect("swivel.db")
 cursor = conn.cursor()
 
