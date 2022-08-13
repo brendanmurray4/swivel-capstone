@@ -8,7 +8,7 @@
 import sqlite3
 import os
 
-os.remove("swivel.db")
+# os.remove("swivel.db")
 conn = sqlite3.connect("swivel.db")
 cursor = conn.cursor()
 

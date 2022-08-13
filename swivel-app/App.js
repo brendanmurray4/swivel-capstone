@@ -48,14 +48,50 @@ export default function App() {
   );
 }
 
-/* NAVIGATE BETWEEN PAGES */
-const Stack = createNativeStackNavigator();
-function MyStack() {
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={LoginPage} />
-      <Stack.Screen name="Map" component={MapPage} />
-      <Stack.Screen name="Delegator" component={DelegatorPage} />
-    </Stack.Navigator>
-  );
-}
+// /* NAVIGATE BETWEEN PAGES */
+// const Stack = createNativeStackNavigator();
+// function MyStack() {
+//   return (
+//     <Stack.Navigator screenOptions={{ headerShown: false }}>
+//       <Stack.Screen name="Login" component={LoginPage} />
+//       <Stack.Screen name="Map" component={MapPage} />
+//       <Stack.Screen name="Delegator" component={DelegatorPage} />
+//     </Stack.Navigator>
+//   );
+// }
+
+// import React, { useEffect, useState } from 'react';
+// import { FlatList, Text, View } from 'react-native';
+
+// export default App = () => {
+//   const [isLoading, setLoading] = useState(true);
+//   const [data, setData] = useState([]);
+//   console.log(data);
+
+//   useEffect(() => {
+//     fetch('https://raw.githubusercontent.com/adhithiravi/React-Hooks-Examples/master/testAPI.json')
+//       .then((response) => response.json())
+//       .then((json) => setData(json))
+//       .catch((error) => console.error(error))
+//       .finally(() => setLoading(false));
+//   }, []);
+
+//   return (
+
+//     <View style={{ flex: 1, padding: 24 }}>
+//       {isLoading ? <Text>Loading...</Text> : 
+//       ( <View style={{ flex: 1, flexDirection: 'column', justifyContent:  'space-between'}}>
+//           <Text style={{ fontSize: 18, color: 'green', textAlign: 'center'}}>{data.title}</Text>
+//           <Text style={{ fontSize: 14, color: 'green', textAlign: 'center', paddingBottom: 10}}>Articles:</Text>
+//           <FlatList
+//             data={data.articles}
+//             keyExtractor={({ id }, index) => id}
+//             renderItem={({ item }) => (
+//               <Text>{item.id + '. ' + item.title}</Text>
+//             )}
+//           />
+//         </View>
+//       )}
+//     </View>
+//   );
+// };
