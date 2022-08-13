@@ -1,4 +1,10 @@
 #This script will create a test database for API testing
+#Script can be edited to provide deeper test cases
+#INSTRUCTIONS
+# - Run script
+# - Run main.py
+# - Navigate to <URL given in console>/status/current/1 OR
+# - Navigate to <URL given in console>/telemetry/1
 import sqlite3
 import os
 
