@@ -15,13 +15,36 @@ import {
 import LoginPage from './LoginPage';
 import { MapPage } from './MapPage';
 import { DelegatorPage } from './DelegatorPage';
+import { gethttp } from './GetHttp';
 
 export default function App() {
+  
+
   return (
-    // NAVIGATE BETWEEN PAGES
-    <NavigationContainer>
-      <MyStack />
-    </NavigationContainer>
+    gethttp()
+    // // NAVIGATE BETWEEN PAGES
+    // <NavigationContainer>
+    //   <MyStack />
+    // </NavigationContainer>
+
+  //   <View style={styles.container}>
+  //   <Text>Swivel Delegator Page</Text>
+  //   <StatusBar style="auto" />
+
+  //   <Text style={[styles.title, styles.setColor]}>
+  //     Please press this button to unlock the delegator
+  //   </Text>
+
+  //   {/* This is the delegator button */}
+  //   <TouchableOpacity style={styles.delegator_button}>
+  //     <Text style={[styles.title, styles.setColorGreen]}>Unlock Delegator</Text>
+  //   </TouchableOpacity>
+
+  //   {/* BACK BUTTON */}
+  //   <TouchableOpacity style={styles.back_button} onPress={() => navigation.goBack()}>
+  //     <Text style={[styles.title, styles.setColorWhite]}>Back</Text>
+  //   </TouchableOpacity>
+  // </View>
   );
 }
 
@@ -36,3 +59,4 @@ function MyStack() {
     </Stack.Navigator>
   );
 }
+
