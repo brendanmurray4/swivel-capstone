@@ -10,21 +10,24 @@ import {
   ImageBackground,
 } from 'react-native';
 
+import { getServerData } from './GetServerData';
+
 // Map Page which will track bike location
 export function MapPage({ navigation }) {
   const receivedData = getServerData();
+  console.log(receivedData);
   
   const [delegatorStatus = 'LOCKED', setStatus] = useState('LOCKED');
   return (
     <View style={styles.container}>
       <Text>Swivel Map</Text>
-      <Text> key is: {receivedData[0]} </Text>
+      {/* <Text> key is: {receivedData[0]} </Text>
       <Text> latitude is: {receivedData[1]} </Text>
       <Text> longitude is: {receivedData[2]} </Text>
-      <Text> acceleration is: {receivedData[3]} </Text>
+      <Text> acceleration is: {receivedData[3]} </Text> */}
 
       <StatusBar style="auto" />
-      <MapView
+      {/* <MapView
         provider="google" // remove if not using Google Maps, perhaps apple maps?
         style={styles.map}
         initialRegion={{
@@ -35,12 +38,12 @@ export function MapPage({ navigation }) {
         }}
       >
         <Marker coordinate={{ latitude: 49.277748, longitude: -122.90905 }} pinColor="black" />
-      </MapView>
+      </MapView> */}
 
       <Text style={[styles.title, styles.setColor]}>Insert map tracking</Text>
 
       {/* This is the bike selection button */}
-      <TouchableOpacity style={styles.bike_button} onPress={() => navigation.navigate('Delegator')}>
+      <TouchableOpacity style={styles.bike_button} onPress={() => navigation.push('Delegator')}>
         <Text style={[styles.title, styles.setColorGreen]}>Select Bike</Text>
       </TouchableOpacity>
 
