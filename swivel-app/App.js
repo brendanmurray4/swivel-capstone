@@ -19,20 +19,11 @@ import { gethttp } from './GetHttp';
 
 
 export default function App() {
-  var temp1 = "test"
-  var temp2 = "test2"
-  // [temp1, temp2] = gethttp();
-
   return (
-    // [temp1, temp2] = gethttp();
-    <View>
-      <Text> "test" </Text>
-    </View>
-
-    // // NAVIGATE BETWEEN PAGES
-    // <NavigationContainer>
-    //   <MyStack />
-    // </NavigationContainer>
+    // NAVIGATE BETWEEN PAGES
+    <NavigationContainer>
+      <MyStack />
+    </NavigationContainer>
   );
 }
 

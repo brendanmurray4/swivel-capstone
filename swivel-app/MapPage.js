@@ -12,13 +12,19 @@ import {
 
 import { gethttp } from './GetHttp';
 
-
 // Map Page which will track bike location
 export function MapPage({ navigation }) {
+  const receivedData = gethttp();
+  console.log("Received on this end" + receivedData)
   const [delegatorStatus = 'LOCKED', setStatus] = useState('LOCKED');
   return (
     <View style={styles.container}>
       <Text>Swivel Map</Text>
+      <Text> key is: {receivedData[0]} </Text>
+      <Text> latitude is: {receivedData[1]} </Text>
+      <Text> longitude is: {receivedData[2]} </Text>
+      <Text> acceleration is: {receivedData[3]} </Text>
+      
       <StatusBar style="auto" />
 
       <Text style={[styles.title, styles.setColor]}>Insert map tracking</Text>
@@ -68,7 +74,6 @@ const styles = StyleSheet.create({
   },
   // End bike page
 
-
   // Navigation Menu
   back_button: {
     width: '80%',
@@ -83,5 +88,4 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   //  END navigation menu
-  
 });
