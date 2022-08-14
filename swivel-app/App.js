@@ -19,7 +19,6 @@ import { gethttp } from './GetHttp';
 
 
 export default function App() {
-
   var temp1 = "test"
   var temp2 = "test2"
   // [temp1, temp2] = gethttp();
