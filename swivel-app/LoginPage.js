@@ -44,7 +44,7 @@ export default function LoginPage({ navigation }) {
             />
           </View>
 
-          <TouchableOpacity style={styles.login_button} onPress={() => navigation.navigate('Map')}>
+          <TouchableOpacity style={styles.login_button} onPress={() => navigation.push('Map')}>
             <Text style={styles.loginText}>Sign In</Text>
           </TouchableOpacity>
 
@@ -63,6 +63,7 @@ export default function LoginPage({ navigation }) {
       </ImageBackground>
     </View>
   );
+  
 }
 
 /* DEFAULT STYLES */
