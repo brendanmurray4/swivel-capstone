@@ -6,10 +6,11 @@ export function gethttp() {
   const [isLoading, setLoading] = useState(true);
   var [latitude, setLatitude] = useState(null);
   var [longitude, setLongitude] = useState(null);
+  // const [data, setData] = useState(null);
 
   const getDataFromServer = async () => {
     try {
-      const response = await fetch('https://iot.swivel.bike/status/ping');
+      const response = await fetch('http://127.0.0.1:3030');
       const json = await response.json();
       setLatitude(json.data.message); // replace with .latitude
       setLongitude(json.data.message); // replace with .longitude

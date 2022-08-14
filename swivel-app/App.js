@@ -15,14 +15,25 @@ import {
 import LoginPage from './LoginPage';
 import { MapPage } from './MapPage';
 import { DelegatorPage } from './DelegatorPage';
+import { gethttp } from './GetHttp';
 
 
 export default function App() {
+
+  var temp1 = "test"
+  var temp2 = "test2"
+  // [temp1, temp2] = gethttp();
+
   return (
-    // NAVIGATE BETWEEN PAGES
-    <NavigationContainer>
-      <MyStack />
-    </NavigationContainer>
+    // [temp1, temp2] = gethttp();
+    <View>
+      <Text> "test" </Text>
+    </View>
+
+    // // NAVIGATE BETWEEN PAGES
+    // <NavigationContainer>
+    //   <MyStack />
+    // </NavigationContainer>
   );
 }
 
