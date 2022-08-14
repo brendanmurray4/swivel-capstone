@@ -10,6 +10,9 @@ import {
   ImageBackground,
 } from 'react-native';
 
+import { gethttp } from './GetHttp';
+
+
 // Map Page which will track bike location
 export function MapPage({ navigation }) {
   const [delegatorStatus = 'LOCKED', setStatus] = useState('LOCKED');
