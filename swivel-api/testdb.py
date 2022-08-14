@@ -18,10 +18,10 @@ cursor = conn.cursor()
 
 #Create and prep test table for DeviceStatus
 cursor.execute("CREATE TABLE DeviceStatus (id INT PRIMARY KEY, action CHAR(10), status CHAR(10), submittedAt datetime, completedAt datetime)")
-cursor.execute("INSERT INTO DeviceStatus(id, action, status, submittedAt, completedAt) values (%d, 'unlock', 'pending', 'November 18, 1999', NULL)", TEST_DEVICE_ID)
+cursor.execute("INSERT INTO DeviceStatus(id, action, status, submittedAt, completedAt) values (?, 'unlock', 'pending', 'November 18, 1999', NULL)", (TEST_DEVICE_ID,))
 
 #Create and prep test table for DeviceTelemetry
 cursor.execute("CREATE TABLE DeviceTelemetry (id INT PRIMARY KEY, latitude FLOAT, longitude FLOAT, acceleration FLOAT)")
-cursor.execute("INSERT INTO DeviceTelemetry values (%d, 49.277748, -122.90905, 0)", TEST_DEVICE_ID)
+cursor.execute("INSERT INTO DeviceTelemetry values (?, 49.277748, -122.90905, 0)", (TEST_DEVICE_ID,))
 conn.commit()
 conn.close()
