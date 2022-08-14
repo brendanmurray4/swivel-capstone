@@ -50,3 +50,14 @@ If you add any dependencies, make sure they go in the `requirements.txt`
 ```
 python3.9 -m pip freeze > requirements.txt
 ```
+
+## Testing and Communicating with the API
+
+The currently supported routes on the API are as follows:
+```
+GET /status/ping/
+GET /telemetry/<DEVICE_ID>/
+POST /telemetry/<DEVICE_ID>/
+GET /control/current/<DEVICE_ID>/
+POST /control/<DEVICE_ID>/
+```
