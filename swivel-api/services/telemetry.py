@@ -1,3 +1,4 @@
+from http.client import REQUESTED_RANGE_NOT_SATISFIABLE
 import sqlite3
 import json
 from flask import Blueprint, request
@@ -5,6 +6,7 @@ from requests import ResponseSuccess
 #Change this path to somewhere near root?
 DB_PATH = "swivel.db"
 TelemetryService = Blueprint("telemetry_service", __name__)
+reqdata = json()
 # GET /telemetry/<DEVICE_ID>/
 # POST /telemetry/<DEVICE_ID>/
 # GET /state/current/<DEVICE_ID>/
@@ -18,12 +20,13 @@ def telemetry(device_id):
         cursor = conn.cursor()
         reqdata = request.json
         reqdata = json.load(reqdata)
-        cursor.execute("BEGIN TRANSACTION")
-        cursor.execute("DELETE FROM DeviceTelemetry WHERE id = ?", device_id)
-        cursor.execute("INSERT INTO DeviceTelemetry(id, latitude, longitude, acceleration) values (?, ?, ?, ?)", tuple(reqdata.items))
-        cursor.execute("COMMIT TRANSACTION")
-        conn.commit()
-        resp = ResponseSuccess({"Success": "POST"})
+        # cursor.execute("BEGIN TRANSACTION")
+        # cursor.execute("DELETE FROM DeviceTelemetry WHERE id = ?", device_id)
+        # cursor.execute("INSERT INTO DeviceTelemetry(id, latitude, longitude, acceleration) values (?, ?, ?, ?)", tuple(reqdata.items))
+        # cursor.execute("COMMIT TRANSACTION")
+        # conn.commit()
+        #resp = ResponseSuccess({"Success": "POST"})
+        resp = ResponseSuccess(reqdata)
     if request.method == 'GET':
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
