@@ -50,3 +50,15 @@ If you add any dependencies, make sure they go in the `requirements.txt`
 ```
 python3.9 -m pip freeze > requirements.txt
 ```
+
+## Testing and Communicating with the API
+
+The currently supported routes on the API are as follows:
+```
+GET /status/ping/ #for checking server status
+GET /telemetry/<DEVICE_ID>/ #returns telemetry information of device, latitude, longitude, acceleration
+POST /telemetry/<DEVICE_ID>/ #Allows device to post its telemetry
+GET /control/current/<DEVICE_ID>/ #returns current control information of device
+POST /control/<DEVICE_ID>/ #Allows app to post the actions it wants the device to take. Request should provide a json body containing device_id, action, time of submittal
+POST /control/complete/<DEVICE_ID> #Allows device to post successful completion of action. No body requirements. Success is assumed
+```
