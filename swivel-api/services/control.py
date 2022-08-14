@@ -1,5 +1,6 @@
 import sqlite3
 import json
+import datetime
 from xmlrpc.client import ResponseError
 from flask import Blueprint, request, jsonify
 from requests import ResponseSuccess
@@ -31,8 +32,15 @@ def postState(device_id):
     resp = ResponseSuccess({"Success": "POST"})
     return resp.encode_json()
 
-@ControlService.errorhandler(ResponseError)
-def handle_invalid_usage(error):
-    response = jsonify(error.to_dict())
-    response.status_code = error.status_code
-    return response
+@ControlService.route("/complete/<device_id>", methods = ["POST"])
+def completeControl(device_id):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("BEGIN TRANSACTION")
+    now = datetime.datetime.now()
+    now = now.strftime("%Y-%m-%dT%H:%M:%S")
+    cursor.execute("UPDATE DeviceStatus SET status = 'Complete', completedAt = ? WHERE id = ?", (now, device_id))
+    cursor.execute("COMMIT TRANSACTION")
+    conn.commit()
+    resp = ResponseSuccess({"Success": "POST"})
+    return resp.encode_json()
