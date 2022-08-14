@@ -7,7 +7,6 @@ from requests import ResponseSuccess
 # Change this path to somewhere near root?
 DB_PATH = "swivel.db"
 TelemetryService = Blueprint("telemetry_service", __name__)
-reqdata = json()
 # GET /telemetry/<DEVICE_ID>/
 # POST /telemetry/<DEVICE_ID>/
 # GET /state/current/<DEVICE_ID>/
