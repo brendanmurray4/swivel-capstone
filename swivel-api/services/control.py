@@ -36,7 +36,6 @@ def postState(device_id):
     # Demo code
     reqdata = request.json
     action = reqdata["actions"]
-    print(action)
     if action[0] not in cache.controlcache["actions"]:
         cache.controlcache["actions"].add(action[0])
     # Code for working with database
@@ -55,11 +54,13 @@ def postState(device_id):
     resp = ResponseSuccess({"Success": "POST"})
     return resp.encode_json()
 
-
+#To remove 
 @ControlService.route("/complete/<device_id>", methods=["POST"])
 def completeControl(device_id):
     reqdata = request.json
-    cache.controlcache["actions"].remove(reqdata["action"])
+    actions = reqdata["actions"]
+    for action in actions:
+        cache.controlcache["actions"].remove(action)
     # For use with database
     # conn = sqlite3.connect(DB_PATH)
     # cursor = conn.cursor()
@@ -72,5 +73,5 @@ def completeControl(device_id):
     # )
     # cursor.execute("COMMIT TRANSACTION")
     # conn.commit()
-    resp = ResponseSuccess({"Success": "POST"})
+    resp = ResponseSuccess({"Success": "Actions removed from actions list"})
     return resp.encode_json()
