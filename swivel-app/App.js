@@ -12,11 +12,9 @@ import {
   ImageBackground,
 } from 'react-native';
 
+import { DelegatorPage } from './DelegatorPage';
 import LoginPage from './LoginPage';
 import { MapPage } from './MapPage';
-import { DelegatorPage } from './DelegatorPage';
-import { gethttp } from './GetHttp';
-
 
 export default function App() {
   return (

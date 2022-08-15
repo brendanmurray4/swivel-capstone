@@ -10,36 +10,38 @@ import {
   ImageBackground,
 } from 'react-native';
 
-import { gethttp } from './GetHttp';
+import { LoadServerData } from './LoadServerData';
 
 // Map Page which will track bike location
 export function MapPage({ navigation }) {
-  const receivedData = gethttp();
-  console.log("Received on this end" + receivedData)
+  console.log('Map Page Loaded');
+  // const receivedData = LoadServerData();
+  // console.log("Received on this end" + receivedData)
   const [delegatorStatus = 'LOCKED', setStatus] = useState('LOCKED');
-  return (
-    <View style={styles.container}>
-      <Text>Swivel Map</Text>
-      {/* <Text> key is: {receivedData[0]} </Text>
-      <Text> latitude is: {receivedData[1]} </Text>
-      <Text> longitude is: {receivedData[2]} </Text>
-      <Text> acceleration is: {receivedData[3]} </Text> */}
-      
-      <StatusBar style="auto" />
+  // return (
+  return LoadServerData();
+  // <View style={styles.container}>
+  //   <Text>Swivel Map</Text>
+  //   {/* <Text> key is: {receivedData[0]} </Text>
+  //   <Text> latitude is: {receivedData[1]} </Text>
+  //   <Text> longitude is: {receivedData[2]} </Text>
+  //   <Text> acceleration is: {receivedData[3]} </Text> */}
 
-      <Text style={[styles.title, styles.setColor]}>Insert map tracking</Text>
+  //   <StatusBar style="auto" />
 
-      {/* This is the bike selection button */}
-      <TouchableOpacity style={styles.bike_button} onPress={() => navigation.navigate('Delegator')}>
-        <Text style={[styles.title, styles.setColorGreen]}>Select Bike</Text>
-      </TouchableOpacity>
+  //   <Text style={[styles.title, styles.setColor]}>Insert map tracking</Text>
 
-      {/* BACK BUTTON */}
-      <TouchableOpacity style={styles.back_button} onPress={() => navigation.goBack()}>
-        <Text style={[styles.title, styles.setColorWhite]}>Back</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  //   {/* This is the bike selection button */}
+  //   <TouchableOpacity style={styles.bike_button} onPress={() => navigation.navigate('Delegator')}>
+  //     <Text style={[styles.title, styles.setColorGreen]}>Select Bike</Text>
+  //   </TouchableOpacity>
+
+  //   {/* BACK BUTTON */}
+  //   <TouchableOpacity style={styles.back_button} onPress={() => navigation.goBack()}>
+  //     <Text style={[styles.title, styles.setColorWhite]}>Back</Text>
+  //   </TouchableOpacity>
+  // </View>
+  // );
 }
 
 /* DEFAULT STYLES */
