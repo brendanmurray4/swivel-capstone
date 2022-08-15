@@ -19,7 +19,9 @@ export function MapPage({ navigation }) {
   // console.log("Received on this end" + receivedData)
   const [delegatorStatus = 'LOCKED', setStatus] = useState('LOCKED');
   // return (
-  return LoadServerData();
+
+
+
   // <View style={styles.container}>
   //   <Text>Swivel Map</Text>
   //   {/* <Text> key is: {receivedData[0]} </Text>
