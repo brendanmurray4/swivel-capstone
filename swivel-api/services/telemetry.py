@@ -3,6 +3,7 @@ import sqlite3
 import json
 from flask import Blueprint, request
 from requests import ResponseSuccess
+from cache import cache
 
 # Change this path to somewhere near root?
 DB_PATH = "swivel.db"
@@ -19,7 +20,10 @@ def telemetry(device_id):
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
         reqdata = request.json
-        reqdata = json.load(reqdata)
+        cache.telemetrycache[device_id] = reqdata
+
+        # For use with databases
+        # reqdata = json.load(reqdata)
         # cursor.execute("BEGIN TRANSACTION")
         # cursor.execute("DELETE FROM DeviceTelemetry WHERE id = ?", device_id)
         # cursor.execute("INSERT INTO DeviceTelemetry(id, latitude, longitude, acceleration) values (?, ?, ?, ?)", tuple(reqdata.items))
@@ -28,10 +32,12 @@ def telemetry(device_id):
         # resp = ResponseSuccess({"Success": "POST"})
         resp = ResponseSuccess(reqdata)
     if request.method == "GET":
-        conn = sqlite3.connect(DB_PATH)
-        cursor = conn.cursor()
-        records = cursor.execute(
-            "SELECT * FROM DeviceTelemetry WHERE id = ?", device_id
-        ).fetchall()
-        resp = ResponseSuccess(records[0])
+        resp = ResponseSuccess(cache.telemetrycache[device_id])
+        # For use with databases
+        # conn = sqlite3.connect(DB_PATH)
+        # cursor = conn.cursor()
+        # records = cursor.execute(
+        #     "SELECT * FROM DeviceTelemetry WHERE id = ?", device_id
+        # ).fetchall()
+        # resp = ResponseSuccess(records[0])
     return resp.encode_json()
