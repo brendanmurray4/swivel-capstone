@@ -20,10 +20,10 @@ export function MapPage({ navigation }) {
   return (
     <View style={styles.container}>
       <Text>Swivel Map</Text>
-      <Text> key is: {receivedData[0]} </Text>
+      {/* <Text> key is: {receivedData[0]} </Text>
       <Text> latitude is: {receivedData[1]} </Text>
       <Text> longitude is: {receivedData[2]} </Text>
-      <Text> acceleration is: {receivedData[3]} </Text>
+      <Text> acceleration is: {receivedData[3]} </Text> */}
       
       <StatusBar style="auto" />
 
