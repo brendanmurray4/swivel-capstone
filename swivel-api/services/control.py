@@ -51,7 +51,8 @@ def postState(device_id):
     # )
     # cursor.execute("COMMIT TRANSACTION")
     # conn.commit()
-    resp = ResponseSuccess({"Success": "POST"})
+    actions = list(cache.controlcache["actions"])
+    resp = ResponseSuccess(actions)
     return resp.encode_json()
 
 
