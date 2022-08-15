@@ -10,18 +10,19 @@ import { ActivityIndicator, FlatList, Text, View, StyleSheet } from 'react-nativ
 // Function returns [latitude, longitude], two variables based on destination address
 export function LoadServerData() {
   const [isLoading, setLoading] = useState(null);
-  const [data, setData] = useState({});
+  const [data, setData] = useState([null]);
 
   const getDataFromServer = async () => {
     console.log('GetDataFromserver loaded');
     try {
-      const response = await fetch('https://iot.swivel.bike/status/ping');
+      const response = await fetch('http://iot.swivel.bike/telemetry/1');
       const json = await response.json();
       setData(json); // replace with .latitude
       // setLongitude(json.data.message); // replace with .longitude
       console.log('\n0.1Received from server1: ' + json);
       console.log('0.2Received from server2: ' + json.data);
-      console.log('0.3Received from server3: ' + json.data.message);
+      console.log('0.3Received from server3: ' + json.data.gps.latitude);
+      console.log('0.3Received from server4: ' + json.data.gps.longitude);
     } catch (error) {
       // Prints error if one occurs
       console.error(error);
@@ -38,7 +39,7 @@ export function LoadServerData() {
     getDataFromServer();
   }, []); // Empty array means run only once
 
-  if (isLoading || (data.data == undefined || data.data == null)) {
+  if (isLoading || data.data == undefined || data.data == null) {
     return (
       <View style={styles.container}>
         <Text>Swivel Map Loading</Text>
@@ -47,31 +48,44 @@ export function LoadServerData() {
     );
   } else if(data.data != undefined && data.data != null) {
     console.log("2. Should occur after 1");
-    console.log('\n\n~Received from server1: ' + data);
-    console.log('\n\n~Received from server2: ' + data.data);
-    console.log('\n\n~Received from server3: ' + data.data.message);
+    console.log('\n~Received from server1: ' + data);
+    console.log('~Received from server2: ' + data.data);
+    console.log('~Received from server3: ' + data.data.gps.latitude);
+    console.log('~Received from server4: ' + data.data.gps.longitude);
+    // return (
+    //   <View style={styles.container}>
+    //     <Text>Swivel Maps2</Text>
+    //     <Text> key is: {data.data.gps.latitude} </Text>
+    //   </View>
+    // );
+    var temp = data.data.gps.latitude;
+    var temp1 = data.data.gps.longitude;
+    return [temp, temp1];
+  }
+
+  // return (
+  //   <View style={styles.container}>
+  //     <Text>Swivel Map Loading</Text>
+  //     <Text> key is: LOADING </Text>
+  //   </View>
+  // );
+}
+
+export function testExample() {
+  const temp = LoadServerData();
+  console.log('Test Success??: ' + temp[0]);
+
+  if (Number.isFinite(temp[0])) {
     return (
       <View style={styles.container}>
         <Text>Swivel Maps2</Text>
-        <Text> key is: {data.data.message} </Text>
+        <Text> Latitude is: {temp[0]} </Text>
+        <Text> Longitude is: {temp[1]} </Text>
       </View>
-    ); 
+    );
+  } else {
+    return temp;
   }
-
-
-}
-
-function test_output(dataObj) {
-  console.log('\nReturning data: ' + dataObj);
-  var key = dataObj.data[0];
-  var latitude = dataObj.data[1];
-  var longitude = dataObj.data[2];
-  var acceleration = dataObj.data[3];
-
-  console.log('Key: ' + dataObj.data[0]);
-  console.log('Latitude: ' + latitude);
-  console.log('Longitude: ' + longitude);
-  console.log('Acceleration: ' + acceleration);
 }
 
 /* DEFAULT STYLES */
