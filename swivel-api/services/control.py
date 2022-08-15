@@ -54,7 +54,8 @@ def postState(device_id):
     resp = ResponseSuccess({"Success": "POST"})
     return resp.encode_json()
 
-#To remove 
+
+# To remove
 @ControlService.route("/complete/<device_id>", methods=["POST"])
 def completeControl(device_id):
     reqdata = request.json

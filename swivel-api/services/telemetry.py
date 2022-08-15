@@ -17,13 +17,11 @@ TelemetryService = Blueprint("telemetry_service", __name__)
 @TelemetryService.route("/<device_id>", methods=["GET", "POST"])
 def telemetry(device_id):
     if request.method == "POST":
-        conn = sqlite3.connect(DB_PATH)
-        cursor = conn.cursor()
         reqdata = request.json
         cache.telemetrycache[device_id] = reqdata
-
         # For use with databases
-        # reqdata = json.load(reqdata)
+        # conn = sqlite3.connect(DB_PATH)
+        # cursor = conn.cursor()
         # cursor.execute("BEGIN TRANSACTION")
         # cursor.execute("DELETE FROM DeviceTelemetry WHERE id = ?", device_id)
         # cursor.execute("INSERT INTO DeviceTelemetry(id, latitude, longitude, acceleration) values (?, ?, ?, ?)", tuple(reqdata.items))
