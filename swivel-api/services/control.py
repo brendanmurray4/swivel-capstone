@@ -75,5 +75,6 @@ def completeControl(device_id):
     # )
     # cursor.execute("COMMIT TRANSACTION")
     # conn.commit()
-    resp = ResponseSuccess({"Success": "Actions removed from actions list"})
+    actions = list(cache.controlcache["actions"])
+    resp = ResponseSuccess(actions)
     return resp.encode_json()
