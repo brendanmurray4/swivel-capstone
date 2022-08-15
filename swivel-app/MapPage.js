@@ -20,7 +20,20 @@ export function MapPage({ navigation }) {
   const [delegatorStatus = 'LOCKED', setStatus] = useState('LOCKED');
   // return (
 
+  const temp = LoadServerData();
+  console.log('Test Success??: ' + temp[0]);
 
+  if (Number.isFinite(temp[0])) {
+    return (
+      <View style={styles.container}>
+        <Text>Swivel Maps2</Text>
+        <Text> Latitude is: {temp[0]} </Text>
+        <Text> Longitude is: {temp[1]} </Text>
+      </View>
+    );
+  } else {
+    return temp;
+  }
 
   // <View style={styles.container}>
   //   <Text>Swivel Map</Text>
