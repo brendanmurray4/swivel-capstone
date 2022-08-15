@@ -10,9 +10,11 @@ import {
   Image,
   TextInput,
   ImageBackground,
+  Modal,
+  Pressable,
+  Alert,
 } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { Button } from 'react-native-web';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 export default function App() {
   return (
@@ -27,10 +29,10 @@ export default function App() {
 const Stack = createNativeStackNavigator();
 function MyStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} defaultScreenOptions={DelegatorPage}>
+      <Stack.Screen name="Delegator" component={DelegatorPage} />
       <Stack.Screen name="Login" component={LoginPage} />
       <Stack.Screen name="Map" component={MapPage} />
-      <Stack.Screen name="Delegator" component={DelegatorPage} />
     </Stack.Navigator>
   );
 }
@@ -122,14 +124,25 @@ export function MapPage({ navigation }) {
 // Page to unlock delegator
 export function DelegatorPage({ navigation }) {
   const [telemetry, setTelemetry] = React.useState(undefined);
+  const [tasks, setTasks] = React.useState(undefined);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [modalOpen, setModalOpen] = React.useState(false);
 
   useEffect(() => {
     const updateInterval = setInterval(() => {
       fetch('http://iot.swivel.bike/telemetry/1')
         .then((resp) => resp.json())
         .then((resp) => {
-          console.log(resp);
           setTelemetry(resp.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      fetch('http://iot.swivel.bike/control/1')
+        .then((resp) => resp.json())
+        .then((resp) => {
+          setTasks(resp.data);
         })
         .catch((err) => {
           console.log(err);
@@ -139,6 +152,48 @@ export function DelegatorPage({ navigation }) {
       window.clearInterval(updateInterval);
     };
   }, []);
+
+  const addTask = (task) => {
+    setIsLoading(true);
+    fetch('http://iot.swivel.bike/control/1', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        actions: [task],
+      }),
+    })
+      .then((resp) => resp.json())
+      .then((resp) => {
+        setTasks(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const removeTask = (task) => {
+    fetch('http://iot.swivel.bike/control/complete/1', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        actions: [task],
+      }),
+    })
+      .then((resp) => resp.json())
+      .then((resp) => {
+        setTasks(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getFriendlyNetworkStatus = () => {
     if (!telemetry) {
@@ -158,19 +213,47 @@ export function DelegatorPage({ navigation }) {
     return 'Unknown';
   };
 
+  const isUnlockable = () => {
+    if (isLoading) {
+      return false;
+    }
+    if (!telemetry) {
+      return false;
+    }
+    if (!tasks) {
+      return false;
+    }
+    if (tasks && tasks.includes('UNLOCK')) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.container}>
-        <MapView
-          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-          style={styles.map}
-          region={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-          }}
-        />
+        {telemetry && (
+          <>
+            <MapView
+              provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              style={styles.map}
+              region={{
+                latitude: telemetry ? telemetry.gps.latitude : 49.277748,
+                longitude: telemetry ? telemetry.gps.longitude : -122.90905,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121,
+              }}
+            >
+              <Marker
+                coordinate={{
+                  latitude: telemetry.gps.latitude,
+                  longitude: telemetry.gps.longitude,
+                }}
+                pinColor="black"
+              />
+            </MapView>
+          </>
+        )}
       </View>
       <View style={styles.dataContainer}>
         <View style={styles.dataContainerRow}>
@@ -198,7 +281,33 @@ export function DelegatorPage({ navigation }) {
           </View>
         </View>
         <View>
-          <TouchableOpacity style={styles.unlockButton}>
+          <TouchableOpacity
+            style={isUnlockable() ? styles.unlockButton : styles.unlockButtonDisabled}
+            onPress={() => {
+              if (isUnlockable()) {
+                addTask('UNLOCK');
+              } else {
+                Alert.alert(
+                  'Reset Delegator State?',
+                  'Would you like to reset the list of tasks for the delegator?',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                      onPress: () => {},
+                    },
+                    {
+                      text: 'Okay',
+                      style: 'destructive',
+                      onPress: () => {
+                        removeTask('UNLOCK');
+                      },
+                    },
+                  ]
+                );
+              }
+            }}
+          >
             <Text style={styles.unlockButtonText}>Unlock Bike</Text>
           </TouchableOpacity>
         </View>
@@ -267,6 +376,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
+  unlockButtonDisabled: {
+    backgroundColor: '#BFC0BD',
+    color: '#000',
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 20,
+    paddingBottom: 20,
+    marginTop: 25,
+    marginBottom: 20,
+  },
+
   unlockButtonText: {
     fontWeight: 'bold',
   },
@@ -280,5 +402,13 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+
+  modalBackground: {
+    minHeight: 50,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    width: 100,
+    height: 100,
   },
 });
