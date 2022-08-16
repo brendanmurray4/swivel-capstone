@@ -13,6 +13,10 @@
 
 #define DELAY_GPRS_CONN_ATTEMPT 3000
 
+// I/O
 #define PIN_SOLENOID 3
+#define PIN_ACC_X A0
+#define PIN_ACC_Y A1
+#define PIN_ACC_Z A2
 
 #endif

@@ -26,7 +26,8 @@ int freeMemory() {
 void __panic__ (const char *str);
 
 // Comm port for module (software serial)
-SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
+// SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
+SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX, false);
 // Low-level library for interfacing with the module
 Adafruit_FONA_LTE fona = Adafruit_FONA_LTE();
 // An instance of the delegator being controlled
@@ -110,6 +111,17 @@ void loop() {
     delegator.GPRSEN = true;
   }
 
+  Serial.println(F(""));
+  Serial.println(F("gathering accelerometer telemetry ..."));
+  // Read and report the accelerometer readings
+  int x = analogRead(PIN_ACC_X);
+  int y = analogRead(PIN_ACC_Y);
+  int z = analogRead(PIN_ACC_Z);
+  Serial.print(F("x: ")); Serial.println(x);
+  Serial.print(F("y: ")); Serial.println(y);
+  Serial.print(F("z: ")); Serial.println(z);
+  Serial.println(F(""));
+
   // Our device needs to send back geolocation data, we need to make sure GPS is enabled
   // This however is not as important as an internet connection, so we continue even
   // when failures are encountered.
@@ -189,6 +201,8 @@ void loop() {
       if (!delegator.unlock) {
          // Set that we don't need to unlock it anymore until later
          delegator.unlock = true;
+
+         // Enter low power mode to provide more current to the solenoid
 
          // Actuate the solenoid
          digitalWrite(PIN_SOLENOID, HIGH);
