@@ -32,6 +32,7 @@ const SignInScreen = () => {
     setLoading(true);
     try {
       const response = await Auth.signIn(data.email, data.password);
+      console.log(response);
     } catch (e) {
       Alert.alert('Oops', e.message);
     }
@@ -81,6 +82,7 @@ const SignInScreen = () => {
           onPress={handleSubmit(onSignInPress)}
         />
         <CustomButton text="Forgot password?" onPress={onSignUpPress} type="TERTIARY" />
+        <CustomButton text="Create Account" onPress={onCreateAccountPress} type = "TERTIARY"/>
       </ImageBackground>
     </View>
   );

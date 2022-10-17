@@ -3,7 +3,7 @@
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "swivel515ddd03",
+    "resourceNameTruncated": "swivela4f83f93",
     "userPoolName": "SwivelAuth",
     "autoVerifiedAttributes": [
       "email"
@@ -25,22 +25,19 @@
     "requiredAttributes": [
       "email",
       "name",
-      "locale"
+      "preferred_username"
     ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "Swivel515ddd03_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "Swivela4f83f93_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "515ddd03",
+    "sharedId": "a4f83f93",
     "resourceName": "SwivelAuth",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
-    "usernameAttributes": [
-      "email"
-    ],
     "useDefault": "manual",
     "userPoolGroups": false,
     "userPoolGroupList": [],
@@ -48,21 +45,6 @@
     "thirdPartyAuth": false,
     "authProviders": [],
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true,
-    "authRoleArn": {
-      "Fn::GetAtt": [
-        "AuthRole",
-        "Arn"
-      ]
-    },
-    "unauthRoleArn": {
-      "Fn::GetAtt": [
-        "UnauthRole",
-        "Arn"
-      ]
-    },
-    "breakCircularDependency": true,
-    "dependsOn": [],
-    "hostedUI": false
+    "useEnabledMfas": true
   }
 }

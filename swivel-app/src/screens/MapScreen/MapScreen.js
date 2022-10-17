@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
+import { Auth } from 'aws-amplify';
 
 // Page to unlock delegator
 const MapScreen = () => {
@@ -112,8 +113,24 @@ const MapScreen = () => {
     return true;
   };
 
+  const signOut = () => {
+    Auth.signOut();
+  }
+
   return (
     <View style={styles.container}>
+      <Text
+        onPress={signOut}
+        style={{
+          width: '100%',
+          textAlign: 'right',
+          color: 'red',
+          marginTop: 'auto',
+          marginVertical: 20,
+          fontSize: 20,
+        }}>
+          Sign out
+        </Text>
       <View style={styles.container}>
         {telemetry && (
           <>
@@ -139,7 +156,7 @@ const MapScreen = () => {
         )}
       </View>
       <View style={styles.dataContainer}>
-        <View style={styles.dataContainerRow}>
+          <View style={styles.dataContainerRow}>
           <View>
             <Text style={styles.dataHeader}>Signal (RSSI)</Text>
             <Text style={styles.dataValue}>{telemetry ? telemetry.grps.rssi : '0'} dBm</Text>
