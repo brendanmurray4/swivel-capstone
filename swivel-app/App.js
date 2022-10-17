@@ -46,59 +46,192 @@ function PurchasePage({ navigation }) {
 
   return (
     <View style={purchaseStyles.container}>
-      <View style={purchaseStyles.top} >
-      <Image style={{resizeMode: "cover", height: "100%", width: "100%"}} source={require('./assets/swivel_bike.png')} />
+      <View style={purchaseStyles.top}>
+        <Image
+          style={{ resizeMode: 'cover', height: '100%', width: '100%' }}
+          source={require('./assets/swivel_bike.png')}
+        />
       </View>
 
-
-      <View style={purchaseStyles.middle} >
-        <Text style={{fontWeight: 'bold', textAlign: 'center', fontSize: 26}}> Emonda SLR 9 eTap</Text>
-        <Text style={purchaseStyles.priceText}> $ 6.55
-          <Text style={{fontWeight: 'bold', color: '#BFC0BD', fontSize: 14, textAlign: 'center'}}> /Hour</Text>
+      <View style={purchaseStyles.middle}>
+        <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 26 }}>
+          {' '}
+          Emonda SLR 9 eTap
+        </Text>
+        <Text style={purchaseStyles.priceText}>
+          {' '}
+          $ 6.55
+          <Text style={{ fontWeight: 'bold', color: '#BFC0BD', fontSize: 14, textAlign: 'center' }}>
+            {' '}
+            /Hour
+          </Text>
         </Text>
       </View>
 
-      <View style={purchaseStyles.middle2} >
-      <Image style={{resizeMode: "cover", height: "100%", width: "20%", resizeMode: 'contain', aspectRatio: 0.75, left: "2%"}} source={require('./assets/gps_icon.jpg')} />
-        <Text style={{fontWeight: 'bold', color: '#BFC0BD', fontSize: 22, textAlign: 'center', position: 'absolute', left: '20%', flexShrink: 1, }}> Science Rd, Burnaby, BC, Canada </Text>
-
-
+      <View style={purchaseStyles.middle2}>
+        <Image
+          style={{
+            resizeMode: 'cover',
+            height: '100%',
+            width: '20%',
+            resizeMode: 'contain',
+            aspectRatio: 0.75,
+            left: '2%',
+          }}
+          source={require('./assets/gps_icon.jpg')}
+        />
+        <Text
+          style={{
+            fontWeight: 'bold',
+            color: '#BFC0BD',
+            fontSize: 22,
+            textAlign: 'center',
+            position: 'absolute',
+            left: '20%',
+            flexShrink: 1,
+          }}
+        >
+          {' '}
+          Science Rd, Burnaby, BC, Canada{' '}
+        </Text>
       </View>
-      <View style={purchaseStyles.middle2} >
-
-      <Image style={{resizeMode: "cover", height: "100%", width: "20%", resizeMode: 'contain'}} source={require('./assets/clock_icon.jpg')} />
-        <Text style={{fontWeight: 'bold', color: '#BFC0BD', fontSize: 22, textAlign: 'center', position: 'absolute', left: '20%', flexShrink: 1, flexWrap: 'wrap'}}> 
-        Sept 20th, 8:00 AM to Sept 20th, 11:00 AM </Text>
+      <View style={purchaseStyles.middle2}>
+        <Image
+          style={{ resizeMode: 'cover', height: '100%', width: '20%', resizeMode: 'contain' }}
+          source={require('./assets/clock_icon.jpg')}
+        />
+        <Text
+          style={{
+            fontWeight: 'bold',
+            color: '#BFC0BD',
+            fontSize: 22,
+            textAlign: 'center',
+            position: 'absolute',
+            left: '20%',
+            flexShrink: 1,
+            flexWrap: 'wrap',
+          }}
+        >
+          Sept 20th, 8:00 AM to Sept 20th, 11:00 AM{' '}
+        </Text>
       </View>
 
-      
-      <View style={purchaseStyles.bottom} >
-      <ScrollView>
-        <View style={purchaseStyles.bottom2} >
-            <Text style={{fontWeight: 'bold', color: '#000000', fontSize: 18, textAlign: 'left', fontWeight: 'bold'}}> Payment Summary</Text>
-            <Text style={{fontWeight: 'bold', color: '#000000', fontSize: 18, textAlign: 'right', fontWeight: 'bold'}}> $ 24.01</Text>
-        </View>
-        <View style={purchaseStyles.bottom2} >
-            <Text style={{fontWeight: 'bold', color: '#BFC0BD', fontSize: 18, textAlign: 'left', fontWeight: 'bold'}}> Hourly Cost</Text>
-            <Text style={{fontWeight: 'bold', color: '#BFC0BD', fontSize: 18, textAlign: 'right', fontWeight: 'bold'}}> $ 19.65</Text>
-        </View>
-        <View style={purchaseStyles.bottom2} >
-            <Text style={{fontWeight: 'bold', color: '#BFC0BD', fontSize: 18, textAlign: 'left', fontWeight: 'bold'}}> GST + PST</Text>
-            <Text style={{fontWeight: 'bold', color: '#BFC0BD', fontSize: 18, textAlign: 'right', fontWeight: 'bold'}}> $ 2.36</Text>
-        </View>
-        <View style={purchaseStyles.bottom2} >
-            <Text style={{fontWeight: 'bold', color: '#000000', fontSize: 18, textAlign: 'center', fontWeight: 'bold'}}> This is Scrollable...</Text>
-        </View>
+      <View style={purchaseStyles.bottom}>
+        <ScrollView>
+          <View style={purchaseStyles.bottom2}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#000000',
+                fontSize: 18,
+                textAlign: 'left',
+                fontWeight: 'bold',
+              }}
+            >
+              {' '}
+              Payment Summary
+            </Text>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#000000',
+                fontSize: 18,
+                textAlign: 'right',
+                fontWeight: 'bold',
+              }}
+            >
+              {' '}
+              $ 24.01
+            </Text>
+          </View>
+          <View style={purchaseStyles.bottom2}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#BFC0BD',
+                fontSize: 18,
+                textAlign: 'left',
+                fontWeight: 'bold',
+              }}
+            >
+              {' '}
+              Hourly Cost
+            </Text>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#BFC0BD',
+                fontSize: 18,
+                textAlign: 'right',
+                fontWeight: 'bold',
+              }}
+            >
+              {' '}
+              $ 19.65
+            </Text>
+          </View>
+          <View style={purchaseStyles.bottom2}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#BFC0BD',
+                fontSize: 18,
+                textAlign: 'left',
+                fontWeight: 'bold',
+              }}
+            >
+              {' '}
+              GST + PST
+            </Text>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#BFC0BD',
+                fontSize: 18,
+                textAlign: 'right',
+                fontWeight: 'bold',
+              }}
+            >
+              {' '}
+              $ 2.36
+            </Text>
+          </View>
+          <View style={purchaseStyles.bottom2}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#000000',
+                fontSize: 18,
+                textAlign: 'center',
+                fontWeight: 'bold',
+              }}
+            >
+              {' '}
+              This is Scrollable...
+            </Text>
+          </View>
         </ScrollView>
       </View>
-      
 
-      <View style={purchaseStyles.confirmButton} >
-        <TouchableOpacity style={styles.confirmButton} onPress={() => navigation.navigate('FinalPurchase')}>
-          <Text style={{fontWeight: 'bold', color: '#000000', fontSize: 26, textAlign: 'left', fontWeight: 'bold'}}> Confirm </Text>
+      <View style={purchaseStyles.confirmButton}>
+        <TouchableOpacity
+          style={styles.confirmButton}
+          onPress={() => navigation.navigate('FinalPurchase')}
+        >
+          <Text
+            style={{
+              fontWeight: 'bold',
+              color: '#000000',
+              fontSize: 26,
+              textAlign: 'left',
+              fontWeight: 'bold',
+            }}
+          >
+            {' '}
+            Confirm{' '}
+          </Text>
         </TouchableOpacity>
       </View>
-
     </View>
   );
 }
@@ -382,19 +515,18 @@ export function DelegatorPage({ navigation }) {
   );
 }
 
-
 /* DEFAULT STYLES */
 const purchaseStyles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
-    backgroundColor: "#fff",
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
     // padding: 20,
     margin: 0,
   },
   top: {
-    flex: 0.40,
-    backgroundColor: "grey",
+    flex: 0.4,
+    backgroundColor: 'grey',
     borderWidth: 1,
     // borderTopLeftRadius: 20,
     // borderTopRightRadius: 20,
@@ -444,7 +576,6 @@ const purchaseStyles = StyleSheet.create({
     borderBottomRightRadius: 20,
   },
 
-
   baseText: {
     // fontSize: 14,
     textAlign: 'center',
@@ -457,17 +588,14 @@ const purchaseStyles = StyleSheet.create({
     justifyContent: 'flex-end',
     color: '#B4FF39',
   },
-
-
 });
-
 
 /* DEFAULT STYLES */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between",
-    backgroundColor: "#fff",
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
     padding: 20,
     margin: 10,
   },
