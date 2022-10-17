@@ -31,7 +31,8 @@ const Stack = createNativeStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} defaultScreenOptions={DelegatorPage}>
-      <Stack.Screen name="Purchase Page" component={PurchasePage} />
+      {/* <Stack.Screen name="Purchase" component={PurchasePage} /> */}
+      <Stack.Screen name="Checkout" component={CheckoutPage} />
       <Stack.Screen name="Delegator" component={DelegatorPage} />
       <Stack.Screen name="Login" component={LoginPage} />
       <Stack.Screen name="Map" component={MapPage} />
@@ -39,11 +40,118 @@ function MyStack() {
   );
 }
 
-/* INITIAL SIGN IN PAGE */
-function PurchasePage({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+/* Purchase Page - Where customer rents item */
+function CheckoutPage({ navigation }) {
+  const [cardnumber, setCardnumber] = useState('');
+  const [fullName, setFullname] = useState('');
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
+  const [cvv, setCvv] = useState('');
 
+  return (
+    <View style={checkoutStyles.container}>
+      <View style={checkoutStyles.top}>
+        <Image
+          style={{ resizeMode: 'stretch', height: '100%', width: '100%'}}
+          source={require('./assets/credit_card.jpg')}
+        />
+      </View>
+      <View style={checkoutStyles.middle}>
+        <TextInput
+          style={checkoutStyles.TextInput1}
+          placeholder="Card Number"
+          placeholderTextColor="#003f5c"
+          onChangeText={(cardnumber) => setCardnumber(cardnumber)}
+        />
+
+        <TextInput
+          style={checkoutStyles.TextInput2}
+          placeholder="Card Holder Name"
+          placeholderTextColor="#003f5c"
+          onChangeText={(fullName) => setFullname(fullName)}
+        />
+
+        <View style={{ flexDirection: 'row' }}>
+          <TextInput
+            style={{
+              flex: 1,
+              marginLeft: 10,
+              height: 50,
+              borderColor: '#474343',
+              borderWidth: 1,
+              borderRadius: 10,
+              textAlign: 'center',
+              fontSize: 20,
+            }}
+            placeholder="MM"
+            placeholderTextColor="#003f5c"
+            onChangeText={(month) => setMonth(month)}
+          />
+          <TextInput
+            style={{
+              flex: 1,
+              marginLeft: 10,
+              marginRight: 10,
+              height: 50,
+              borderColor: '#474343',
+              borderWidth: 1,
+              borderRadius: 10,
+              textAlign: 'center',
+              fontSize: 20,
+            }}
+            placeholder="YY"
+            placeholderTextColor="#003f5c"
+            onChangeText={(year) => setYear(year)}
+          />
+          <TextInput
+            style={{
+              flex: 1,
+              marginRight: 10,
+              height: 50,
+              borderColor: '#474343',
+              borderWidth: 1,
+              borderRadius: 10,
+              textAlign: 'center',
+              fontSize: 20,
+            }}
+            placeholder="CVV"
+            placeholderTextColor="#003f5c"
+            onChangeText={(cvv) => setCvv(cvv)}
+          />
+        </View>
+
+        <Text style={checkoutStyles.totalPrice}>
+          $ 28.55
+        </Text>
+      </View>
+
+      <View style={checkoutStyles.bottom}>
+        <View style={checkoutStyles.PayButton}>
+          <TouchableOpacity
+            style={styles.PayButton}
+            onPress={() => navigation.navigate('ConfirmScreen')}
+          >
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#000000',
+                fontSize: 26,
+                textAlign: 'left',
+                // fontWeight: 'bold',
+              }}
+            >
+              {' '}
+              Pay Now{' '}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+/* Purchase Page - Where customers see total price */
+function PurchasePage({ navigation }) {
   return (
     <View style={purchaseStyles.container}>
       <View style={purchaseStyles.top}>
@@ -515,7 +623,95 @@ export function DelegatorPage({ navigation }) {
   );
 }
 
-/* DEFAULT STYLES */
+const checkoutStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    // padding: 20,
+    margin: 0,
+    
+  },
+  top: {
+    flex: 0.50,
+    backgroundColor: 'grey',
+    // borderWidth: 1,
+    // paddingTop: 40,
+    // marginTop: 60,
+    marginHorizontal: 0,
+    // marginBottom: 60,
+    border: 'none',
+    
+  },
+  middle: {
+    flex: 0.30,
+    borderWidth: 1,
+  },
+
+  middle2: {
+    flex: 0.1,
+    // borderWidth: 1,
+  },
+
+  bottom: {
+    flex: 0.1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // backgroundColor: "pink",
+    borderWidth: 1,
+    marginHorizontal: 15,
+    marginBottom: 40,
+    borderRadius: 20,
+  },
+
+  PayButton: {
+    flex: 1,
+    backgroundColor: '#B4FF39',
+    color: '#000',
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderRadius: 20,
+  },
+
+  TextInput1: {
+    fontSize: 20,
+    marginTop: 15,
+    marginHorizontal: 15,
+    textAlign: 'center',
+    justifyContent: 'flex-end',
+    borderColor: '#474343',
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+
+  TextInput2: {
+    fontSize: 20,
+    margin: 15,
+    textAlign: 'center',
+    justifyContent: 'flex-end',
+    borderColor: '#474343',
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+
+  totalPrice: {
+    fontSize: 36,
+    textAlign: 'center',
+    justifyContent: 'flex-end',
+    color: '#B4FF39',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 20,
+  },
+
+
+});
+
+/* Purchase Page */
 const purchaseStyles = StyleSheet.create({
   container: {
     flex: 1,
