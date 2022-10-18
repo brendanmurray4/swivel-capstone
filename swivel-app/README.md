@@ -79,4 +79,4 @@ yarn lint:fix
 
 If you encounter any errors please fix them. Eslint integrates with VSCode and you will see all these errors in your editor directly without having to run this command. If you cannot see these errors, your configuration is not setup properly.
 
-
+For all future development uphold to the standard of creating new screens in respective folders and setting them to be exported as components as the other screens are. All navigation will be done through the central navigation .js file as well.
