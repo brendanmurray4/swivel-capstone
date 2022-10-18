@@ -12,9 +12,7 @@ const ConfirmEmailScreen = () => {
   const { control, handleSubmit, watch } = useForm({
     defaultValues: { username: route?.params?.username },
   });
-
   const username = watch('username');
-
   const navigation = useNavigation();
 
   const onConfirmPressed = async (data) => {
