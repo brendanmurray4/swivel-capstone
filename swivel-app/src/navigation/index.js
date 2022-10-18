@@ -7,17 +7,19 @@ import ConfirmEmailScreen from '../screens/ConfirmEmailScreen/ConfirmEmailScreen
 import MapScreen from '../screens/MapScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
+import CheckoutScreen from '../screens/CheckoutScreen';
+import PurchaseScreen from '../screens/PurchaseScreen';
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
   const [user, setUser] = useState(undefined);
 
   const checkUser = async () => {
-    try{
+    try {
       const authUser = await Auth.currentAuthenticatedUser({ bypassCache: true });
       setUser(authUser);
-    } catch(e) {
-      setUser(null)
+    } catch (e) {
+      setUser(null);
     }
   };
 
@@ -26,7 +28,7 @@ const Navigation = () => {
   }, []);
 
   useEffect(() => {
-    const listener = data => {
+    const listener = (data) => {
       if (data.payload.event === 'signIn' || data.payload.event === 'signOut') {
         checkUser();
       }
@@ -38,12 +40,16 @@ const Navigation = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {user ? (
-          <Stack.Screen name="MapScreen" component={MapScreen} />
+          <>
+            <Stack.Screen name="MapScreen" component={MapScreen} />
+            <Stack.Screen name="Purchase" component={PurchaseScreen}/>
+            <Stack.Screen name="Checkout" component={CheckoutScreen} />
+          </>
         ) : (
           <>
             <Stack.Screen name="SignIn" component={SignInScreen} />
-            <Stack.Screen name= "CreateAccount" component = {SignUpScreen} />
-            <Stack.Screen name="ConfirmEmail" component = {ConfirmEmailScreen} />
+            <Stack.Screen name="CreateAccount" component={SignUpScreen} />
+            <Stack.Screen name="ConfirmEmail" component={ConfirmEmailScreen} />
           </>
         )}
       </Stack.Navigator>
