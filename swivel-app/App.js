@@ -1,5 +1,4 @@
 import { Amplify } from 'aws-amplify';
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
