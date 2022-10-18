@@ -80,6 +80,7 @@ const SignInScreen = () => {
         <CustomButton
           text={loading ? 'Loading...' : 'Sign In'}
           onPress={handleSubmit(onSignInPress)}
+          color = "#66fc03"
         />
         <CustomButton text="Forgot password?" onPress={onSignUpPress} type="TERTIARY" />
         <CustomButton text="Create Account" onPress={onCreateAccountPress} type = "TERTIARY"/>
