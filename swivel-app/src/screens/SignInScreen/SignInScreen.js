@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  KeyboardAvoidingView
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 
@@ -48,7 +49,8 @@ const SignInScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
+    style={styles.container} >
       <ImageBackground
         source={require('../../../assets/temp2.jpg')}
         resizeMode="cover"
@@ -85,7 +87,7 @@ const SignInScreen = () => {
         <CustomButton text="Forgot password?" onPress={onSignUpPress} type="TERTIARY" />
         <CustomButton text="Create Account" onPress={onCreateAccountPress} type = "TERTIARY"/>
       </ImageBackground>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 /* DEFAULT STYLES */
