@@ -28,13 +28,20 @@ Install all of required dependencies
 yarn install
 ```
 
+Now that amplify has been added, you will have to go through a setup process for the amplify account to use authentication.
+- First run amplify configure in your current folder
+- Next sign in to the IAM account
+    - Account Alias: 107360558748
+    - Username: swivel-admin
+    - Password: swivel-admin1
+- Follow the steps in the console, set yourself a username. Select us-west1 as region
+- Once complete the app should run with auth
+
 To run the app locally, follow the instructions below. You will see a QRCode pop up which you will scan on your phone to preview the app.
 
 ```
-yarn start
+expo start
 
-
-yarn run v1.22.17
 $ expo start
 Starting project at /home/nafana/src/swivel/swivel-app
 Starting Metro Bundler
