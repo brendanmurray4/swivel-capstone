@@ -20,8 +20,8 @@ const CheckoutScreen = () => {
     <View style={checkoutStyles.container}>
       <View style={checkoutStyles.top}>
         <Image
-          style={{ resizeMode: 'contain', height: '100%', width: '100%' }}
-          source={require('../../../assets/swivel_logo.png')}
+          style={{ resizeMode: 'contain', height: '100%', width: '80%' }}
+          source={require('../../../assets/credit_card2.jpg')}
         />
       </View>
       <View style={checkoutStyles.middle}>
@@ -87,7 +87,6 @@ const CheckoutScreen = () => {
             onChangeText={(cvv) => setCvv(cvv)}
           />
         </View>
-
         <Text style={checkoutStyles.totalPrice}>$ 28.55</Text>
       </View>
 
@@ -106,8 +105,7 @@ const CheckoutScreen = () => {
                 // fontWeight: 'bold',
               }}
             >
-              {' '}
-              Pay Now{' '}
+              {' '}Pay Now{' '}
             </Text>
           </TouchableOpacity>
         </View>
@@ -125,22 +123,22 @@ const checkoutStyles = StyleSheet.create({
     margin: 0,
   },
   top: {
-    flex: 0.5,
-    backgroundColor: 'grey',
+    flex: 0.55,
+    backgroundColor: 'white',
+    // justifyContent: 'flex-end',
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     // borderWidth: 1,
     // paddingTop: 40,
     // marginTop: 60,
-    marginHorizontal: 0,
+    // marginHorizontal: 0,
     // marginBottom: 60,
     border: 'none',
   },
   middle: {
-    flex: 0.3,
-    borderWidth: 1,
-  },
-
-  middle2: {
-    flex: 0.1,
+    flex: 0.35,
     // borderWidth: 1,
   },
 
@@ -151,7 +149,7 @@ const checkoutStyles = StyleSheet.create({
     // backgroundColor: "pink",
     borderWidth: 1,
     marginHorizontal: 15,
-    marginBottom: 40,
+    marginBottom: '5%',
     borderRadius: 20,
   },
 
@@ -163,8 +161,6 @@ const checkoutStyles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 15,
-    paddingBottom: 15,
     borderRadius: 20,
   },
 
@@ -192,10 +188,11 @@ const checkoutStyles = StyleSheet.create({
   totalPrice: {
     fontSize: 36,
     textAlign: 'center',
+    textAlignVertical: 'bottom',
     justifyContent: 'flex-end',
     color: '#B4FF39',
     fontWeight: 'bold',
-    marginTop: 20,
+    marginTop: '15%',
   },
 });
 

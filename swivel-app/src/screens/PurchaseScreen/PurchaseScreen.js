@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {
-    Text,
-    View,
-    StyleSheet,
-    TouchableOpacity,
-    Image,
-    ScrollView,
-  } from 'react-native';
-import {useNavigation} from "@react-navigation/native"
+import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 const PurchaseScreen = () => {
-    const navigation = useNavigation()
+  const navigation = useNavigation();
   return (
     <View style={purchaseStyles.container}>
       <View style={purchaseStyles.top}>
@@ -38,10 +31,11 @@ const PurchaseScreen = () => {
         <Image
           style={{
             resizeMode: 'cover',
-            height: '100%',
+            height: '76%',
             width: '20%',
             aspectRatio: 0.75,
-            left: '2%',
+            left: '4%',
+            bottom: '5%',
           }}
           source={require('../../../assets/gps_icon.jpg')}
         />
@@ -53,16 +47,17 @@ const PurchaseScreen = () => {
             textAlign: 'center',
             position: 'absolute',
             left: '20%',
+            right: '5%',
             flexShrink: 1,
           }}
         >
           {' '}
-          Science Rd, Burnaby, BC, Canada{' '}
+          Science Road, Burnaby, BC, Canada{' '}
         </Text>
       </View>
       <View style={purchaseStyles.middle2}>
         <Image
-          style={{ resizeMode: 'cover', height: '100%', width: '20%'}}
+          style={{ resizeMode: 'cover', height: '80%', width: '20%', bottom: '5%' }}
           source={require('../../../assets/clock_icon.jpg')}
         />
         <Text
@@ -73,6 +68,7 @@ const PurchaseScreen = () => {
             textAlign: 'center',
             position: 'absolute',
             left: '20%',
+            right: '5%',
             flexShrink: 1,
             flexWrap: 'wrap',
           }}
@@ -83,12 +79,12 @@ const PurchaseScreen = () => {
 
       <View style={purchaseStyles.bottom}>
         <ScrollView>
-          <View style={purchaseStyles.bottom2}>
+          <View style={purchaseStyles.bottom_text}>
             <Text
               style={{
                 fontWeight: 'bold',
                 color: '#000000',
-                fontSize: 18,
+                fontSize: 22,
                 textAlign: 'left',
               }}
             >
@@ -99,7 +95,7 @@ const PurchaseScreen = () => {
               style={{
                 fontWeight: 'bold',
                 color: '#000000',
-                fontSize: 18,
+                fontSize: 22,
                 textAlign: 'right',
               }}
             >
@@ -107,12 +103,12 @@ const PurchaseScreen = () => {
               $ 24.01
             </Text>
           </View>
-          <View style={purchaseStyles.bottom2}>
+          <View style={purchaseStyles.bottom_text}>
             <Text
               style={{
                 fontWeight: 'bold',
                 color: '#BFC0BD',
-                fontSize: 18,
+                fontSize: 22,
                 textAlign: 'left',
               }}
             >
@@ -123,7 +119,7 @@ const PurchaseScreen = () => {
               style={{
                 fontWeight: 'bold',
                 color: '#BFC0BD',
-                fontSize: 18,
+                fontSize: 22,
                 textAlign: 'right',
               }}
             >
@@ -131,12 +127,12 @@ const PurchaseScreen = () => {
               $ 19.65
             </Text>
           </View>
-          <View style={purchaseStyles.bottom2}>
+          <View style={purchaseStyles.bottom_text}>
             <Text
               style={{
                 fontWeight: 'bold',
                 color: '#BFC0BD',
-                fontSize: 18,
+                fontSize: 22,
                 textAlign: 'left',
               }}
             >
@@ -147,7 +143,7 @@ const PurchaseScreen = () => {
               style={{
                 fontWeight: 'bold',
                 color: '#BFC0BD',
-                fontSize: 18,
+                fontSize: 22,
                 textAlign: 'right',
               }}
             >
@@ -158,22 +154,25 @@ const PurchaseScreen = () => {
         </ScrollView>
       </View>
 
-      <View style={purchaseStyles.confirmButton}>
+      <View style={purchaseStyles.bottom2}>
         <TouchableOpacity
           style={purchaseStyles.confirmButton}
           onPress={() => navigation.navigate('Checkout')}
         >
-          <Text
-            style={{
-              fontWeight: 'bold',
-              color: '#000000',
-              fontSize: 26,
-              textAlign: 'left',
-            }}
-          >
-            {' '}
-            Confirm{' '}
-          </Text>
+          <View style={purchaseStyles.confirmButton}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: '#300000',
+                fontSize: 26,
+                textAlign: 'left',
+                // fontWeight: 'bold',
+              }}
+            >
+              {' '}
+              Pay Now{' '}
+            </Text>
+          </View>
         </TouchableOpacity>
       </View>
     </View>
@@ -191,51 +190,64 @@ const purchaseStyles = StyleSheet.create({
   top: {
     flex: 0.4,
     backgroundColor: 'grey',
-    borderWidth: 1,
+    // borderWidth: 1,
     // borderTopLeftRadius: 20,
     // borderTopRightRadius: 20,
   },
   middle: {
+    
     flex: 0.1,
+    marginBottom: '2%',
     // backgroundColor: "beige",
-    borderWidth: 1,
+    // borderWidth: 1,
   },
+
   middle2: {
-    flex: 0.1,
+    flex: 0.1, // *2 since there are 2 using this
     // backgroundColor: "beige",
-    borderWidth: 1,
+    // borderWidth: 1,
   },
   bottom: {
-    flex: 0.25,
+    flex: 0.2,
     // flexDirection: 'row',
     // justifyContent: 'space-between',
     // backgroundColor: "pink",
-    borderWidth: 1,
+    // borderWidth: 1,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+    marginHorizontal: '3%',
+    // marginTop: '10%',
   },
-  bottom2: {
+  bottom_text: {
     // flex: 0.2,
     flexDirection: 'row',
     justifyContent: 'space-between',
     // backgroundColor: "pink",
-    borderWidth: 1,
+    // borderWidth: 1,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+
+  bottom2: {
+    flex: 0.1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // backgroundColor: "pink",
+    // borderWidth: 1,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
 
   confirmButton: {
-    flex: 0.05,
+    flex: 1,
     backgroundColor: '#B4FF39',
     color: '#000',
     textAlign: 'center',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 15,
-    paddingBottom: 15,
     // marginTop: 25,
-    marginBottom: 15,
+    // marginBottom: 15,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
@@ -253,4 +265,4 @@ const purchaseStyles = StyleSheet.create({
     color: '#B4FF39',
   },
 });
- export default PurchaseScreen;
+export default PurchaseScreen;
