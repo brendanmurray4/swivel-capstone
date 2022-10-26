@@ -35,7 +35,7 @@ Now that amplify has been added, you will have to go through a setup process for
     - Account Alias: 107360558748
     - Username: swivel-admin
     - Password: swivel-admin1
-- Follow the steps in the console, set yourself a username. Select us-west1 as region
+-Ctrl-C out of the console and run (`amplify pull --appId dgig2aaj3mb7m --envName staging`)
 - Once complete the app should run with auth
 
 To run the app locally, follow the instructions below. You will see a QRCode pop up which you will scan on your phone to preview the app.
