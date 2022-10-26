@@ -52,7 +52,7 @@ const PurchaseScreen = () => {
           }}
         >
           {' '}
-          Science Road, Burnaby, BC, Canada{' '}
+          Science Rd, Burnaby, BC, Canada{' '}
         </Text>
       </View>
       <View style={purchaseStyles.middle2}>
@@ -187,6 +187,7 @@ const purchaseStyles = StyleSheet.create({
     // padding: 20,
     margin: 0,
   },
+  
   top: {
     flex: 0.4,
     backgroundColor: 'grey',
