@@ -29,7 +29,8 @@ yarn install
 ```
 
 Now that amplify has been added, you will have to go through a setup process for the amplify account to use authentication.
-- First run amplify configure in your current folder
+- Run (`npm install -g @aws-amplify/cli`)
+- Run (`amplify configure`) in your current folder
 - Next sign in to the IAM account
     - Account Alias: 107360558748
     - Username: swivel-admin
