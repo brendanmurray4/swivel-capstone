@@ -45,7 +45,7 @@ const SignInScreen = () => {
   };
 
   const onSignUpPress = () => {
-    navigation.navigate('SignUp');
+    navigation.navigate('SignUpScreen');
   };
 
   return (

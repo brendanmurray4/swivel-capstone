@@ -9,6 +9,7 @@ import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import CheckoutScreen from '../screens/CheckoutScreen';
 import PurchaseScreen from '../screens/PurchaseScreen';
+import BikeSelectionScreen from '../screens/BikeSelectionScreen';
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
@@ -43,6 +44,7 @@ const Navigation = () => {
           <>
             <Stack.Screen name="MapScreen" component={MapScreen} />
             <Stack.Screen name="Purchase" component={PurchaseScreen}/>
+            <Stack.Screen name="BikeSelection" component={BikeSelectionScreen}/>
             <Stack.Screen name="Checkout" component={CheckoutScreen} />
           </>
         ) : (
