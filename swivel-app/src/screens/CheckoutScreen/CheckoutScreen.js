@@ -7,7 +7,9 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  ImageBackground,
 } from 'react-native';
+import { headerFooterStyles } from '../Header_Footer/HeaderFooter';
 
 const CheckoutScreen = () => {
   const [cardnumber, setCardnumber] = useState('');
@@ -18,98 +20,147 @@ const CheckoutScreen = () => {
   const navigation = useNavigation();
   return (
     <View style={checkoutStyles.container}>
-      <View style={checkoutStyles.top}>
-        <Image
-          style={{ resizeMode: 'contain', height: '100%', width: '80%' }}
-          source={require('../../../assets/credit_card2.jpg')}
-        />
-      </View>
-      <View style={checkoutStyles.middle}>
-        <TextInput
-          style={checkoutStyles.TextInput1}
-          placeholder="Card Number"
-          placeholderTextColor="#003f5c"
-          onChangeText={(cardnumber) => setCardnumber(cardnumber)}
-        />
-
-        <TextInput
-          style={checkoutStyles.TextInput2}
-          placeholder="Card Holder Name"
-          placeholderTextColor="#003f5c"
-          onChangeText={(fullName) => setFullname(fullName)}
-        />
-
-        <View style={{ flexDirection: 'row' }}>
-          <TextInput
-            style={{
-              flex: 1,
-              marginLeft: 10,
-              height: 50,
-              borderColor: '#474343',
-              borderWidth: 1,
-              borderRadius: 10,
-              textAlign: 'center',
-              fontSize: 20,
-            }}
-            placeholder="MM"
-            placeholderTextColor="#003f5c"
-            onChangeText={(month) => setMonth(month)}
-          />
-          <TextInput
-            style={{
-              flex: 1,
-              marginLeft: 10,
-              marginRight: 10,
-              height: 50,
-              borderColor: '#474343',
-              borderWidth: 1,
-              borderRadius: 10,
-              textAlign: 'center',
-              fontSize: 20,
-            }}
-            placeholder="YY"
-            placeholderTextColor="#003f5c"
-            onChangeText={(year) => setYear(year)}
-          />
-          <TextInput
-            style={{
-              flex: 1,
-              marginRight: 10,
-              height: 50,
-              borderColor: '#474343',
-              borderWidth: 1,
-              borderRadius: 10,
-              textAlign: 'center',
-              fontSize: 20,
-            }}
-            placeholder="CVV"
-            placeholderTextColor="#003f5c"
-            onChangeText={(cvv) => setCvv(cvv)}
-          />
-        </View>
-        <Text style={checkoutStyles.totalPrice}>$ 28.55</Text>
-      </View>
-
-      <View style={checkoutStyles.bottom}>
-        <View style={checkoutStyles.PayButton}>
+      <ImageBackground
+        style={{ flex: 1 }}
+        source={require('../../../assets/swivel_login_background.jpg')}
+      >
+        <View style={headerFooterStyles.header}>
           <TouchableOpacity
-            style={checkoutStyles.PayButton}
-            onPress={() => navigation.navigate('Purchase')}
+            style={headerFooterStyles.headerButtonSwivel}
+            onPress={() => navigation.navigate('MapScreen')}
           >
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: '#000000',
-                fontSize: 26,
-                textAlign: 'left',
-                // fontWeight: 'bold',
-              }}
-            >
-              {' '}Pay Now{' '}
-            </Text>
+            <Image
+              style={{ resizeMode: 'contain', height: '60%', width: '60%' }}
+              source={require('../../../assets/swivel_logo.png')}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={headerFooterStyles.headerButtonUser}
+            onPress={() => navigation.navigate('MapScreen')}
+          >
+            <Image
+              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
+              source={require('../../../assets/user_icon.jpg')}
+            />
           </TouchableOpacity>
         </View>
-      </View>
+        <View style={headerFooterStyles.body}>
+          <View style={checkoutStyles.top}>
+            <Image
+              style={{ resizeMode: 'contain', height: '100%', width: '80%' }}
+              source={require('../../../assets/credit_card2.jpg')}
+            />
+          </View>
+          <View style={checkoutStyles.middle}>
+            <TextInput
+              style={checkoutStyles.TextInput1}
+              placeholder="Card Number"
+              placeholderTextColor="#003f5c"
+              onChangeText={(cardnumber) => setCardnumber(cardnumber)}
+            />
+
+            <TextInput
+              style={checkoutStyles.TextInput2}
+              placeholder="Card Holder Name"
+              placeholderTextColor="#003f5c"
+              onChangeText={(fullName) => setFullname(fullName)}
+            />
+
+            <View style={{ flexDirection: 'row' }}>
+              <TextInput
+                style={{
+                  flex: 1,
+                  marginLeft: 10,
+                  height: 50,
+                  borderColor: '#474343',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  textAlign: 'center',
+                  fontSize: 20,
+                }}
+                placeholder="MM"
+                placeholderTextColor="#003f5c"
+                onChangeText={(month) => setMonth(month)}
+              />
+              <TextInput
+                style={{
+                  flex: 1,
+                  marginLeft: 10,
+                  marginRight: 10,
+                  height: 50,
+                  borderColor: '#474343',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  textAlign: 'center',
+                  fontSize: 20,
+                }}
+                placeholder="YY"
+                placeholderTextColor="#003f5c"
+                onChangeText={(year) => setYear(year)}
+              />
+              <TextInput
+                style={{
+                  flex: 1,
+                  marginRight: 10,
+                  height: 50,
+                  borderColor: '#474343',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  textAlign: 'center',
+                  fontSize: 20,
+                }}
+                placeholder="CVV"
+                placeholderTextColor="#003f5c"
+                onChangeText={(cvv) => setCvv(cvv)}
+              />
+            </View>
+            <Text style={checkoutStyles.totalPrice}>$ 28.55</Text>
+          </View>
+
+          <View style={checkoutStyles.bottom}>
+            <View style={checkoutStyles.PayButton}>
+              <TouchableOpacity
+                style={checkoutStyles.PayButton}
+                onPress={() => navigation.navigate('Purchase')}
+              >
+                <Text
+                  style={{
+                    fontWeight: 'bold',
+                    color: '#000000',
+                    fontSize: 26,
+                    textAlign: 'left',
+                    // fontWeight: 'bold',
+                  }}
+                >
+                  {' '}
+                  Pay Now{' '}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+        <View style={headerFooterStyles.footer}>
+          <TouchableOpacity
+            style={headerFooterStyles.footerButtonBike}
+            onPress={() => navigation.navigate('MapScreen')}
+          >
+            <Image
+              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
+              source={require('../../../assets/footer_bike_highlighted.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={headerFooterStyles.footerButtonGarage}
+            onPress={() => navigation.navigate('MapScreen')}
+          >
+            <Image
+              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
+              source={require('../../../assets/footer_garage.png')}
+            />
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
     </View>
   );
 };

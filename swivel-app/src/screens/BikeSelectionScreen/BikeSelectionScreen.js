@@ -7,8 +7,10 @@ import {
   Image,
   ScrollView,
   FlatList,
+  ImageBackground,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { headerFooterStyles } from '../Header_Footer/HeaderFooter';
 
 const defaultHeight = 125;
 const defaultWidth = 125;
@@ -17,66 +19,116 @@ const BikeSelectionScreen = () => {
   const navigation = useNavigation();
   return (
     <View style={bikeSelectionStyles.container}>
-      <View style={bikeSelectionStyles.top}>
-        <ScrollView style={bikeSelectionStyles.scrollView}>
-          <View style={bikeSelectionStyles.bikeBox}>
+      <ImageBackground
+        style={{ flex: 1 }}
+        source={require('../../../assets/swivel_login_background.jpg')}
+      >
+        <View style={headerFooterStyles.header}>
+          <TouchableOpacity
+            style={headerFooterStyles.headerButtonSwivel}
+            onPress={() => navigation.navigate('MapScreen')}
+          >
             <Image
-              style={bikeSelectionStyles.bikeImage}
-              source={require('../../../assets/swivel_bike.png')}
+              style={{ resizeMode: 'contain', height: '60%', width: '60%' }}
+              source={require('../../../assets/swivel_logo.png')}
             />
-            <View style={bikeSelectionStyles.bikeTextBox}>
-              <View style={bikeSelectionStyles.bikeTextBoxInnerTop}>
-                <Text style={bikeSelectionStyles.bikeTextTop}> Emonda SLR 9 eTap </Text>
-                <Text style={bikeSelectionStyles.bikeTextMiddle}>
-                  {' '}
-                  Science Rd, Burnaby, BC, Canada{' '}
-                </Text>
-              </View>
+          </TouchableOpacity>
 
-              <View style={bikeSelectionStyles.bikeTextBoxInnerBottom}>
-                <Image
-                  style={bikeSelectionStyles.bikeInnerImage}
-                  source={require('../../../assets/star.png')}
-                />
-                <Text style={bikeSelectionStyles.bikeTextBottom}>4.7/5</Text>
-                <Image
-                  style={bikeSelectionStyles.bikeInnerImage}
-                  source={require('../../../assets/refresh.png')}
-                />
-                <Text style={bikeSelectionStyles.bikeTextBottom}>56</Text>
-                <Image
-                  style={bikeSelectionStyles.bikeInnerImage}
-                  source={require('../../../assets/battery.png')}
-                />
-                <Text style={bikeSelectionStyles.bikeTextBottom}>4d 5h</Text>
-              </View>
+          <TouchableOpacity
+            style={headerFooterStyles.headerButtonUser}
+            onPress={() => navigation.navigate('MapScreen')}
+          >
+            <Image
+              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
+              source={require('../../../assets/user_icon.jpg')}
+            />
+          </TouchableOpacity>
+        </View>
 
-              <View style={bikeSelectionStyles.bottomButtonInner}>
-                <TouchableOpacity
-                  style={bikeSelectionStyles.button}
-                  onPress={() => navigation.navigate('Purchase')}
-                >
-                  <View style={bikeSelectionStyles.button}>
-                    <Text
-                      style={{
-                        fontWeight: 'bold',
-                        color: '#300000',
-                        fontSize: 22,
-                        textAlign: 'center',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                    >
+        <View style={headerFooterStyles.body}>
+          <View style={bikeSelectionStyles.top}>
+            <ScrollView style={bikeSelectionStyles.scrollView}>
+              <View style={bikeSelectionStyles.bikeBox}>
+                <Image
+                  style={bikeSelectionStyles.bikeImage}
+                  source={require('../../../assets/swivel_bike.png')}
+                />
+                <View style={bikeSelectionStyles.bikeTextBox}>
+                  <View style={bikeSelectionStyles.bikeTextBoxInnerTop}>
+                    <Text style={bikeSelectionStyles.bikeTextTop}> Emonda SLR 9 eTap </Text>
+                    <Text style={bikeSelectionStyles.bikeTextMiddle}>
                       {' '}
-                      Rent Bike{' '}
+                      Science Rd, Burnaby, BC, Canada{' '}
                     </Text>
                   </View>
-                </TouchableOpacity>
+
+                  <View style={bikeSelectionStyles.bikeTextBoxInnerBottom}>
+                    <Image
+                      style={bikeSelectionStyles.bikeInnerImage}
+                      source={require('../../../assets/star.png')}
+                    />
+                    <Text style={bikeSelectionStyles.bikeTextBottom}>4.7/5</Text>
+                    <Image
+                      style={bikeSelectionStyles.bikeInnerImage}
+                      source={require('../../../assets/refresh.png')}
+                    />
+                    <Text style={bikeSelectionStyles.bikeTextBottom}>56</Text>
+                    <Image
+                      style={bikeSelectionStyles.bikeInnerImage}
+                      source={require('../../../assets/battery.png')}
+                    />
+                    <Text style={bikeSelectionStyles.bikeTextBottom}>4d 5h</Text>
+                  </View>
+
+                  <View style={bikeSelectionStyles.bottomButtonInner}>
+                    <TouchableOpacity
+                      style={bikeSelectionStyles.button}
+                      onPress={() => navigation.navigate('Purchase')}
+                    >
+                      <View style={bikeSelectionStyles.button}>
+                        <Text
+                          style={{
+                            fontWeight: 'bold',
+                            color: '#300000',
+                            fontSize: 22,
+                            textAlign: 'center',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}
+                        >
+                          {' '}
+                          Rent Bike{' '}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </View>
-            </View>
+            </ScrollView>
           </View>
-        </ScrollView>
-      </View>
+        </View>
+
+        <View style={headerFooterStyles.footer}>
+          <TouchableOpacity
+            style={headerFooterStyles.footerButtonBike}
+            onPress={() => navigation.navigate('MapScreen')}
+          >
+            <Image
+              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
+              source={require('../../../assets/footer_bike_highlighted.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={headerFooterStyles.footerButtonGarage}
+            onPress={() => navigation.navigate('MapScreen')}
+          >
+            <Image
+              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
+              source={require('../../../assets/footer_garage.png')}
+            />
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
     </View>
   );
 };
@@ -158,7 +210,6 @@ const bikeSelectionStyles = StyleSheet.create({
     // borderWidth: 1,
     backgroundColor: 'white',
   },
-
 
   bottomButtonInner: {
     flex: 0.45,
