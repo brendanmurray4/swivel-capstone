@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 
@@ -49,8 +49,10 @@ const SignInScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
-    style={styles.container} >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
       <ImageBackground
         source={require('../../../assets/temp2.jpg')}
         resizeMode="cover"
@@ -61,7 +63,7 @@ const SignInScreen = () => {
           style={{ flex: 1, width: null, height: null, resizeMode: 'contain' }}
         />
         <CustomInput
-          name="Username"
+          name="email"
           placeholder="Username"
           control={control}
           rules={{ required: 'Username is required' }}
@@ -82,10 +84,10 @@ const SignInScreen = () => {
         <CustomButton
           text={loading ? 'Loading...' : 'Sign In'}
           onPress={handleSubmit(onSignInPress)}
-          color = "#66fc03"
+          color="#66fc03"
         />
         <CustomButton text="Forgot password?" onPress={onSignUpPress} type="TERTIARY" />
-        <CustomButton text="Create Account" onPress={onCreateAccountPress} type = "TERTIARY"/>
+        <CustomButton text="Create Account" onPress={onCreateAccountPress} type="TERTIARY" />
       </ImageBackground>
     </KeyboardAvoidingView>
   );
