@@ -17,6 +17,27 @@ const defaultWidth = 125;
 
 const BikeSelectionScreen = () => {
   const navigation = useNavigation();
+  var tempArray = [
+    {
+      bikeName: ['Emonda SLR 9 eTap'],
+      location: ['Science Rd, Burnaby, BC, Canada'],
+      rating: ['4.7/5'],
+      battery: ['56'],
+      time: ['4d 5h'],
+    },
+  ];
+  var tempArray2 = [
+    {
+      bikeName: ['Emonda SLR 9 eTap'],
+      location: ['Science Rd, Burnaby, BC, Canada'],
+      rating: ['4.7/5'],
+      battery: ['56'],
+      time: ['4d 5h'],
+    },
+  ];
+  // var tempArray23 = [{"bikeName": ["Emonda SLR 9 eTap"], "location": ["Science Rd, Burnaby, BC, Canada"], "rating": ["4.7/5"], "battery":["56"], "time":["4d 5h"]}]
+  var masterArray = [tempArray.bikeName, tempArray2.bikeName];
+  const keys = tempArray.map(({ bikeName }) => bikeName);
   return (
     <View style={bikeSelectionStyles.container}>
       <ImageBackground
