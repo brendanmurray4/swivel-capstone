@@ -61,8 +61,8 @@ const SignInScreen = () => {
           style={{ flex: 1, width: null, height: null, resizeMode: 'contain' }}
         />
         <CustomInput
-          name="email"
-          placeholder="Email"
+          name="Username"
+          placeholder="Username"
           control={control}
           rules={{ required: 'Username is required' }}
         />

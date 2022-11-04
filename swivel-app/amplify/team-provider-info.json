@@ -10,11 +10,6 @@
       "StackName": "amplify-swivelauth-staging-35246",
       "StackId": "arn:aws:cloudformation:us-west-2:107360558748:stack/amplify-swivelauth-staging-35246/d4b05cb0-4c3c-11ed-8528-0adae233fdeb",
       "AmplifyAppId": "dgig2aaj3mb7m"
-    },
-    "categories": {
-      "auth": {
-        "SwivelAuth": {}
-      }
     }
   }
 }
