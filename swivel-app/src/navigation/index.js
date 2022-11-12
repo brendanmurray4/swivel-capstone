@@ -1,15 +1,16 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Auth, Hub } from 'aws-amplify';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import BikeSelectionScreen from '../screens/BikeSelectionScreen';
+import CheckoutScreen from '../screens/CheckoutScreen';
 import ConfirmEmailScreen from '../screens/ConfirmEmailScreen/ConfirmEmailScreen';
 import MapScreen from '../screens/MapScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import PurchaseScreen from '../screens/PurchaseScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
-import CheckoutScreen from '../screens/CheckoutScreen';
-import PurchaseScreen from '../screens/PurchaseScreen';
-import BikeSelectionScreen from '../screens/BikeSelectionScreen';
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
@@ -42,10 +43,11 @@ const Navigation = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {user ? (
           <>
-            <Stack.Screen name="MapScreen" component={MapScreen} />
-            <Stack.Screen name="Purchase" component={PurchaseScreen}/>
-            <Stack.Screen name="BikeSelection" component={BikeSelectionScreen}/>
+            <Stack.Screen name="Map" component={MapScreen} />
+            <Stack.Screen name="Purchase" component={PurchaseScreen} />
+            <Stack.Screen name="BikeSelection" component={BikeSelectionScreen} />
             <Stack.Screen name="Checkout" component={CheckoutScreen} />
+            <Stack.Screen name="Profile" component={ProfileScreen} />
           </>
         ) : (
           <>

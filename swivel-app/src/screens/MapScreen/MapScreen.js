@@ -132,7 +132,7 @@ const MapScreen = () => {
         <View style={headerFooterStyles.header}>
           <TouchableOpacity
             style={headerFooterStyles.headerButtonSwivel}
-            onPress={() => navigation.navigate('MapScreen')}
+            onPress={() => navigation.navigate('Map')}
           >
             <Image
               style={{ resizeMode: 'contain', height: '60%', width: '60%' }}
@@ -142,7 +142,7 @@ const MapScreen = () => {
 
           <TouchableOpacity
             style={headerFooterStyles.headerButtonUser}
-            onPress={() => navigation.navigate('MapScreen')}
+            onPress={() => navigation.navigate('Profile')}
           >
             <Image
               style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
@@ -250,7 +250,7 @@ const MapScreen = () => {
         <View style={headerFooterStyles.footer}>
           <TouchableOpacity
             style={headerFooterStyles.footerButtonBike}
-            onPress={() => navigation.navigate('MapScreen')}
+            onPress={() => navigation.navigate('Map')}
           >
             <Image
               style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
@@ -259,7 +259,7 @@ const MapScreen = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={headerFooterStyles.footerButtonGarage}
-            onPress={() => navigation.navigate('MapScreen')}
+            onPress={() => navigation.navigate('Map')}
           >
             <Image
               style={{ resizeMode: 'contain', height: '60%', width: '50%' }}

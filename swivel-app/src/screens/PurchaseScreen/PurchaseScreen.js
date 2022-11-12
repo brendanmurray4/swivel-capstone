@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
   Text,
@@ -8,7 +9,7 @@ import {
   ScrollView,
   ImageBackground,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+
 import { headerFooterStyles } from '../Header_Footer/HeaderFooter';
 
 const PurchaseScreen = () => {
@@ -22,7 +23,7 @@ const PurchaseScreen = () => {
         <View style={headerFooterStyles.header}>
           <TouchableOpacity
             style={headerFooterStyles.headerButtonSwivel}
-            onPress={() => navigation.navigate('MapScreen')}
+            onPress={() => navigation.navigate('Map')}
           >
             <Image
               style={{ resizeMode: 'contain', height: '60%', width: '60%' }}
@@ -32,7 +33,7 @@ const PurchaseScreen = () => {
 
           <TouchableOpacity
             style={headerFooterStyles.headerButtonUser}
-            onPress={() => navigation.navigate('MapScreen')}
+            onPress={() => navigation.navigate('Profile')}
           >
             <Image
               style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
@@ -119,76 +120,16 @@ const PurchaseScreen = () => {
           <View style={purchaseStyles.bottom}>
             <ScrollView>
               <View style={purchaseStyles.bottom_text}>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    color: '#000000',
-                    fontSize: 22,
-                    textAlign: 'left',
-                  }}
-                >
-                  {' '}
-                  Payment Summary
-                </Text>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    color: '#000000',
-                    fontSize: 22,
-                    textAlign: 'right',
-                  }}
-                >
-                  {' '}
-                  $ 24.01
-                </Text>
+                <Text style={purchaseStyles.blackTextStyleLeft}> Payment Summary</Text>
+                <Text style={purchaseStyles.blackTextStyleRight}> $ 24.01</Text>
               </View>
               <View style={purchaseStyles.bottom_text}>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    color: '#BFC0BD',
-                    fontSize: 22,
-                    textAlign: 'left',
-                  }}
-                >
-                  {' '}
-                  Hourly Cost
-                </Text>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    color: '#BFC0BD',
-                    fontSize: 22,
-                    textAlign: 'right',
-                  }}
-                >
-                  {' '}
-                  $ 19.65
-                </Text>
+                <Text style={purchaseStyles.greyTextStyleLeft}> Hourly Cost</Text>
+                <Text style={purchaseStyles.greyTextStyleRight}> $ 19.65</Text>
               </View>
               <View style={purchaseStyles.bottom_text}>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    color: '#BFC0BD',
-                    fontSize: 22,
-                    textAlign: 'left',
-                  }}
-                >
-                  {' '}
-                  GST + PST
-                </Text>
-                <Text
-                  style={{
-                    fontWeight: 'bold',
-                    color: '#BFC0BD',
-                    fontSize: 22,
-                    textAlign: 'right',
-                  }}
-                >
-                  {' '}
-                  $ 2.36
-                </Text>
+                <Text style={purchaseStyles.greyTextStyleLeft}> GST + PST</Text>
+                <Text style={purchaseStyles.greyTextStyleRight}> $ 2.36</Text>
               </View>
             </ScrollView>
           </View>
@@ -314,6 +255,30 @@ const purchaseStyles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'flex-end',
     color: '#B4FF39',
+  },
+  greyTextStyleLeft: {
+    fontWeight: 'bold',
+    color: '#BFC0BD',
+    fontSize: 22,
+    textAlign: 'left',
+  },
+  greyTextStyleRight: {
+    fontWeight: 'bold',
+    color: '#BFC0BD',
+    fontSize: 22,
+    textAlign: 'left',
+  },
+  blackTextStyleLeft: {
+    fontWeight: 'bold',
+    color: '#000000',
+    fontSize: 22,
+    textAlign: 'left',
+  },
+  blackTextStyleRight: {
+    fontWeight: 'bold',
+    color: '#000000',
+    fontSize: 22,
+    textAlign: 'left',
   },
 });
 

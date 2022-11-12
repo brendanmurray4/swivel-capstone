@@ -47,7 +47,7 @@ const BikeSelectionScreen = () => {
         <View style={headerFooterStyles.header}>
           <TouchableOpacity
             style={headerFooterStyles.headerButtonSwivel}
-            onPress={() => navigation.navigate('MapScreen')}
+            onPress={() => navigation.navigate('Map')}
           >
             <Image
               style={{ resizeMode: 'contain', height: '60%', width: '60%' }}
@@ -57,7 +57,7 @@ const BikeSelectionScreen = () => {
 
           <TouchableOpacity
             style={headerFooterStyles.headerButtonUser}
-            onPress={() => navigation.navigate('MapScreen')}
+            onPress={() => navigation.navigate('Profile')}
           >
             <Image
               style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
