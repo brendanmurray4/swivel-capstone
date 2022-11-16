@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
+import { Auth } from 'aws-amplify';
 import {
   Text,
   View,
@@ -11,6 +12,10 @@ import {
 } from 'react-native';
 
 import { headerFooterStyles } from '../Header_Footer/HeaderFooter';
+
+const signOut = () => {
+  Auth.signOut();
+};
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -43,10 +48,11 @@ const ProfileScreen = () => {
         </View>
 
         <View style={headerFooterStyles.body}>
+          
           <View style={profileStyles.top}>
             <Image
-              style={{ resizeMode: 'cover', height: '100%', width: '50%', borderRadius: 200, alignSelf: 'center' }}
-              source={require('../../../assets/swivel_bike.png')}
+              style={{ resizeMode: 'cover', height: '100%', width: '50%', borderRadius: 200, alignSelf: 'center'}}
+              source={require('../../../assets/p_user_selfie.png')}
             />
           </View>
 
@@ -58,8 +64,8 @@ const ProfileScreen = () => {
             <View style={profileStyles.horizontalView}>
               <View style={profileStyles.middleLeft}>
                 <Image
-                  style={{ resizeMode: 'cover', height: '100%', width: '30%' }}
-                  source={require('../../../assets/clock_icon.jpg')}
+                  style={profileStyles.defaultIconStyle}
+                  source={require('../../../assets/p_profile.png')}
                 />
               </View>
               <View style={profileStyles.middleRight}>
@@ -76,8 +82,8 @@ const ProfileScreen = () => {
             <View style={profileStyles.horizontalView}>
               <View style={profileStyles.middleLeft}>
                 <Image
-                  style={{ resizeMode: 'cover', height: '100%', width: '30%' }}
-                  source={require('../../../assets/clock_icon.jpg')}
+                  style={profileStyles.defaultIconStyle}
+                  source={require('../../../assets/p_notifications.png')}
                 />
               </View>
               <View style={profileStyles.middleRight}>
@@ -95,8 +101,8 @@ const ProfileScreen = () => {
             <View style={profileStyles.horizontalView}>
               <View style={profileStyles.middleLeft}>
                 <Image
-                  style={{ resizeMode: 'cover', height: '100%', width: '30%' }}
-                  source={require('../../../assets/clock_icon.jpg')}
+                  style={profileStyles.defaultIconStyle}
+                  source={require('../../../assets/p_settings.png')}
                 />
               </View>
               <View style={profileStyles.middleRight}>
@@ -114,8 +120,8 @@ const ProfileScreen = () => {
             <View style={profileStyles.horizontalView}>
               <View style={profileStyles.middleLeft}>
                 <Image
-                  style={{ resizeMode: 'cover', height: '100%', width: '30%' }}
-                  source={require('../../../assets/clock_icon.jpg')}
+                  style={profileStyles.defaultIconStyle}
+                  source={require('../../../assets/p_support.png')}
                 />
               </View>
               <View style={profileStyles.middleRight}>
@@ -132,14 +138,14 @@ const ProfileScreen = () => {
             <View style={profileStyles.horizontalView}>
               <View style={profileStyles.middleLeft}>
                 <Image
-                  style={{ resizeMode: 'cover', height: '100%', width: '30%' }}
-                  source={require('../../../assets/clock_icon.jpg')}
+                  style={profileStyles.defaultIconStyle}
+                  source={require('../../../assets/p_logout.png')}
                 />
               </View>
               <View style={profileStyles.middleRight}>
                 <TouchableOpacity
                   style={profileStyles.baseButton}
-                  onPress={() => navigation.navigate('Checkout')}
+                  onPress={() => navigation.navigate(signOut)}
                 >
                   <View style={profileStyles.baseButton}>
                     <Text style={profileStyles.baseButtonText}> Logout </Text>
@@ -179,16 +185,17 @@ const profileStyles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: '#000',
+    // backgroundColor: '#000',
   },
   top: {
     flex: 0.3,
-    backgroundColor: 'grey',
+    // backgroundColor: 'black',
     borderWidth: 1,
+    paddingBottom: '2%',
   },
   lowerTop: {
     flex: 0.1,
-    backgroundColor: 'pink',
+    backgroundColor: 'white',
     borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -206,11 +213,11 @@ const profileStyles = StyleSheet.create({
 
   topText: {
     fontWeight: 'bold',
-    color: '#af9',
-    fontSize: 22,
+    // color: '#af9',
+    fontSize: 32,
     textAlign: 'center',
     justifyContent: 'center',
-    bottom: '10%',
+    // bottom: '10%',
   },
 
   horizontalView: {
@@ -221,15 +228,15 @@ const profileStyles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   middleLeft: {
-    flex: 0.3,
-    backgroundColor: 'purple',
-    borderWidth: 1,
+    flex: 0.4,
+    backgroundColor: 'white',
+    // borderWidth: 1,
     alignItems: 'center',
   },
   middleRight: {
-    flex: 0.7,
+    flex: 0.6,
     backgroundColor: 'teal',
-    borderWidth: 1,
+    // borderWidth: 1,
     justifyContent: 'center',
   },
 
@@ -237,7 +244,7 @@ const profileStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#af9',
     fontSize: 22,
-    textAlign: 'left',
+    textAlign: 'middle',
   },
   baseButton: {
     flex: 1,
@@ -251,6 +258,13 @@ const profileStyles = StyleSheet.create({
     color: '#BFC0BD',
     fontSize: 26,
     textAlign: 'left',
+  },
+  defaultIconStyle: {
+    resizeMode: 'cover', 
+    height: '80%', 
+    width: '45%',
+    top: '10%',
+    bottom: '1%',
   },
 });
 

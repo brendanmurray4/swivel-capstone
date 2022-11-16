@@ -43,6 +43,7 @@ const PurchaseScreen = () => {
         </View>
 
         <View style={headerFooterStyles.body}>
+          <View style={purchaseStyles.backgroundColor}>
           <View style={purchaseStyles.top}>
             <Image
               style={{ resizeMode: 'cover', height: '100%', width: '100%' }}
@@ -154,6 +155,7 @@ const PurchaseScreen = () => {
                 </Text>
               </View>
             </TouchableOpacity>
+          </View>
           </View>
         </View>
 
@@ -279,6 +281,10 @@ const purchaseStyles = StyleSheet.create({
     color: '#000000',
     fontSize: 22,
     textAlign: 'left',
+  },
+  backgroundColor: {
+    flex: 1,
+    backgroundColor: "white",
   },
 });
 

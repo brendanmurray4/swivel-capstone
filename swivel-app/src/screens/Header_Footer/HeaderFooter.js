@@ -6,7 +6,7 @@ export const headerFooterStyles = StyleSheet.create({
     flex: 0.1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#5dc00',
+    // backgroundColor: '#5dc00',
     // alignItems: 'center',
     borderWidth: 1,
   },
@@ -32,7 +32,7 @@ export const headerFooterStyles = StyleSheet.create({
   footer: {
     flex: 0.1,
     flexDirection: 'row',
-    backgroundColor: '#5dc00',
+    // backgroundColor: '#5dc00',
     borderWidth: 1,
   },
   footerButtonBike: {
