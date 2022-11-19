@@ -44,118 +44,123 @@ const PurchaseScreen = () => {
 
         <View style={headerFooterStyles.body}>
           <View style={purchaseStyles.backgroundColor}>
-          <View style={purchaseStyles.top}>
-            <Image
-              style={{ resizeMode: 'cover', height: '100%', width: '100%' }}
-              source={require('../../../assets/swivel_bike.png')}
-            />
-          </View>
+            <View style={purchaseStyles.top}>
+              <Image
+                style={{ resizeMode: 'cover', height: '100%', width: '100%' }}
+                source={require('../../../assets/swivel_bike.png')}
+              />
+            </View>
 
-          <View style={purchaseStyles.middle}>
-            <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 26 }}>
-              {' '}
-              Emonda SLR 9 eTap
-            </Text>
-            <Text style={purchaseStyles.priceText}>
-              {' '}
-              $ 6.55
-              <Text
-                style={{ fontWeight: 'bold', color: '#BFC0BD', fontSize: 14, textAlign: 'center' }}
-              >
+            <View style={purchaseStyles.middle}>
+              <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 26 }}>
                 {' '}
-                /Hour
+                Emonda SLR 9 eTap
               </Text>
-            </Text>
-          </View>
-
-          <View style={purchaseStyles.middle2}>
-            <Image
-              style={{
-                resizeMode: 'cover',
-                height: '76%',
-                width: '20%',
-                aspectRatio: 0.75,
-                left: '4%',
-                bottom: '5%',
-              }}
-              source={require('../../../assets/gps_icon.jpg')}
-            />
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: '#BFC0BD',
-                fontSize: 22,
-                textAlign: 'center',
-                position: 'absolute',
-                left: '20%',
-                right: '5%',
-                flexShrink: 1,
-              }}
-            >
-              {' '}
-              Science Rd, Burnaby, BC, Canada{' '}
-            </Text>
-          </View>
-          <View style={purchaseStyles.middle2}>
-            <Image
-              style={{ resizeMode: 'cover', height: '80%', width: '20%', bottom: '5%' }}
-              source={require('../../../assets/clock_icon.jpg')}
-            />
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: '#BFC0BD',
-                fontSize: 22,
-                textAlign: 'center',
-                position: 'absolute',
-                left: '20%',
-                right: '5%',
-                flexShrink: 1,
-                flexWrap: 'wrap',
-              }}
-            >
-              Sept 20th, 8:00 AM to Sept 20th, 11:00 AM{' '}
-            </Text>
-          </View>
-
-          <View style={purchaseStyles.bottom}>
-            <ScrollView>
-              <View style={purchaseStyles.bottom_text}>
-                <Text style={purchaseStyles.blackTextStyleLeft}> Payment Summary</Text>
-                <Text style={purchaseStyles.blackTextStyleRight}> $ 24.01</Text>
-              </View>
-              <View style={purchaseStyles.bottom_text}>
-                <Text style={purchaseStyles.greyTextStyleLeft}> Hourly Cost</Text>
-                <Text style={purchaseStyles.greyTextStyleRight}> $ 19.65</Text>
-              </View>
-              <View style={purchaseStyles.bottom_text}>
-                <Text style={purchaseStyles.greyTextStyleLeft}> GST + PST</Text>
-                <Text style={purchaseStyles.greyTextStyleRight}> $ 2.36</Text>
-              </View>
-            </ScrollView>
-          </View>
-
-          <View style={purchaseStyles.bottom2}>
-            <TouchableOpacity
-              style={purchaseStyles.confirmButton}
-              onPress={() => navigation.navigate('Checkout')}
-            >
-              <View style={purchaseStyles.confirmButton}>
+              <Text style={purchaseStyles.priceText}>
+                {' '}
+                $ 6.55
                 <Text
                   style={{
                     fontWeight: 'bold',
-                    color: '#300000',
-                    fontSize: 26,
-                    textAlign: 'left',
-                    // fontWeight: 'bold',
+                    color: '#BFC0BD',
+                    fontSize: 14,
+                    textAlign: 'center',
                   }}
                 >
                   {' '}
-                  Pay Now{' '}
+                  /Hour
                 </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+              </Text>
+            </View>
+
+            <View style={purchaseStyles.middle2}>
+              <Image
+                style={{
+                  resizeMode: 'cover',
+                  height: '76%',
+                  width: '20%',
+                  aspectRatio: 0.75,
+                  left: '4%',
+                  bottom: '5%',
+                }}
+                source={require('../../../assets/gps_icon.jpg')}
+              />
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  color: '#BFC0BD',
+                  fontSize: 22,
+                  textAlign: 'center',
+                  position: 'absolute',
+                  left: '20%',
+                  right: '5%',
+                  flexShrink: 1,
+                }}
+              >
+                {' '}
+                Science Rd, Burnaby, BC, Canada{' '}
+              </Text>
+            </View>
+            <View style={purchaseStyles.middle2}>
+              <Image
+                style={{ resizeMode: 'cover', height: '80%', width: '20%', bottom: '5%' }}
+                source={require('../../../assets/clock_icon.jpg')}
+              />
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  color: '#BFC0BD',
+                  fontSize: 22,
+                  textAlign: 'center',
+                  position: 'absolute',
+                  left: '20%',
+                  right: '5%',
+                  flexShrink: 1,
+                  flexWrap: 'wrap',
+                }}
+              >
+                Sept 20th, 8:00 AM to Sept 20th, 11:00 AM{' '}
+              </Text>
+            </View>
+
+            <View style={purchaseStyles.bottom}>
+              <ScrollView>
+                <View style={purchaseStyles.bottom_text}>
+                  <Text style={purchaseStyles.blackTextStyleLeft}> Payment Summary</Text>
+                  <Text style={purchaseStyles.blackTextStyleRight}> $ 24.01</Text>
+                </View>
+                <View style={purchaseStyles.bottom_text}>
+                  <Text style={purchaseStyles.greyTextStyleLeft}> Hourly Cost</Text>
+                  <Text style={purchaseStyles.greyTextStyleRight}> $ 19.65</Text>
+                </View>
+                <View style={purchaseStyles.bottom_text}>
+                  <Text style={purchaseStyles.greyTextStyleLeft}> GST + PST</Text>
+                  <Text style={purchaseStyles.greyTextStyleRight}> $ 2.36</Text>
+                </View>
+              </ScrollView>
+            </View>
+
+            <View style={purchaseStyles.bottom2}>
+              <TouchableOpacity
+                style={purchaseStyles.confirmButton}
+                onPress={() => navigation.navigate('Checkout')}
+              >
+                <View style={purchaseStyles.confirmButton}>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      color: '#300000',
+                      fontSize: 26,
+                      textAlign: 'left',
+                      // fontWeight: 'bold',
+                    }}
+                  >
+                    {' '}
+                    Pay Now{' '}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
 
@@ -284,7 +289,7 @@ const purchaseStyles = StyleSheet.create({
   },
   backgroundColor: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
 });
 

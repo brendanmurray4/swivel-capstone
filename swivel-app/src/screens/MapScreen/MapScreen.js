@@ -21,7 +21,7 @@ const MapScreen = () => {
   useEffect(() => {
     const updateInterval = setInterval(() => {
       fetch('http://iot.swivel.bike/telemetry/1')
-        // .then((resp) => resp.json())
+        // .then((resp) => resp.json()) // PLEASE UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         .then((resp) => {
           setTelemetry(resp.data);
         })
@@ -30,7 +30,7 @@ const MapScreen = () => {
         });
 
       fetch('http://iot.swivel.bike/control/1')
-        // .then((resp) => resp.json())
+        // .then((resp) => resp.json()) // PLEASE UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         .then((resp) => {
           setTasks(resp.data);
         })
