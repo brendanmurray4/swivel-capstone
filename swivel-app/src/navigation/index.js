@@ -4,13 +4,15 @@ import { Auth, Hub } from 'aws-amplify';
 import React, { useState, useEffect } from 'react';
 
 import BikeSelectionScreen from '../screens/BikeSelectionScreen';
-import CheckoutScreen from '../screens/CheckoutScreen';
 import ConfirmEmailScreen from '../screens/ConfirmEmailScreen/ConfirmEmailScreen';
+import CurrentBikeScreen from '../screens/CurrentBikeScreen';
+import GarageScreen from '../screens/GarageScreen';
 import MapScreen from '../screens/MapScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import PurchaseScreen from '../screens/PurchaseScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
+import VisaScreen from '../screens/VisaScreen';
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
@@ -46,8 +48,10 @@ const Navigation = () => {
             <Stack.Screen name="Map" component={MapScreen} />
             <Stack.Screen name="Purchase" component={PurchaseScreen} />
             <Stack.Screen name="BikeSelection" component={BikeSelectionScreen} />
-            <Stack.Screen name="Checkout" component={CheckoutScreen} />
+            <Stack.Screen name="Visa" component={VisaScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="Garage" component={GarageScreen} />
+            <Stack.Screen name="CurrentBike" component={CurrentBikeScreen} />
           </>
         ) : (
           <>

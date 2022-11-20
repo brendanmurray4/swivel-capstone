@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, route, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
   Text,
@@ -10,55 +10,40 @@ import {
   ImageBackground,
 } from 'react-native';
 
-import { headerFooterStyles } from '../Header_Footer/HeaderFooter';
+import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 
-const PurchaseScreen = () => {
+const PurchaseScreen = ({ route }) => {
   const navigation = useNavigation();
+  // const route = useRoute();
+  const { image, name, location, rating, price, time } = route.params;
+  let totalHourly = 0,
+    numHours = 3,
+    tax = 0,
+    totalPrice = 0;
+  totalHourly = numHours * price;
+  tax = totalHourly * 0.12;
+  totalPrice = totalHourly + tax;
   return (
     <View style={purchaseStyles.container}>
       <ImageBackground
         style={{ flex: 1 }}
         source={require('../../../assets/swivel_login_background.jpg')}
       >
-        <View style={headerFooterStyles.header}>
-          <TouchableOpacity
-            style={headerFooterStyles.headerButtonSwivel}
-            onPress={() => navigation.navigate('Map')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '60%' }}
-              source={require('../../../assets/swivel_logo.png')}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={headerFooterStyles.headerButtonUser}
-            onPress={() => navigation.navigate('Profile')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
-              source={require('../../../assets/user_icon.jpg')}
-            />
-          </TouchableOpacity>
-        </View>
+        <View style={headerFooterStyles.header}>{generateHeader()}</View>
 
         <View style={headerFooterStyles.body}>
           <View style={purchaseStyles.backgroundColor}>
             <View style={purchaseStyles.top}>
               <Image
                 style={{ resizeMode: 'cover', height: '100%', width: '100%' }}
-                source={require('../../../assets/swivel_bike.png')}
+                source={image}
               />
             </View>
 
             <View style={purchaseStyles.middle}>
-              <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 26 }}>
-                {' '}
-                Emonda SLR 9 eTap
-              </Text>
-              <Text style={purchaseStyles.priceText}>
-                {' '}
-                $ 6.55
+              <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 26 }}>{name}</Text>
+              <Text style={purchaseStyles.priceText}> {'$ '}
+                {price}
                 <Text
                   style={{
                     fontWeight: 'bold',
@@ -97,8 +82,7 @@ const PurchaseScreen = () => {
                   flexShrink: 1,
                 }}
               >
-                {' '}
-                Science Rd, Burnaby, BC, Canada{' '}
+                {location}
               </Text>
             </View>
             <View style={purchaseStyles.middle2}>
@@ -127,15 +111,15 @@ const PurchaseScreen = () => {
               <ScrollView>
                 <View style={purchaseStyles.bottom_text}>
                   <Text style={purchaseStyles.blackTextStyleLeft}> Payment Summary</Text>
-                  <Text style={purchaseStyles.blackTextStyleRight}> $ 24.01</Text>
+                  <Text style={purchaseStyles.blackTextStyleRight}> $ {totalPrice.toFixed(2)}</Text>
                 </View>
                 <View style={purchaseStyles.bottom_text}>
                   <Text style={purchaseStyles.greyTextStyleLeft}> Hourly Cost</Text>
-                  <Text style={purchaseStyles.greyTextStyleRight}> $ 19.65</Text>
+                  <Text style={purchaseStyles.greyTextStyleRight}> $ {totalHourly.toFixed(2)}</Text>
                 </View>
                 <View style={purchaseStyles.bottom_text}>
                   <Text style={purchaseStyles.greyTextStyleLeft}> GST + PST</Text>
-                  <Text style={purchaseStyles.greyTextStyleRight}> $ 2.36</Text>
+                  <Text style={purchaseStyles.greyTextStyleRight}> $ {tax.toFixed(2)}</Text>
                 </View>
               </ScrollView>
             </View>
@@ -143,7 +127,7 @@ const PurchaseScreen = () => {
             <View style={purchaseStyles.bottom2}>
               <TouchableOpacity
                 style={purchaseStyles.confirmButton}
-                onPress={() => navigation.navigate('Checkout')}
+                onPress={() => navigation.navigate('Visa')}
               >
                 <View style={purchaseStyles.confirmButton}>
                   <Text
@@ -164,26 +148,7 @@ const PurchaseScreen = () => {
           </View>
         </View>
 
-        <View style={headerFooterStyles.footer}>
-          <TouchableOpacity
-            style={headerFooterStyles.footerButtonBike}
-            onPress={() => navigation.navigate('MapScreen')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
-              source={require('../../../assets/footer_bike_highlighted.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={headerFooterStyles.footerButtonGarage}
-            onPress={() => navigation.navigate('MapScreen')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
-              source={require('../../../assets/footer_garage.png')}
-            />
-          </TouchableOpacity>
-        </View>
+        <View style={headerFooterStyles.footer}>{generateFooter()}</View>
       </ImageBackground>
     </View>
   );
@@ -259,6 +224,7 @@ const purchaseStyles = StyleSheet.create({
 
   priceText: {
     fontSize: 26,
+    fontWeight: 'bold',
     textAlign: 'center',
     justifyContent: 'flex-end',
     color: '#B4FF39',

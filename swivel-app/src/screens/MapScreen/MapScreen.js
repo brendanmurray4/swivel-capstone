@@ -4,7 +4,8 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 import { Auth } from 'aws-amplify';
 import CustomButton from '../../components/CustomButton';
-import { headerFooterStyles } from '../Header_Footer/HeaderFooter';
+import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
+
 
 // Page to unlock delegator
 const MapScreen = () => {
@@ -129,27 +130,7 @@ const MapScreen = () => {
         style={{ flex: 1 }}
         source={require('../../../assets/swivel_login_background.jpg')}
       >
-        <View style={headerFooterStyles.header}>
-          <TouchableOpacity
-            style={headerFooterStyles.headerButtonSwivel}
-            onPress={() => navigation.navigate('Map')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '60%' }}
-              source={require('../../../assets/swivel_logo.png')}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={headerFooterStyles.headerButtonUser}
-            onPress={() => navigation.navigate('Profile')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
-              source={require('../../../assets/user_icon.jpg')}
-            />
-          </TouchableOpacity>
-        </View>
+        <View style={headerFooterStyles.header}>{generateHeader()}</View>
         <View style={headerFooterStyles.body}>
           <Text
             onPress={signOut}
@@ -247,26 +228,7 @@ const MapScreen = () => {
             </View>
           </View>
         </View>
-        <View style={headerFooterStyles.footer}>
-          <TouchableOpacity
-            style={headerFooterStyles.footerButtonBike}
-            onPress={() => navigation.navigate('Map')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
-              source={require('../../../assets/footer_bike_highlighted.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={headerFooterStyles.footerButtonGarage}
-            onPress={() => navigation.navigate('Map')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
-              source={require('../../../assets/footer_garage.png')}
-            />
-          </TouchableOpacity>
-        </View>
+        <View style={headerFooterStyles.footer}>{generateFooter()}</View>
       </ImageBackground>
     </View>
   );

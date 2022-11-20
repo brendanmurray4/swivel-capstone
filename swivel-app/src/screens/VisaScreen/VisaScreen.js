@@ -10,9 +10,9 @@ import {
   ImageBackground,
 } from 'react-native';
 
-import { headerFooterStyles } from '../Header_Footer/HeaderFooter';
+import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 
-const CheckoutScreen = () => {
+const VisaScreen = () => {
   const [cardnumber, setCardnumber] = useState('');
   const [fullName, setFullname] = useState('');
   const [month, setMonth] = useState('');
@@ -20,50 +20,30 @@ const CheckoutScreen = () => {
   const [cvv, setCvv] = useState('');
   const navigation = useNavigation();
   return (
-    <View style={checkoutStyles.container}>
+    <View style={visaStyles.container}>
       <ImageBackground
         style={{ flex: 1 }}
         source={require('../../../assets/swivel_login_background.jpg')}
       >
-        <View style={headerFooterStyles.header}>
-          <TouchableOpacity
-            style={headerFooterStyles.headerButtonSwivel}
-            onPress={() => navigation.navigate('Map')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '60%' }}
-              source={require('../../../assets/swivel_logo.png')}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={headerFooterStyles.headerButtonUser}
-            onPress={() => navigation.navigate('Profile')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
-              source={require('../../../assets/user_icon.jpg')}
-            />
-          </TouchableOpacity>
-        </View>
+        <View style={headerFooterStyles.header}>{generateHeader()}</View>
         <View style={headerFooterStyles.body}>
-          <View style={checkoutStyles.lower_background}>
-            <View style={checkoutStyles.top}>
+          <View style={visaStyles.lower_background}>
+            <View style={visaStyles.top}>
               <Image
                 style={{ resizeMode: 'contain', height: '100%', width: '80%' }}
                 source={require('../../../assets/credit_card2.jpg')}
               />
             </View>
-            <View style={checkoutStyles.middle}>
+            <View style={visaStyles.middle}>
               <TextInput
-                style={checkoutStyles.TextInput1}
+                style={visaStyles.TextInput1}
                 placeholder="Card Number"
                 placeholderTextColor="#003f5c"
                 onChangeText={(cardnumber) => setCardnumber(cardnumber)}
               />
 
               <TextInput
-                style={checkoutStyles.TextInput2}
+                style={visaStyles.TextInput2}
                 placeholder="Card Holder Name"
                 placeholderTextColor="#003f5c"
                 onChangeText={(fullName) => setFullname(fullName)}
@@ -117,13 +97,13 @@ const CheckoutScreen = () => {
                   onChangeText={(cvv) => setCvv(cvv)}
                 />
               </View>
-              <Text style={checkoutStyles.totalPrice}>$ 28.55</Text>
+              <Text style={visaStyles.totalPrice}>$ 28.55</Text>
             </View>
 
-            <View style={checkoutStyles.bottom}>
-              <View style={checkoutStyles.PayButton}>
+            <View style={visaStyles.bottom}>
+              <View style={visaStyles.PayButton}>
                 <TouchableOpacity
-                  style={checkoutStyles.PayButton}
+                  style={visaStyles.PayButton}
                   onPress={() => navigation.navigate('Purchase')}
                 >
                   <Text
@@ -143,32 +123,13 @@ const CheckoutScreen = () => {
             </View>
           </View>
         </View>
-        <View style={headerFooterStyles.footer}>
-          <TouchableOpacity
-            style={headerFooterStyles.footerButtonBike}
-            onPress={() => navigation.navigate('MapScreen')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
-              source={require('../../../assets/footer_bike_highlighted.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={headerFooterStyles.footerButtonGarage}
-            onPress={() => navigation.navigate('MapScreen')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
-              source={require('../../../assets/footer_garage.png')}
-            />
-          </TouchableOpacity>
-        </View>
+        <View style={headerFooterStyles.footer}>{generateFooter()}</View>
       </ImageBackground>
     </View>
   );
 };
 
-const checkoutStyles = StyleSheet.create({
+const visaStyles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
@@ -255,4 +216,4 @@ const checkoutStyles = StyleSheet.create({
   },
 });
 
-export default CheckoutScreen;
+export default VisaScreen;

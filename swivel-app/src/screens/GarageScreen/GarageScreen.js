@@ -17,7 +17,7 @@ import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Fo
 const defaultHeight = 125;
 const defaultWidth = 125;
 
-const BikeSelectionScreen = () => {
+const GarageScreen = () => {
   const navigation = useNavigation();
   return (
     <View style={bikeSelectionStyles.container}>
@@ -44,55 +44,50 @@ function bikeGeneration() {
   const navigation = useNavigation();
   const bikeData1 = [
     {
-      key: 0,
       bikeName: 'Townie Original 7D',
       location: 'Burrard St, Vancouver, BC, Canada',
       rating: '4.7/5',
-      price: '4.60',
+      trips: '77',
       time: '5d 2h',
       image: require('../../../assets/bikeSelection/bike1.jpg'),
     },
   ];
   const bikeData2 = [
     {
-      key: 1,
       bikeName: 'Domane+ ALR',
       location: 'Westridge, Burnaby, BC, Canada',
       rating: '4.1/5',
-      price: '3.61',
+      trips: '47',
       time: '3d 5h',
       image: require('../../../assets/bikeSelection/bike2.jpg'),
     },
   ];
   const bikeData3 = [
     {
-      key: 2,
       bikeName: 'Boone 6',
       location: 'Nelson St, Vancouver, BC, Canada',
       rating: '4.9/5',
-      price: '6.81',
+      trips: '63',
       time: '4d 5h',
       image: require('../../../assets/bikeSelection/bike3.jpg'),
     },
   ];
   const bikeData4 = [
     {
-      key: 3,
       bikeName: 'Checkpoint ALR 5 Driftless',
       location: 'Science Rd, Burnaby, BC, Canada',
       rating: '3.7/5',
-      price: '12.52',
+      trips: '30',
       time: '2d 1h',
       image: require('../../../assets/bikeSelection/bike4.jpg'),
     },
   ];
   const bikeData5 = [
     {
-      key: 4,
       bikeName: 'Emonda SLR 9 eTap',
       location: '52a St, Delta, BC, Canada',
       rating: '4.2/5',
-      price: '2.24',
+      trips: '96',
       time: '6d 9h',
       image: require('../../../assets/bikeSelection/bike5.png'),
     },
@@ -102,25 +97,24 @@ function bikeGeneration() {
 
   const views = [];
   for (let i = 0; i < numBikes; i++) {
-    const image = masterArray[i].map(({ image }) => image).toString();
-    const name = masterArray[i].map(({ bikeName }) => bikeName);
-    const location = masterArray[i].map(({ location }) => location);
-    const rating = masterArray[i].map(({ rating }) => rating);
-    const price = masterArray[i].map(({ price }) => price);
-    const time = masterArray[i].map(({ time }) => time);
     views.push(
       <View style={bikeSelectionStyles.bikeBox}>
-        <Image style={bikeSelectionStyles.bikeImage} source={image} />
+        <Image
+          style={bikeSelectionStyles.bikeImage}
+          source={masterArray[i].map(({ image }) => image).toString()}
+        />
         <View style={bikeSelectionStyles.bikeTextBox}>
           <View style={bikeSelectionStyles.bikeTextBoxInnerTop}>
-            <Text style={bikeSelectionStyles.bikeTextTop}>{name}</Text>
+            <Text style={bikeSelectionStyles.bikeTextTop}>
+              {masterArray[i].map(({ bikeName }) => bikeName)}
+            </Text>
             <Text
               adjustsFontSizeToFit
               numberOfLines={1}
               allowFontScaling
               style={bikeSelectionStyles.bikeTextMiddle}
             >
-              {location}
+              {masterArray[i].map(({ location }) => location).toString()}
             </Text>
           </View>
 
@@ -129,35 +123,32 @@ function bikeGeneration() {
               style={bikeSelectionStyles.bikeInnerImage}
               source={require('../../../assets/star.png')}
             />
-            <Text style={bikeSelectionStyles.bikeTextBottom}>{rating}</Text>
+            <Text style={bikeSelectionStyles.bikeTextBottom}>
+              {masterArray[i].map(({ rating }) => rating)}
+            </Text>
             <Image
-              style={bikeSelectionStyles.bikeInnerImagePrice}
-              source={require('../../../assets/dollar2.png')}
+              style={bikeSelectionStyles.bikeInnerImageTrips}
+              source={require('../../../assets/trips.png')}
             />
-            <Text style={bikeSelectionStyles.bikeTextBottomPrice}>{price}</Text>
+            <Text style={bikeSelectionStyles.bikeTextBottomTrips}>
+              {masterArray[i].map(({ trips }) => trips)}
+            </Text>
             <Image
               style={bikeSelectionStyles.bikeInnerImage}
               source={require('../../../assets/battery.png')}
             />
-            <Text style={bikeSelectionStyles.bikeTextBottom}>{time}</Text>
+            <Text style={bikeSelectionStyles.bikeTextBottom}>
+              {masterArray[i].map(({ time }) => time)}
+            </Text>
           </View>
 
           <View style={bikeSelectionStyles.bottomButtonInner}>
             <TouchableOpacity
               style={bikeSelectionStyles.button}
-              onPress={() =>
-                navigation.navigate('Purchase', {
-                  image,
-                  name,
-                  location,
-                  rating,
-                  price,
-                  time,
-                })
-              }
+              onPress={() => navigation.navigate('Purchase')}
             >
               <View style={bikeSelectionStyles.button2}>
-                <Text style={bikeSelectionStyles.buttonText}> Rent Bike </Text>
+                <Text style={bikeSelectionStyles.buttonText}> Edit Bike </Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -172,13 +163,12 @@ const bikeSelectionStyles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-between',
-    // backgroundColor: '#fff',
+    backgroundColor: '#fff',
     margin: 0,
   },
   top: {
     flex: 1,
-    backgroundColor: 'transparent',
-    // opacity: 0.3,
+    backgroundColor: 'red',
     borderWidth: 1,
   },
   // bottom: {
@@ -192,13 +182,13 @@ const bikeSelectionStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderColor: '#2a4944',
-    // backgroundColor: 'white',
+    backgroundColor: 'white',
     borderWidth: 0.5,
   },
 
   scrollView: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'pink',
     // paddingTop: 50,
   },
 
@@ -217,16 +207,16 @@ const bikeSelectionStyles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingTop: '6%',
     paddingBottom: '4%',
-    // borderColor: '#7a4944',
+    borderColor: '#7a4944',
     // borderWidth: 1,
-    // backgroundColor: 'white',
+    backgroundColor: 'white',
   },
 
   bikeTextBoxInnerTop: {
     flex: 0.1,
     borderColor: '#7a4944',
     // borderWidth: 1,
-    // backgroundColor: 'green',
+    backgroundColor: 'white',
   },
   bikeTextBoxInnerBottom: {
     flex: 0.7,
@@ -234,14 +224,14 @@ const bikeSelectionStyles = StyleSheet.create({
     alignItems: 'center',
     borderColor: '#7a4944',
     // borderWidth: 1,
-    // backgroundColor: 'purple',
+    backgroundColor: 'white',
   },
   bikeInnerImage: {
     resizeMode: 'contain',
     height: '50%',
     width: '10%',
   },
-  bikeInnerImagePrice: {
+  bikeInnerImageTrips: {
     resizeMode: 'contain',
     height: '50%',
     width: '10%',
@@ -251,7 +241,7 @@ const bikeSelectionStyles = StyleSheet.create({
     flex: 0.2,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // backgroundColor: 'yellow',
+    backgroundColor: 'white',
     // borderWidth: 1,
   },
 
@@ -279,7 +269,7 @@ const bikeSelectionStyles = StyleSheet.create({
     marginLeft: '2%',
     // borderWidth: 1,
   },
-  bikeTextBottomPrice: {
+  bikeTextBottomTrips: {
     flex: 1,
     fontSize: 14,
     color: '#000000',
@@ -289,7 +279,7 @@ const bikeSelectionStyles = StyleSheet.create({
 
   button: {
     flex: 1,
-    // backgroundColor: '#B4FF39',
+    backgroundColor: '#B4FF39',
     color: '#000',
     justifyContent: 'center',
     top: '0%',
@@ -298,12 +288,10 @@ const bikeSelectionStyles = StyleSheet.create({
     // marginBottom: '5%',
     marginRight: '5%',
     borderRadius: 10,
-    // backgroundColor: 'yellow',
   },
   button2: {
     flex: 1,
-    // backgroundColor: '#B4FF39',
-    // backgroundColor: 'black',
+    backgroundColor: '#B4FF39',
     color: '#000',
     justifyContent: 'center',
     top: '0%',
@@ -312,20 +300,15 @@ const bikeSelectionStyles = StyleSheet.create({
     // marginBottom: '5%',
     // marginRight: '5%',
     borderRadius: 10,
-    backgroundColor: '#18191a',
-    // backgroundImage: require('../../../assets/swivel_login_background.jpg'),
   },
   buttonText: {
     fontWeight: 'bold',
-    // color: '#300000',
-    color: '#B4FF39',
+    color: '#300000',
     fontSize: 22,
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: '5%',
-    opacity: 1,
-    // backgroundColor: 'yellow',
   },
 });
-export default BikeSelectionScreen;
+export default GarageScreen;

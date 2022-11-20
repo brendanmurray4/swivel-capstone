@@ -11,7 +11,8 @@ import {
   ImageBackground,
 } from 'react-native';
 
-import { headerFooterStyles } from '../Header_Footer/HeaderFooter';
+import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
+
 
 const signOut = () => {
   Auth.signOut();
@@ -25,27 +26,7 @@ const ProfileScreen = () => {
         style={{ flex: 1 }}
         source={require('../../../assets/swivel_login_background.jpg')}
       >
-        <View style={headerFooterStyles.header}>
-          <TouchableOpacity
-            style={headerFooterStyles.headerButtonSwivel}
-            onPress={() => navigation.navigate('Map')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '60%' }}
-              source={require('../../../assets/swivel_logo.png')}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={headerFooterStyles.headerButtonUser}
-            onPress={() => navigation.navigate('Profile')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
-              source={require('../../../assets/user_icon.jpg')}
-            />
-          </TouchableOpacity>
-        </View>
+        <View style={headerFooterStyles.header}>{generateHeader()}</View>
 
         <View style={headerFooterStyles.body}>
           
@@ -71,7 +52,7 @@ const ProfileScreen = () => {
               <View style={profileStyles.middleRight}>
                 <TouchableOpacity
                   style={profileStyles.baseButton}
-                  onPress={() => navigation.navigate('Checkout')}
+                  onPress={() => navigation.navigate('Visa')}
                 >
                   <View style={profileStyles.baseButton}>
                     <Text style={profileStyles.baseButtonText}> Profile </Text>
@@ -89,7 +70,7 @@ const ProfileScreen = () => {
               <View style={profileStyles.middleRight}>
                 <TouchableOpacity
                   style={profileStyles.baseButton}
-                  onPress={() => navigation.navigate('Checkout')}
+                  onPress={() => navigation.navigate('Visa')}
                 >
                   <View style={profileStyles.baseButton}>
                     <Text style={profileStyles.baseButtonText}> Notifications </Text>
@@ -108,7 +89,7 @@ const ProfileScreen = () => {
               <View style={profileStyles.middleRight}>
                 <TouchableOpacity
                   style={profileStyles.baseButton}
-                  onPress={() => navigation.navigate('Checkout')}
+                  onPress={() => navigation.navigate('Visa')}
                 >
                   <View style={profileStyles.baseButton}>
                     <Text style={profileStyles.baseButtonText}> Settings </Text>
@@ -127,7 +108,7 @@ const ProfileScreen = () => {
               <View style={profileStyles.middleRight}>
                 <TouchableOpacity
                   style={profileStyles.baseButton}
-                  onPress={() => navigation.navigate('Checkout')}
+                  onPress={() => navigation.navigate('Visa')}
                 >
                   <View style={profileStyles.baseButton}>
                     <Text style={profileStyles.baseButtonText}> Support </Text>
@@ -156,26 +137,7 @@ const ProfileScreen = () => {
           </View>
         </View>
 
-        <View style={headerFooterStyles.footer}>
-          <TouchableOpacity
-            style={headerFooterStyles.footerButtonBike}
-            onPress={() => navigation.navigate('MapScreen')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
-              source={require('../../../assets/footer_bike_highlighted.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={headerFooterStyles.footerButtonGarage}
-            onPress={() => navigation.navigate('MapScreen')}
-          >
-            <Image
-              style={{ resizeMode: 'contain', height: '60%', width: '50%' }}
-              source={require('../../../assets/footer_garage.png')}
-            />
-          </TouchableOpacity>
-        </View>
+        <View style={headerFooterStyles.footer}>{generateFooter()}</View>
       </ImageBackground>
     </View>
   );
@@ -189,14 +151,14 @@ const profileStyles = StyleSheet.create({
   },
   top: {
     flex: 0.3,
-    // backgroundColor: 'black',
+    // backgroundColor: '#5dc00',
     borderWidth: 1,
-    paddingBottom: '2%',
+    paddingVertical: '1%',
   },
   lowerTop: {
     flex: 0.1,
-    backgroundColor: 'white',
-    borderWidth: 1,
+    // backgroundColor: '#2a4944',
+    // borderWidth: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -213,7 +175,8 @@ const profileStyles = StyleSheet.create({
 
   topText: {
     fontWeight: 'bold',
-    // color: '#af9',
+    color: '#B4FF39',
+    // color: 'white',
     fontSize: 32,
     textAlign: 'center',
     justifyContent: 'center',
