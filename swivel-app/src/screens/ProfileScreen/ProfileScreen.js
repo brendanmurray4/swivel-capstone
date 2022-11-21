@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
 import { Auth } from 'aws-amplify';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
-
 
 const signOut = () => {
   Auth.signOut();
@@ -29,10 +28,15 @@ const ProfileScreen = () => {
         <View style={headerFooterStyles.header}>{generateHeader()}</View>
 
         <View style={headerFooterStyles.body}>
-          
           <View style={profileStyles.top}>
             <Image
-              style={{ resizeMode: 'cover', height: '100%', width: '50%', borderRadius: 200, alignSelf: 'center'}}
+              style={{
+                resizeMode: 'cover',
+                height: '100%',
+                width: '50%',
+                borderRadius: 200,
+                alignSelf: 'center',
+              }}
               source={require('../../../assets/p_user_selfie.png')}
             />
           </View>
@@ -124,10 +128,7 @@ const ProfileScreen = () => {
                 />
               </View>
               <View style={profileStyles.middleRight}>
-                <TouchableOpacity
-                  style={profileStyles.baseButton}
-                  onPress={() => navigation.navigate(signOut)}
-                >
+                <TouchableOpacity style={profileStyles.baseButton} onPress={signOut}>
                   <View style={profileStyles.baseButton}>
                     <Text style={profileStyles.baseButtonText}> Logout </Text>
                   </View>
@@ -223,8 +224,8 @@ const profileStyles = StyleSheet.create({
     textAlign: 'left',
   },
   defaultIconStyle: {
-    resizeMode: 'cover', 
-    height: '80%', 
+    resizeMode: 'cover',
+    height: '80%',
     width: '45%',
     top: '10%',
     bottom: '1%',

@@ -156,7 +156,7 @@ function bikeGeneration() {
                 })
               }
             >
-              <View style={bikeSelectionStyles.button2}>
+              <View style={bikeSelectionStyles.button}>
                 <Text style={bikeSelectionStyles.buttonText}> Rent Bike </Text>
               </View>
             </TouchableOpacity>
@@ -288,19 +288,6 @@ const bikeSelectionStyles = StyleSheet.create({
   },
 
   button: {
-    flex: 1,
-    // backgroundColor: '#B4FF39',
-    color: '#000',
-    justifyContent: 'center',
-    top: '0%',
-    // bottom: '10%',
-    // borderWidth: 1,
-    // marginBottom: '5%',
-    marginRight: '5%',
-    borderRadius: 10,
-    // backgroundColor: 'yellow',
-  },
-  button2: {
     flex: 1,
     // backgroundColor: '#B4FF39',
     // backgroundColor: 'black',

@@ -1,4 +1,4 @@
-import { useNavigation, route, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
   Text,
@@ -12,9 +12,9 @@ import {
 
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 
-const PurchaseScreen = ({ route }) => {
+const PurchaseScreen = () => {
   const navigation = useNavigation();
-  // const route = useRoute();
+  const route = useRoute();
   const { image, name, location, rating, price, time } = route.params;
   let totalHourly = 0,
     numHours = 3,

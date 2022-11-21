@@ -132,19 +132,6 @@ const MapScreen = () => {
       >
         <View style={headerFooterStyles.header}>{generateHeader()}</View>
         <View style={headerFooterStyles.body}>
-          <Text
-            onPress={signOut}
-            style={{
-              width: '100%',
-              textAlign: 'left',
-              color: 'red',
-              marginTop: 'auto',
-              marginVertical: 20,
-              fontSize: 20,
-            }}
-          >
-            Sign out
-          </Text>
           <CustomButton text="Checkout" onPress={onCheckoutPressed} alignItems="right" />
           <View style={styles.container}>
             {telemetry && (

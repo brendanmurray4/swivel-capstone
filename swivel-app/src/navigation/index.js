@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import BikeSelectionScreen from '../screens/BikeSelectionScreen';
 import ConfirmEmailScreen from '../screens/ConfirmEmailScreen/ConfirmEmailScreen';
 import CurrentBikeScreen from '../screens/CurrentBikeScreen';
+import GarageForm from '../screens/GarageForm';
 import GarageScreen from '../screens/GarageScreen';
 import MapScreen from '../screens/MapScreen';
 import ProfileScreen from '../screens/ProfileScreen';
@@ -51,6 +52,7 @@ const Navigation = () => {
             <Stack.Screen name="Visa" component={VisaScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} />
             <Stack.Screen name="Garage" component={GarageScreen} />
+            <Stack.Screen name="GarageForm" component={GarageForm} />
             <Stack.Screen name="CurrentBike" component={CurrentBikeScreen} />
           </>
         ) : (
