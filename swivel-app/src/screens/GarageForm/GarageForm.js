@@ -3,10 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
-import {
-  launchCamera,
-  launchImageLibrary
-} from 'react-native-image-picker';
 const defaultHeight = 125;
 const defaultWidth = 125;
 
