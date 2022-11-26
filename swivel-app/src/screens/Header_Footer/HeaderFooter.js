@@ -57,7 +57,7 @@ export function generateFooter() {
     <View style={headerFooterStyles.default}>
       <TouchableOpacity
         style={headerFooterStyles.footerButtonBike}
-        onPress={() => navigation.navigate('MapScreen')}
+        onPress={() => navigation.navigate('CurrentBike')}
       >
         <Image style={{ resizeMode: 'contain', height: '60%', width: '50%' }} source={bikeImage} />
       </TouchableOpacity>
