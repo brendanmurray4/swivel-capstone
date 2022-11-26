@@ -1,14 +1,18 @@
 import { Amplify } from 'aws-amplify';
+import registerNNPushToken from 'native-notify';
 import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   SafeAreaView
 } from 'react-native';
+
+
 import awsconfig from './src/aws-exports';
-import Navigation from './src/navigation'
+import Navigation from './src/navigation';
 Amplify.configure(awsconfig);
 
-const App = () => {
+export default function App(){
+  registerNNPushToken(5009, 'zLGSh3bkdXv2IweqrDbIFD');
   return (
     <SafeAreaView style={styles.root}>
       <Navigation />
@@ -23,4 +27,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
