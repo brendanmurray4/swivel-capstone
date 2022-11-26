@@ -41,7 +41,7 @@ export function generateFooter() {
 
   let bikeImage;
   let garageImage;
-  if (route.name == 'BikeSelection' || route.name == 'Purchase') {
+  if (route.name == 'CurrentBike') {
     bikeImage = require('../../../assets/footer_bike_highlighted.png');
   } else {
     bikeImage = require('../../../assets/footer_bike.png');

@@ -182,37 +182,7 @@ const MapScreen = () => {
                 <Text style={styles.dataValue}>{telemetry ? telemetry.gps.altitude : '0'}</Text>
               </View>
             </View>
-            <View>
-              <TouchableOpacity
-                style={isUnlockable() ? styles.unlockButton : styles.unlockButtonDisabled}
-                onPress={() => {
-                  if (isUnlockable()) {
-                    addTask('UNLOCK');
-                  } else {
-                    Alert.alert(
-                      'Reset Delegator State?',
-                      'Would you like to reset the list of tasks for the delegator?',
-                      [
-                        {
-                          text: 'Cancel',
-                          style: 'cancel',
-                          onPress: () => {},
-                        },
-                        {
-                          text: 'Okay',
-                          style: 'destructive',
-                          onPress: () => {
-                            removeTask('UNLOCK');
-                          },
-                        },
-                      ]
-                    );
-                  }
-                }}
-              >
-                <Text style={styles.unlockButtonText}>Unlock Bike</Text>
-              </TouchableOpacity>
-            </View>
+
           </View>
         </View>
         <View style={headerFooterStyles.footer}>{generateFooter()}</View>
@@ -244,14 +214,16 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#ffffff',
-    width: '100%',
+    width: '90%',
     minHeight: '25%',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderRadius: 20,
     paddingHorizontal: 25,
-    paddingTop: 10,
+    // paddingTop: 10,
+    paddingVertical: 10,
     position: 'absolute',
-    bottom: 0,
+    bottom: '3%',
+    left: '5%',
+    right: '5%',
   },
 
   dataContainerRow: {
