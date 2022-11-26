@@ -133,7 +133,7 @@ const MapScreen = () => {
         <View style={headerFooterStyles.body}>
           <CustomButton text="Checkout" onPress={onCheckoutPressed} alignItems="right" />
           <View style={styles.container}>
-            {telemetry && (
+            {true && (
               <>
                 <MapView
                   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
@@ -147,8 +147,11 @@ const MapScreen = () => {
                 >
                   <Marker
                     coordinate={{
-                      latitude: telemetry.gps.latitude,
-                      longitude: telemetry.gps.longitude,
+                      latitude: telemetry ? telemetry.gps.latitude : 49.277748,
+                      longitude: telemetry ? telemetry.gps.longitude : -122.90905,
+                      //latitude: telemetry.gps.latitude,
+                      //longitude: telemetry.gps.longitude,
+
                     }}
                     pinColor="black"
                   />
