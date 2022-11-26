@@ -248,36 +248,6 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
 
-  unlockButton: {
-    backgroundColor: '#B4FF39',
-    color: '#000',
-    textAlign: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: 20,
-    marginTop: 25,
-    marginBottom: 20,
-  },
-
-  unlockButtonDisabled: {
-    backgroundColor: '#BFC0BD',
-    color: '#000',
-    textAlign: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: 20,
-    marginTop: 25,
-    marginBottom: 20,
-  },
-
-  unlockButtonText: {
-    fontWeight: 'bold',
-  },
-
   mapContainer: {
     ...StyleSheet.absoluteFillObject,
     height: 400,
