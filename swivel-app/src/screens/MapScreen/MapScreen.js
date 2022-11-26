@@ -12,7 +12,6 @@ const MapScreen = () => {
   const [telemetry, setTelemetry] = React.useState(undefined);
   const [tasks, setTasks] = React.useState(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [modalOpen, setModalOpen] = React.useState(false);
   const navigation = useNavigation();
 
   const onCheckoutPressed = () => {
@@ -259,13 +258,6 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
 
-  modalBackground: {
-    minHeight: 50,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    width: 100,
-    height: 100,
-  },
 });
 
 export default MapScreen;
