@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Alert, Image, ImageBackground } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Image,
+  Modal,
+  ImageBackground,
+} from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 import { Auth } from 'aws-amplify';
 import CustomButton from '../../components/CustomButton';
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
-
 
 // Page to unlock delegator
 const MapScreen = () => {
@@ -13,7 +21,58 @@ const MapScreen = () => {
   const [tasks, setTasks] = React.useState(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
   const navigation = useNavigation();
-
+  const [SelectedBike,setSelectedBike] = React.useState(0);
+  const [AvailableBikes] = useState([
+    // replace this with an API Fetch
+    {
+      key: 0,
+      bikeName: 'Townie Original 7D',
+      location: {
+        longitude: '-122.90730537910062',
+        latitude: '49.27997279477743',
+      },
+      rating: '4.7/5',
+      price: '4.60',
+      time: '5d 2h',
+      image: require('../../../assets/bikeSelection/bike1.jpg'),
+    },
+    {
+      key: 1,
+      bikeName: 'Domane+ ALR',
+      location: {
+        longitude: '-122.90858136763505',
+        latitude: '49.27832317062849',
+      },
+      rating: '4.1/5',
+      price: '3.61',
+      time: '3d 5h',
+      image: require('../../../assets/bikeSelection/bike2.jpg'),
+    },
+    {
+      key: 2,
+      bikeName: "Boone 6",
+      location: {
+        longitude: "-122.9042562339713",
+        latitude: "49.27823110281287",
+      },
+      rating: "4.9/5",
+      price: "6.81",
+      time: "4d 5h",
+      image: require("../../../assets/bikeSelection/bike3.jpg"),
+    },
+    {
+      key: 3,
+      bikeName: "Checkpoint ALR 5 Driftless",
+      location: {
+        longitude: "-122.91382570898952",
+        latitude: "49.27651388289689",
+      },
+      rating: "3.7/5",
+      price: "12.52",
+      time: "2d 1h",
+      image: require("../../../assets/bikeSelection/bike4.jpg"),
+    }
+  ]);
   const onCheckoutPressed = () => {
     navigation.navigate('BikeSelection');
   };
@@ -103,6 +162,9 @@ const MapScreen = () => {
     return 'Unknown';
   };
 
+
+
+
   const isUnlockable = () => {
     if (isLoading) {
       return false;
@@ -123,6 +185,8 @@ const MapScreen = () => {
     Auth.signOut();
   };
 
+  
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -131,7 +195,7 @@ const MapScreen = () => {
       >
         <View style={headerFooterStyles.header}>{generateHeader()}</View>
         <View style={headerFooterStyles.body}>
-          <CustomButton text="Checkout" onPress={onCheckoutPressed} alignItems="right" />
+          <CustomButton text= { SelectedBike == 0 ? "Select a bike " :"Tap to rent: " +SelectedBike.bikeName + " for $"+ SelectedBike.price+"/hr"}  onPress={onCheckoutPressed} alignItems="right" />
           <View style={styles.container}>
             {true && (
               <>
@@ -147,15 +211,31 @@ const MapScreen = () => {
                 >
                   <Marker
                     coordinate={{
-                      latitude: telemetry ? telemetry.gps.latitude : 49.277748,
-                      longitude: telemetry ? telemetry.gps.longitude : -122.90905,
-                      //latitude: telemetry.gps.latitude,
-                      //longitude: telemetry.gps.longitude,
-
+                      latitude: 49.277748,
+                      longitude: -122.90905,
                     }}
-                    pinColor="black"
+                    icon={require('../../../assets/user_location_map_enlarged.png')}
                   />
+                  {AvailableBikes
+                    ? AvailableBikes.map((bike) => (
+                        <Marker
+                          coordinate={bike.location}
+                          title={bike.bikeName}
+                          description={"★" + bike.rating + '\n' + '$' + bike.price + "/hour"}
+                          icon={require('../../../assets/available_bike_map_enlarged.png')}
+                          onPress={() => {
+                          
+                          setSelectedBike(bike);
+
+                            console.log(SelectedBike);
+                           }}
+                        />
+                      ))
+                    : null}
+                   
                 </MapView>
+                
+        
               </>
             )}
           </View>
@@ -184,7 +264,6 @@ const MapScreen = () => {
                 <Text style={styles.dataValue}>{telemetry ? telemetry.gps.altitude : '0'}</Text>
               </View>
             </View>
-
           </View>
         </View>
         <View style={headerFooterStyles.footer}>{generateFooter()}</View>
@@ -260,7 +339,5 @@ const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
   },
-
 });
-
 export default MapScreen;
