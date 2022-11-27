@@ -195,7 +195,7 @@ const MapScreen = () => {
       >
         <View style={headerFooterStyles.header}>{generateHeader()}</View>
         <View style={headerFooterStyles.body}>
-          <CustomButton text="Checkout" onPress={onCheckoutPressed} alignItems="right" />
+          <CustomButton text= { SelectedBike == 0 ? "Select a bike " :"Tap to rent: " +SelectedBike.bikeName + " for $"+ SelectedBike.price+"/hr"}  onPress={onCheckoutPressed} alignItems="right" />
           <View style={styles.container}>
             {true && (
               <>
@@ -221,7 +221,7 @@ const MapScreen = () => {
                         <Marker
                           coordinate={bike.location}
                           title={bike.bikeName}
-                          description={bike.rating + '\n' + '$' + bike.price + "/hour"}
+                          description={"★" + bike.rating + '\n' + '$' + bike.price + "/hour"}
                           icon={require('../../../assets/available_bike_map_enlarged.png')}
                           onPress={() => {
                           
@@ -234,6 +234,8 @@ const MapScreen = () => {
                     : null}
                    
                 </MapView>
+                
+        
               </>
             )}
           </View>
