@@ -31,8 +31,8 @@ const MapScreen = () => {
       key: 0,
       bikeName: 'Townie Original 7D',
       location: {
-        longitude: '-122.90730537910062',
-        latitude: '49.27997279477743',
+        longitude: -122.90730537910062,
+        latitude: 49.27997279477743,
       },
       rating: '4.7/5',
       price: '4.60',
@@ -43,8 +43,8 @@ const MapScreen = () => {
       key: 1,
       bikeName: 'Domane+ ALR',
       location: {
-        longitude: '-122.90858136763505',
-        latitude: '49.27832317062849',
+        longitude: -122.90858136763505,
+        latitude: 49.27832317062849,
       },
       rating: '4.1/5',
       price: '3.61',
@@ -55,8 +55,8 @@ const MapScreen = () => {
       key: 2,
       bikeName: 'Boone 6',
       location: {
-        longitude: '-122.9042562339713',
-        latitude: '49.27823110281287',
+        longitude: -122.9042562339713,
+        latitude: 49.27823110281287,
       },
       rating: '4.9/5',
       price: '6.81',
@@ -67,8 +67,8 @@ const MapScreen = () => {
       key: 3,
       bikeName: 'Checkpoint ALR 5 Driftless',
       location: {
-        longitude: '-122.91382570898952',
-        latitude: '49.27651388289689',
+        longitude: -122.91382570898952,
+        latitude: 49.27651388289689,
       },
       rating: '3.7/5',
       price: '12.52',
@@ -254,14 +254,15 @@ const MapScreen = () => {
                     ? AvailableBikes.map((bike) => (
                         <Marker
                           coordinate={{
-                            latitude: 49.277748,
-                            longitude: -122.90905,
+                            latitude: bike.location.latitude,
+                            longitude: bike.location.longitude,
                           }}
                           title={bike.bikeName}
                           description={'★' + bike.rating + '\n' + '$' + bike.price + '/hour'}
                           icon={require('../../../assets/available_bike_map_enlarged.png')}
                           onPress={() => {
                             setSelectedBike(bike);
+                            console.log(bike.location.latitude);
 
                             // console.log(SelectedBike);
                           }}
