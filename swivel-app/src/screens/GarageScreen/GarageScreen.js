@@ -14,15 +14,20 @@ import {
   TextInput,
 } from 'react-native';
 
-import GarageForm from '../GarageForm/GarageForm';
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 
 const defaultHeight = 125;
 const defaultWidth = 125;
+const masterArray = defaultBikes();
 
 const GarageScreen = () => {
   const navigation = useNavigation();
   const [showModal, setShowModal] = useState(false);
+
+  const [defaultBike, defaultPrice] = ['null', 666];
+  let [bikeName, onChangeBikeName] = useState('null');
+  let [price, onChangePrice] = useState(666);
+
   return (
     <View style={bikeGarageStyles.container}>
       <ImageBackground
@@ -33,7 +38,9 @@ const GarageScreen = () => {
 
         <View style={headerFooterStyles.body}>
           <View style={bikeGarageStyles.top}>
-            <ScrollView style={bikeGarageStyles.scrollView}>{bikeGeneration()}</ScrollView>
+            <ScrollView style={bikeGarageStyles.scrollView}>
+              {bikeGeneration(masterArray)}
+            </ScrollView>
           </View>
 
           <View style={bikeGarageStyles.bottom}>
@@ -58,19 +65,37 @@ const GarageScreen = () => {
               console.log('Modal has been closed.');
             }}
           >
-            {/*All views of Modal*/}
-            {/*Animation can be slide, slide, none*/}
             <View style={styles.modal}>
-              <View style={styles.textBoxContainer}>
-                <TextInput style={styles.textBox} placeholder="Name of the Bike" />
-                <TextInput style={styles.textBox} placeholder="Price Per Hour" />
-              </View>
-              <Button
-                title="Add Listing"
-                onPress={() => {
-                  setShowModal(!showModal);
-                }}
+              <TextInput
+                style={styles.textBox}
+                onChangeText={onChangeBikeName}
+                placeholder="Bike Name"
+                keyboardType="ascii-capable"
               />
+              <TextInput
+                style={styles.textBox}
+                onChangeText={onChangePrice}
+                placeholder="Hourly Price"
+                keyboardType="numeric"
+              />
+              <TouchableOpacity
+                style={bikeGarageStyles.button}
+                onPress={() => {
+                  if (bikeName == 'null' || price == '666') {
+                    console.log("FAILEDDDD");
+                  } else {
+                    setShowModal(!showModal);
+                    masterArray.push(userInput(bikeName, price));
+
+                    onChangeBikeName(defaultBike);
+                    onChangePrice(defaultPrice);
+                  }
+                }}
+              >
+                <View style={bikeGarageStyles.buttonAddBike}>
+                  <Text style={bikeGarageStyles.buttonAddBikeText}> Add Listing </Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </Modal>
 
@@ -83,12 +108,9 @@ const GarageScreen = () => {
   );
 };
 
-function bikeGeneration() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const navigation = useNavigation();
+function defaultBikes() {
   const bikeData1 = [
     {
-      key: 0,
       bikeName: 'Townie Original 7D',
       location: 'Burrard St, Vancouver, BC, Canada',
       rating: '4.7/5',
@@ -99,7 +121,6 @@ function bikeGeneration() {
   ];
   const bikeData2 = [
     {
-      key: 1,
       bikeName: 'Domane+ ALR',
       location: 'Westridge, Burnaby, BC, Canada',
       rating: '4.1/5',
@@ -110,7 +131,6 @@ function bikeGeneration() {
   ];
   const bikeData3 = [
     {
-      key: 2,
       bikeName: 'Boone 6',
       location: 'Nelson St, Vancouver, BC, Canada',
       rating: '4.9/5',
@@ -121,7 +141,6 @@ function bikeGeneration() {
   ];
   const bikeData4 = [
     {
-      key: 3,
       bikeName: 'Checkpoint ALR 5 Driftless',
       location: 'Science Rd, Burnaby, BC, Canada',
       rating: '3.7/5',
@@ -132,7 +151,6 @@ function bikeGeneration() {
   ];
   const bikeData5 = [
     {
-      key: 4,
       bikeName: 'Emonda SLR 9 eTap',
       location: '52a St, Delta, BC, Canada',
       rating: '4.2/5',
@@ -142,6 +160,32 @@ function bikeGeneration() {
     },
   ];
   const masterArray = [bikeData1, bikeData2, bikeData3, bikeData4, bikeData5];
+  return masterArray;
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+function userInput(bikeName, price) {
+  const rating = '{getRandomInt(max)}';
+  const bikeData = [
+    {
+      bikeName,
+      location: 'Delegator Disconnected',
+      rating: 'TBD',
+      price,
+      time: getRandomInt(7) + 'd ' + getRandomInt(23) + 'h',
+      image: require('../../../assets/bikeSelection/bike1.jpg'),
+    },
+  ];
+
+  return bikeData;
+}
+
+function bikeGeneration(masterArray) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const navigation = useNavigation();
   const numBikes = masterArray.length;
 
   const views = [];
@@ -379,22 +423,6 @@ const bikeGarageStyles = StyleSheet.create({
     opacity: 1,
     // backgroundColor: 'green',
   },
-  textBox: {
-    flex: 1,
-    borderWidth: 1,
-    // flexGrow: 1,
-    // // paddingVertical: 10,
-
-    // // alignContent: 'center',
-    // textAlign: 'center',
-    backgroundColor: 'white',
-    // fontWeight: 'bold',
-    // color: '#000',
-    // fontSize: 16,
-    // paddingVertical: '3%',
-    paddingHorizontal: '15%',
-    alignItems: 'stretch',
-  },
 });
 export default GarageScreen;
 
@@ -416,29 +444,40 @@ const styles = StyleSheet.create({
   },
   modal: {
     flex: 1,
-    width: '50%',
+    width: '75%',
     // height: '25%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // textAlign: 'center',
     backgroundColor: '#000',
     // paddingHorizontal: '20%',
-    position: 'absolute', //Here is the trick
-    bottom: '25%', //Here is the trick
-    left: '25%', //Here is the trick
-    // right: '20%', //Here is the trick
+    position: 'absolute',
+    bottom: '25%',
+    left: '12.5%',
+    // right: '20%',
+    borderRadius: 20,
   },
   text: {
     color: '#3f2949',
     marginTop: 10,
   },
   textBox: {
-    borderWidth: 1,
-    paddingVertical: 10,
-    marginHorizontal: 10,
-    // alignContent: 'center',
-    textAlign: 'center',
-    backgroundColor: 'white',
+    // borderWidth: 1,
+    flex: 1,
+    // flexGrow: 1,
+    paddingVertical: '10%',
+    // paddingHorizontal: '37.5%',
+    // marginHorizontal: 10,
+    // // alignContent: 'center',
+    // textAlign: 'center',
+    // backgroundColor: 'white',
     fontSize: 20,
+    // alignItems: 'stretch'
+    borderWidth: 1,
+    backgroundColor: 'white',
+    textAlign: 'center',
+  },
+  textContainer: {
+    flex: 1,
   },
 });

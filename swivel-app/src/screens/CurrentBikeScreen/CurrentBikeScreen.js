@@ -159,12 +159,14 @@ const CurrentBikeScreen = () => {
               <Text style={currentBikeStyles.greyText}> Battery Life </Text>
               <Text style={currentBikeStyles.greyText}> Location </Text>
               <Text style={currentBikeStyles.greyText}> Delegator </Text>
+              <Text style={currentBikeStyles.greyText}> Hourly Price </Text>
             </View>
             <View style={currentBikeStyles.textBoxColumn}>
               <Text style={currentBikeStyles.defaultText}> 52 minutes left </Text>
               <Text style={currentBikeStyles.defaultText}> 38% </Text>
               <Text style={currentBikeStyles.defaultText}> Seymour Drive </Text>
               <Text style={currentBikeStyles.defaultText}> Locked </Text>
+              <Text style={currentBikeStyles.defaultText}> $ 4.21 </Text>
             </View>
           </View>
 
