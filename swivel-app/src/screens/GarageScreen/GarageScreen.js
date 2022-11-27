@@ -12,6 +12,7 @@ import {
   Button,
   SafeAreaView,
   TextInput,
+  Alert,
 } from 'react-native';
 
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
@@ -25,8 +26,8 @@ const GarageScreen = () => {
   const [showModal, setShowModal] = useState(false);
 
   const [defaultBike, defaultPrice] = ['null', 666];
-  let [bikeName, onChangeBikeName] = useState('null');
-  let [price, onChangePrice] = useState(666);
+  const [bikeName, onChangeBikeName] = useState('null');
+  const [price, onChangePrice] = useState(666);
 
   return (
     <View style={bikeGarageStyles.container}>
@@ -82,7 +83,7 @@ const GarageScreen = () => {
                 style={bikeGarageStyles.button}
                 onPress={() => {
                   if (bikeName == 'null' || price == '666') {
-                    console.log("FAILEDDDD");
+                    console.log('FAILEDDDD');
                   } else {
                     setShowModal(!showModal);
                     masterArray.push(userInput(bikeName, price));
@@ -244,9 +245,19 @@ function bikeGeneration(masterArray) {
                 })
               }
             >
-              <View style={bikeGarageStyles.button}>
-                <Text style={bikeGarageStyles.buttonText}> Edit Bike </Text>
-              </View>
+              <TouchableOpacity
+                style={bikeGarageStyles.button}
+                onPress={() => {
+                  Alert.alert('In Progress', 'This page will be updated soon!', [
+
+                    { text: 'OK', onPress: () => console.log('OK Pressed') },
+                  ]);
+                }}
+              >
+                <View style={bikeGarageStyles.button}>
+                  <Text style={bikeGarageStyles.buttonText}> Edit Listing </Text>
+                </View>
+              </TouchableOpacity>
             </TouchableOpacity>
           </View>
         </View>

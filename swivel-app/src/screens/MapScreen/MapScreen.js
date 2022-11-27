@@ -1,3 +1,5 @@
+import { useNavigation } from '@react-navigation/native';
+import { Auth, selectInput } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import {
   Text,
@@ -9,11 +11,12 @@ import {
   Modal,
   ImageBackground,
 } from 'react-native';
+import Geocoder from 'react-native-geocoding';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import { useNavigation } from '@react-navigation/native';
-import { Auth } from 'aws-amplify';
+
 import CustomButton from '../../components/CustomButton';
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
+Geocoder.init('AIzaSyBmjnH37clBAaGKN4R6Ji-qqUM3w8Lk2Js');
 
 // Page to unlock delegator
 const MapScreen = () => {
@@ -21,7 +24,7 @@ const MapScreen = () => {
   const [tasks, setTasks] = React.useState(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
   const navigation = useNavigation();
-  const [SelectedBike,setSelectedBike] = React.useState(0);
+  const [SelectedBike, setSelectedBike] = React.useState(0);
   const [AvailableBikes] = useState([
     // replace this with an API Fetch
     {
@@ -50,32 +53,60 @@ const MapScreen = () => {
     },
     {
       key: 2,
-      bikeName: "Boone 6",
+      bikeName: 'Boone 6',
       location: {
-        longitude: "-122.9042562339713",
-        latitude: "49.27823110281287",
+        longitude: '-122.9042562339713',
+        latitude: '49.27823110281287',
       },
-      rating: "4.9/5",
-      price: "6.81",
-      time: "4d 5h",
-      image: require("../../../assets/bikeSelection/bike3.jpg"),
+      rating: '4.9/5',
+      price: '6.81',
+      time: '4d 5h',
+      image: require('../../../assets/bikeSelection/bike3.jpg'),
     },
     {
       key: 3,
-      bikeName: "Checkpoint ALR 5 Driftless",
+      bikeName: 'Checkpoint ALR 5 Driftless',
       location: {
-        longitude: "-122.91382570898952",
-        latitude: "49.27651388289689",
+        longitude: '-122.91382570898952',
+        latitude: '49.27651388289689',
       },
-      rating: "3.7/5",
-      price: "12.52",
-      time: "2d 1h",
-      image: require("../../../assets/bikeSelection/bike4.jpg"),
-    }
+      rating: '3.7/5',
+      price: '12.52',
+      time: '2d 1h',
+      image: require('../../../assets/bikeSelection/bike4.jpg'),
+    },
   ]);
   const onCheckoutPressed = () => {
-    navigation.navigate('BikeSelection');
+    const image = SelectedBike.image;
+    const name = SelectedBike.bikeName;
+    const rating = SelectedBike.rating;
+    const price = SelectedBike.price;
+    const time = SelectedBike.time;
+    let location = '';
+
+    Geocoder.from(SelectedBike.location.latitude, SelectedBike.location.longitude)
+      .catch((error) => console.log(error))
+      .then((loc) => {
+        location =
+          loc.results[1].address_components[0].long_name +
+          ' ' +
+          loc.results[1].address_components[1].long_name +
+          ', ' +
+          loc.results[1].address_components[2].long_name;
+        NavigateToNextPage(image, name, location, rating, price, time);
+      });
   };
+
+  function NavigateToNextPage(image, name, location, rating, price, time) {
+    navigation.navigate('Purchase', {
+      image,
+      name,
+      location,
+      rating,
+      price,
+      time,
+    });
+  }
 
   useEffect(() => {
     const updateInterval = setInterval(() => {
@@ -162,9 +193,6 @@ const MapScreen = () => {
     return 'Unknown';
   };
 
-
-
-
   const isUnlockable = () => {
     if (isLoading) {
       return false;
@@ -185,8 +213,6 @@ const MapScreen = () => {
     Auth.signOut();
   };
 
-  
-
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -195,7 +221,15 @@ const MapScreen = () => {
       >
         <View style={headerFooterStyles.header}>{generateHeader()}</View>
         <View style={headerFooterStyles.body}>
-          <CustomButton text= { SelectedBike == 0 ? "Select a bike " :"Tap to rent: " +SelectedBike.bikeName + " for $"+ SelectedBike.price+"/hr"}  onPress={onCheckoutPressed} alignItems="right" />
+          <CustomButton
+            text={
+              SelectedBike == 0
+                ? 'Select a bike '
+                : 'Tap to rent: ' + SelectedBike.bikeName + ' for $' + SelectedBike.price + '/hr'
+            }
+            onPress={onCheckoutPressed}
+            alignItems="right"
+          />
           <View style={styles.container}>
             {true && (
               <>
@@ -219,23 +253,22 @@ const MapScreen = () => {
                   {AvailableBikes
                     ? AvailableBikes.map((bike) => (
                         <Marker
-                          coordinate={bike.location}
+                          coordinate={{
+                            latitude: 49.277748,
+                            longitude: -122.90905,
+                          }}
                           title={bike.bikeName}
-                          description={"★" + bike.rating + '\n' + '$' + bike.price + "/hour"}
+                          description={'★' + bike.rating + '\n' + '$' + bike.price + '/hour'}
                           icon={require('../../../assets/available_bike_map_enlarged.png')}
                           onPress={() => {
-                          
-                          setSelectedBike(bike);
+                            setSelectedBike(bike);
 
-                            console.log(SelectedBike);
-                           }}
+                            // console.log(SelectedBike);
+                          }}
                         />
                       ))
                     : null}
-                   
                 </MapView>
-                
-        
               </>
             )}
           </View>

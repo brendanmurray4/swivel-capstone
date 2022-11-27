@@ -16,13 +16,33 @@ const PurchaseScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { image, name, location, rating, price, time } = route.params;
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  const today = new Date();
   let totalHourly = 0,
-    numHours = 3,
+    numHours = 1,
     tax = 0,
-    totalPrice = 0;
+    totalPrice = 0,
+    swivelFee = 0.05,
+    swivelFeeTotal = 0;
   totalHourly = numHours * price;
+  swivelFeeTotal = totalHourly * swivelFee;
+  totalHourly = totalHourly * (1 + swivelFee);
   tax = totalHourly * 0.12;
   totalPrice = totalHourly + tax;
+
   return (
     <View style={purchaseStyles.container}>
       <ImageBackground
@@ -42,7 +62,9 @@ const PurchaseScreen = () => {
 
             <View style={purchaseStyles.middle}>
               <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 26 }}>{name}</Text>
-              <Text style={purchaseStyles.priceText}> {'$ '}
+              <Text style={purchaseStyles.priceText}>
+                {' '}
+                {'$ '}
                 {price}
                 <Text
                   style={{
@@ -59,52 +81,68 @@ const PurchaseScreen = () => {
             </View>
 
             <View style={purchaseStyles.middle2}>
-              <Image
-                style={{
-                  resizeMode: 'cover',
-                  height: '76%',
-                  width: '20%',
-                  aspectRatio: 0.75,
-                  left: '4%',
-                  bottom: '5%',
-                }}
-                source={require('../../../assets/gps_icon.jpg')}
-              />
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: '#BFC0BD',
-                  fontSize: 22,
-                  textAlign: 'center',
-                  position: 'absolute',
-                  left: '20%',
-                  right: '5%',
-                  flexShrink: 1,
-                }}
-              >
-                {location}
-              </Text>
+              <View style={purchaseStyles.middle2Image}>
+                <Image
+                  style={{
+                    resizeMode: 'contain',
+                    width: '85%',
+                    flex: 1,
+                    left: '5%',
+                    bottom: '10%',
+                  }}
+                  source={require('../../../assets/gps_icon.png')}
+                />
+              </View>
+              <View style={purchaseStyles.middle2Text}>
+                <Text
+                  numberOfLines={2}
+                  adjustsFontSizeToFit
+                  style={{
+                    fontWeight: 'bold',
+                    color: '#BFC0BD',
+                    fontSize: 22,
+                    textAlign: 'left',
+                    left: '2%',
+                  }}
+                >
+                  {location}
+                </Text>
+              </View>
             </View>
             <View style={purchaseStyles.middle2}>
-              <Image
-                style={{ resizeMode: 'cover', height: '80%', width: '20%', bottom: '5%' }}
-                source={require('../../../assets/clock_icon.jpg')}
-              />
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  color: '#BFC0BD',
-                  fontSize: 22,
-                  textAlign: 'center',
-                  position: 'absolute',
-                  left: '20%',
-                  right: '5%',
-                  flexShrink: 1,
-                  flexWrap: 'wrap',
-                }}
-              >
-                Sept 20th, 8:00 AM to Sept 20th, 11:00 AM{' '}
-              </Text>
+              <View style={purchaseStyles.middle2Image}>
+                <Image
+                  style={{
+                    resizeMode: 'contain',
+                    width: '85%',
+                    flex: 1,
+                    left: '5%',
+                    bottom: '10%',
+                  }}
+                  source={require('../../../assets/clock_icon.png')}
+                />
+              </View>
+              <View style={purchaseStyles.middle2Text}>
+                <Text
+                  adjustsFontSizeToFit
+                  style={{
+                    fontWeight: 'bold',
+                    color: '#BFC0BD',
+                    fontSize: 22,
+                    textAlign: 'left',
+                    textAlignVertical: 'center',
+                    left: '2%',
+                    top: '15%',
+                  }}
+                >
+                  {monthNames[today.getMonth()]} {today.getDate()},{' '}
+                  {(today.getHours() < 10 ? '0' : '') + today.getHours()}:
+                  {(today.getMinutes() < 10 ? '0' : '') + today.getMinutes()} to{' '}
+                  {monthNames[today.getMonth()]} {today.getDate()},{' '}
+                  {(today.getHours() < 10 ? '0' : '') + (today.getHours() + 1)}:
+                  {(today.getMinutes() < 10 ? '0' : '') + today.getMinutes()}{' '}
+                </Text>
+              </View>
             </View>
 
             <View style={purchaseStyles.bottom}>
@@ -120,6 +158,16 @@ const PurchaseScreen = () => {
                 <View style={purchaseStyles.bottom_text}>
                   <Text style={purchaseStyles.greyTextStyleLeft}> GST + PST</Text>
                   <Text style={purchaseStyles.greyTextStyleRight}> $ {tax.toFixed(2)}</Text>
+                </View>
+                <View style={purchaseStyles.bottom_text}>
+                  <Text style={purchaseStyles.greyTextStyleLeft}> Swivel Maintenace </Text>
+                  <Text style={purchaseStyles.greyTextStyleRight}>
+                    $ {swivelFeeTotal.toFixed(2)}
+                  </Text>
+                </View>
+                <View style={purchaseStyles.bottom_text}>
+                  <Text style={purchaseStyles.greyTextStyleLeft}> Number of Hours</Text>
+                  <Text style={purchaseStyles.greyTextStyleRight}> {numHours}</Text>
                 </View>
               </ScrollView>
             </View>
@@ -139,8 +187,7 @@ const PurchaseScreen = () => {
                       // fontWeight: 'bold',
                     }}
                   >
-                    {' '}
-                    Pay Now{' '}
+                    Pay Now
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -175,8 +222,17 @@ const purchaseStyles = StyleSheet.create({
   },
 
   middle2: {
-    flex: 0.1, // *2 since there are 2 using this
-    // backgroundColor: "beige",
+    flex: 0.1,
+    flexDirection: 'row',
+    marginLeft: '5%',
+    marginRight: '2%',
+  },
+  middle2Image: {
+    flex: 0.15,
+    // borderWidth: 1,
+  },
+  middle2Text: {
+    flex: 1,
     // borderWidth: 1,
   },
   bottom: {
