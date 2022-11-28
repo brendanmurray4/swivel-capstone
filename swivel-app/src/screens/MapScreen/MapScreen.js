@@ -262,8 +262,6 @@ const MapScreen = () => {
                           icon={require('../../../assets/available_bike_map_enlarged.png')}
                           onPress={() => {
                             setSelectedBike(bike);
-                            console.log(bike.location.latitude);
-
                             // console.log(SelectedBike);
                           }}
                         />
