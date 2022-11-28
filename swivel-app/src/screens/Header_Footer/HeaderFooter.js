@@ -8,7 +8,7 @@ export function generateHeader() {
   const header = [];
 
   header.push(
-    <View style={headerFooterStyles.default}>
+    <View style={headerFooterStyles.default} key={0}>
       <TouchableOpacity
         style={headerFooterStyles.headerButtonSwivel}
         onPress={() => navigation.navigate('Map')}
@@ -54,7 +54,7 @@ export function generateFooter() {
   }
 
   footer.push(
-    <View style={headerFooterStyles.default}>
+    <View style={headerFooterStyles.default} key={1}>
       <TouchableOpacity
         style={headerFooterStyles.footerButtonBike}
         onPress={() => navigation.navigate('CurrentBike')}

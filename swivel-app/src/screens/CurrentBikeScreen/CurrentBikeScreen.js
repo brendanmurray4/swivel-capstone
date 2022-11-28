@@ -216,7 +216,6 @@ const CurrentBikeScreen = () => {
 const currentBikeStyles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'space-between',
     backgroundColor: '#eff',
   },
   //Image
@@ -244,56 +243,27 @@ const currentBikeStyles = StyleSheet.create({
   defaultText: {
     flex: 1,
     borderWidth: 1,
-    // flexGrow: 1,
-    // // paddingVertical: 10,
-
-    // alignContent: 'center',
+    borderLeftWidth: 0.5,
     backgroundColor: 'white',
-    // fontWeight: 'bold',
-    // color: '#000',
-    // fontSize: 16,
-    // paddingVertical: '3%',
-    // paddingHorizontal: '15%',
     alignItems: 'stretch',
     textAlignVertical: 'center',
     textAlign: 'center',
+    fontSize: 18,
   },
   textBoxRow: {
     flex: 1,
     flexDirection: 'row',
-    borderWidth: 1,
-    // flexGrow: 1,
-    // // paddingVertical: 10,
-
-    // alignContent: 'center',
-
     justifyContent: 'center',
     textAlign: 'center',
     backgroundColor: 'white',
-    // fontWeight: 'bold',
-    // color: '#000',
-    // fontSize: 16,
-    // paddingVertical: '3%',
-    // paddingHorizontal: '15%',
     alignItems: 'stretch',
   },
   textBoxColumn: {
     flex: 1,
     flexDirection: 'column',
-    borderWidth: 1,
-    // flexGrow: 1,
-    // // paddingVertical: 10,
-
-    // alignContent: 'center',
-
     justifyContent: 'center',
     textAlign: 'center',
     backgroundColor: 'white',
-    // fontWeight: 'bold',
-    // color: '#000',
-    // fontSize: 16,
-    // paddingVertical: '3%',
-    // paddingHorizontal: '15%',
     alignItems: 'stretch',
   },
 
@@ -301,14 +271,12 @@ const currentBikeStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     top: '0%',
-    // borderWidth: 1,
     backgroundColor: '#B4FF39',
   },
 
   buttonUnlockDelegatorText: {
     fontWeight: 'bold',
     color: '#000',
-    // color: '#B4FF39',
     fontSize: 22,
     textAlign: 'center',
     textAlignVertical: 'center',
@@ -321,6 +289,7 @@ const currentBikeStyles = StyleSheet.create({
     color: '#BFC0BD',
     fontSize: 22,
     borderWidth: 1,
+    borderRightWidth: 0.5,
     flex: 1,
     textAlignVertical: 'center',
     textAlign: 'center',

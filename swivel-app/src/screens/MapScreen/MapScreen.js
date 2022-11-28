@@ -76,7 +76,7 @@ const MapScreen = () => {
       image: require('../../../assets/bikeSelection/bike4.jpg'),
     },
   ]);
-  const onCheckoutPressed = () => {
+  const onCheckoutPressed = (props) => {
     const image = SelectedBike.image;
     const name = SelectedBike.bikeName;
     const rating = SelectedBike.rating;
@@ -84,17 +84,22 @@ const MapScreen = () => {
     const time = SelectedBike.time;
     let location = '';
 
-    Geocoder.from(SelectedBike.location.latitude, SelectedBike.location.longitude)
-      .catch((error) => console.log(error))
-      .then((loc) => {
-        location =
-          loc.results[1].address_components[0].long_name +
-          ' ' +
-          loc.results[1].address_components[1].long_name +
-          ', ' +
-          loc.results[1].address_components[2].long_name;
-        NavigateToNextPage(image, name, location, rating, price, time);
-      });
+    if (SelectedBike != 0) {
+      Geocoder.from(SelectedBike.location.latitude, SelectedBike.location.longitude)
+        .catch((error) => console.log(error))
+        .then((loc) => {
+          location =
+            loc.results[1].address_components[0].long_name +
+            ' ' +
+            loc.results[1].address_components[1].long_name +
+            ', ' +
+            loc.results[1].address_components[2].long_name;
+
+          NavigateToNextPage(image, name, location, rating, price, time);
+        });
+    } else {
+      navigation.navigate('BikeSelection');
+    }
   };
 
   function NavigateToNextPage(image, name, location, rating, price, time) {
@@ -221,80 +226,101 @@ const MapScreen = () => {
       >
         <View style={headerFooterStyles.header}>{generateHeader()}</View>
         <View style={headerFooterStyles.body}>
-          <CustomButton
-            text={
-              SelectedBike == 0
-                ? 'Select a bike '
-                : 'Tap to rent: ' + SelectedBike.bikeName + ' for $' + SelectedBike.price + '/hr'
-            }
-            onPress={onCheckoutPressed}
-            alignItems="right"
-          />
           <View style={styles.container}>
-            {true && (
-              <>
-                <MapView
-                  provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                  style={styles.map}
-                  region={{
-                    latitude: telemetry ? telemetry.gps.latitude : 49.277748,
-                    longitude: telemetry ? telemetry.gps.longitude : -122.90905,
-                    latitudeDelta: 0.015,
-                    longitudeDelta: 0.0121,
-                  }}
-                >
-                  <Marker
-                    coordinate={{
-                      latitude: 49.277748,
-                      longitude: -122.90905,
+            <View style={styles.mapArea}>
+              {true && (
+                <>
+                  <MapView
+                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                    style={styles.map}
+                    region={{
+                      latitude: telemetry ? telemetry.gps.latitude : 49.277748,
+                      longitude: telemetry ? telemetry.gps.longitude : -122.90905,
+                      latitudeDelta: 0.015,
+                      longitudeDelta: 0.0121,
                     }}
-                    icon={require('../../../assets/user_location_map_enlarged.png')}
-                  />
-                  {AvailableBikes
-                    ? AvailableBikes.map((bike) => (
-                        <Marker
-                          coordinate={{
-                            latitude: bike.location.latitude,
-                            longitude: bike.location.longitude,
-                          }}
-                          title={bike.bikeName}
-                          description={'★' + bike.rating + '\n' + '$' + bike.price + '/hour'}
-                          icon={require('../../../assets/available_bike_map_enlarged.png')}
-                          onPress={() => {
-                            setSelectedBike(bike);
-                            // console.log(SelectedBike);
-                          }}
-                        />
-                      ))
-                    : null}
-                </MapView>
-              </>
-            )}
-          </View>
-          <View style={styles.dataContainer}>
-            <View style={styles.dataContainerRow}>
-              <View>
-                <Text style={styles.dataHeader}>Signal (RSSI)</Text>
-                <Text style={styles.dataValue}>{telemetry ? telemetry.grps.rssi : '0'} dBm</Text>
+                    onPress={() => {
+                      setSelectedBike(0);
+                    }}
+                  >
+                    <Marker
+                      coordinate={{
+                        latitude: 49.277748,
+                        longitude: -122.90905,
+                      }}
+                      icon={require('../../../assets/user_location_map_enlarged.png')}
+                    />
+                    {AvailableBikes
+                      ? AvailableBikes.map((bike) => (
+                          <Marker
+                            coordinate={{
+                              latitude: bike.location.latitude,
+                              longitude: bike.location.longitude,
+                            }}
+                            title={bike.bikeName}
+                            description={'★' + bike.rating + '\n' + '$' + bike.price + '/hour'}
+                            icon={require('../../../assets/available_bike_map_enlarged.png')}
+                            onPress={() => {
+                              setSelectedBike(bike);
+                            }}
+                            key={bike.key}
+                          />
+                        ))
+                      : null}
+                  </MapView>
+                </>
+              )}
+            </View>
+            <View style={styles.dataContainer}>
+              <View style={styles.dataContainerRow}>
+                <View>
+                  <Text style={styles.dataHeader}>Signal (RSSI)</Text>
+                  <Text style={styles.dataValue}>{telemetry ? telemetry.grps.rssi : '0'} dBm</Text>
+                </View>
+                <View>
+                  <Text style={styles.dataHeader}>Network</Text>
+                  <Text style={styles.dataValue}>{getFriendlyNetworkStatus()}</Text>
+                </View>
               </View>
-              <View>
-                <Text style={styles.dataHeader}>Network</Text>
-                <Text style={styles.dataValue}>{getFriendlyNetworkStatus()}</Text>
+              <View style={styles.dataContainerRow}>
+                <View>
+                  <Text style={styles.dataHeader}>Long</Text>
+                  <Text style={styles.dataValue}>{telemetry ? telemetry.gps.longitude : '0'}</Text>
+                </View>
+                <View>
+                  <Text style={styles.dataHeader}>Lat</Text>
+                  <Text style={styles.dataValue}>{telemetry ? telemetry.gps.latitude : '0'}</Text>
+                </View>
+                <View>
+                  <Text style={styles.dataHeader}>Alt</Text>
+                  <Text style={styles.dataValue}>{telemetry ? telemetry.gps.altitude : '0'}</Text>
+                </View>
               </View>
             </View>
-            <View style={styles.dataContainerRow}>
-              <View>
-                <Text style={styles.dataHeader}>Long</Text>
-                <Text style={styles.dataValue}>{telemetry ? telemetry.gps.longitude : '0'}</Text>
-              </View>
-              <View>
-                <Text style={styles.dataHeader}>Lat</Text>
-                <Text style={styles.dataValue}>{telemetry ? telemetry.gps.latitude : '0'}</Text>
-              </View>
-              <View>
-                <Text style={styles.dataHeader}>Alt</Text>
-                <Text style={styles.dataValue}>{telemetry ? telemetry.gps.altitude : '0'}</Text>
-              </View>
+
+            <View style={styles.buttonArea}>
+              <TouchableOpacity style={styles.rentButton} onPress={() => onCheckoutPressed()}>
+                <View style={styles.rentButton}>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      color: '#300000',
+                      fontSize: 26,
+                      textAlign: 'center',
+                      // fontWeight: 'bold',
+                      flexShrink: 1,
+                    }}
+                  >
+                    {SelectedBike == 0
+                      ? 'List of Bikes'
+                      : 'Tap to Rent: ' +
+                        SelectedBike.bikeName +
+                        ' for $' +
+                        SelectedBike.price +
+                        '/hr'}
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -314,16 +340,26 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    display: 'flex',
+    // display: 'flex',
     flex: 1,
-    backgroundColor: '#e2e8f0',
+    backgroundColor: 'red',
     // alignItems: 'center',
     // justifyContent: 'flex-end',
     // width: '100%',
     flexDirection: 'column',
   },
+  mapArea: {
+    flex: 0.9,
+    backgroundColor: 'yellow',
+  },
+  buttonArea: {
+    flex: 0.1,
+    backgroundColor: 'blue',
+    flexDirection: 'column',
+  },
 
   dataContainer: {
+    // flex: 1,
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#ffffff',
@@ -334,7 +370,7 @@ const styles = StyleSheet.create({
     // paddingTop: 10,
     paddingVertical: 10,
     position: 'absolute',
-    bottom: '3%',
+    bottom: '20%',
     left: '5%',
     right: '5%',
   },
@@ -370,6 +406,17 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+
+  rentButton: {
+    flex: 1,
+    backgroundColor: '#B4FF39',
+    color: '#000',
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: '1%',
   },
 });
 export default MapScreen;

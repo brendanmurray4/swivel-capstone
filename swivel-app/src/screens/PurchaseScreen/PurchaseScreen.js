@@ -42,7 +42,6 @@ const PurchaseScreen = () => {
   totalHourly = totalHourly * (1 + swivelFee);
   tax = totalHourly * 0.12;
   totalPrice = totalHourly + tax;
-
   return (
     <View style={purchaseStyles.container}>
       <ImageBackground
@@ -175,7 +174,7 @@ const PurchaseScreen = () => {
             <View style={purchaseStyles.bottom2}>
               <TouchableOpacity
                 style={purchaseStyles.confirmButton}
-                onPress={() => navigation.navigate('Visa')}
+                onPress={() => navigation.navigate('Visa', {price})}
               >
                 <View style={purchaseStyles.confirmButton}>
                   <Text

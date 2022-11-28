@@ -109,10 +109,10 @@ function bikeGeneration() {
     const price = masterArray[i].map(({ price }) => price);
     const time = masterArray[i].map(({ time }) => time);
     views.push(
-      <View style={bikeSelectionStyles.bikeBox}>
+      <View style={bikeSelectionStyles.bikeBox} key={masterArray[i].name}>
         <Image style={bikeSelectionStyles.bikeImage} source={image} />
-        <View style={bikeSelectionStyles.bikeTextBox}>
-          <View style={bikeSelectionStyles.bikeTextBoxInnerTop}>
+        <View style={bikeSelectionStyles.bikeTextBox} key={masterArray[i].name}>
+          <View style={bikeSelectionStyles.bikeTextBoxInnerTop} key={masterArray[i].name}>
             <Text style={bikeSelectionStyles.bikeTextTop}>{name}</Text>
             <Text
               adjustsFontSizeToFit
@@ -124,7 +124,7 @@ function bikeGeneration() {
             </Text>
           </View>
 
-          <View style={bikeSelectionStyles.bikeTextBoxInnerBottom}>
+          <View style={bikeSelectionStyles.bikeTextBoxInnerBottom} key={masterArray[i].name}>
             <Image
               style={bikeSelectionStyles.bikeInnerImage}
               source={require('../../../assets/star.png')}
@@ -142,7 +142,7 @@ function bikeGeneration() {
             <Text style={bikeSelectionStyles.bikeTextBottom}>{time}</Text>
           </View>
 
-          <View style={bikeSelectionStyles.bottomButtonInner}>
+          <View style={bikeSelectionStyles.bottomButtonInner} key={masterArray[i].name}>
             <TouchableOpacity
               style={bikeSelectionStyles.button}
               onPress={() =>
@@ -156,7 +156,7 @@ function bikeGeneration() {
                 })
               }
             >
-              <View style={bikeSelectionStyles.button}>
+              <View style={bikeSelectionStyles.button} key={masterArray[i].name}>
                 <Text style={bikeSelectionStyles.buttonText}> Rent Bike </Text>
               </View>
             </TouchableOpacity>

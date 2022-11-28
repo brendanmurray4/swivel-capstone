@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
 import {
   Text,
@@ -13,6 +13,8 @@ import {
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 
 const VisaScreen = () => {
+  const route = useRoute();
+  const {price} = route.params;
   const [cardnumber, setCardnumber] = useState('');
   const [fullName, setFullname] = useState('');
   const [month, setMonth] = useState('');
@@ -97,14 +99,14 @@ const VisaScreen = () => {
                   onChangeText={(cvv) => setCvv(cvv)}
                 />
               </View>
-              <Text style={visaStyles.totalPrice}>$ 28.55</Text>
+              <Text style={visaStyles.totalPrice}>$ {price}</Text>
             </View>
 
             <View style={visaStyles.bottom}>
               <View style={visaStyles.PayButton}>
                 <TouchableOpacity
                   style={visaStyles.PayButton}
-                  onPress={() => navigation.navigate('Purchase')}
+                  onPress={() => navigation.navigate(Alert())}
                 >
                   <Text
                     style={{
