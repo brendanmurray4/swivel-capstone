@@ -13,3 +13,5 @@ def device():
     if request.method =="POST":
         reqdata=request.json
         print(reqdata)
+        resp = ResponseSuccess(reqdata)
+    return resp.encode_json()
