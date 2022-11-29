@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import os
-from flask import Flask
+from flask import Flask, g
 from services.status import StatusService
 from services.telemetry import TelemetryService
 from services.control import ControlService

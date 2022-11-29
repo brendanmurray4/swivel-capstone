@@ -1,32 +1,72 @@
 import base64
 import requests
-from flask import Blueprint, request, Response
+from flask import g, Blueprint, request, Response, current_app
 from common import ResponseSuccess, ResponseError, APIError
-from cache import cache
 from http import HTTPStatus
 
 HeliumService = Blueprint("helium_service", __name__)
 
+state = {
+    'lat': 0.,
+    'long': 0.,
+    'alert': 0,
+    'name': '',
+    'location': '',
+    'rating': '4.7/5',
+    'price': '4.60',
+    'time': '5d 2h',
+    'image': 'http://imgur.com/',
+    'theft_detection': True,
+    'rented': False,
+    'on_platform': False
+}
+
 @HeliumService.route("/device", methods=["POST"])
 def device():
     data=request.json
+
     if data['type'] == 'join':
         # Send through the device state
-        send_to_main("state:1")
+        theft_detection_state = 0
+        if state['theft_detection'] == True:
+            theft_detection_state = 1
+        send_to_main("state:%d" % (theft_detection_state))
     if data['type'] == 'uplink':
         # Update our local state
-        pass
+        payload = data['payload']
+        payload_decoded = base64_to_text(payload)
+        print("(%s) -> (%s): %s" % (data['name'], data['hotspots'][0]['name'], payload_decoded))
+
     return ResponseSuccess({ 'status': HTTPStatus.OK }).encode_json()
 
+@HeliumService.route("/device/sentry/<value_str>", methods=["POST"])
+def send_state(value_str: str):
+    value = None
+    try:
+        value = int(value_str)
+    except ValueError as e:
+        print(e)
+        return ResponseError([APIError('INVALID_VALUE', 'set a valid value for sentry mode')]).encode_json()
 
-@HeliumService.route("/unlock", methods=["POST"])
+    try:
+        state['theft_detection'] = value > 0
+        if state['theft_detection'] == True:
+            send_to_main("state:1")
+        else:
+            send_to_main("state:0")
+    except Exception as e:
+        print(e)
+        return ResponseError([APIError("HELIUM_NETWORK_FAIL_SEND", str(e))], HTTPStatus.INTERNAL_SERVER_ERROR).encode_json(), HTTPStatus.INTERNAL_SERVER_ERROR
+    return ResponseSuccess({"message":"success"}).encode_json()
+
+@HeliumService.route("/device/unlock", methods=["POST"])
 def unlock():
     try:
         send_to_main("unlock")
     except Exception as e:
         print(e)
         return ResponseError([APIError("HELIUM_NETWORK_FAIL_SEND", str(e))], HTTPStatus.INTERNAL_SERVER_ERROR).encode_json(), HTTPStatus.INTERNAL_SERVER_ERROR
-    return ResponseSuccess({"message":"success"})
+    return ResponseSuccess({"message":"success"}).encode_json()
 
 
 def send_to_main(raw_message = "") -> Response:
@@ -36,6 +76,12 @@ def send_to_main(raw_message = "") -> Response:
         "2add8aa4-46ac-40e3-b2d1-672e3939b0bf",
         raw_message
     )
+
+def base64_to_text(raw_message = ""):
+    base64_bytes = raw_message.encode('ascii')
+    message_bytes = base64.b64decode(base64_bytes)
+    message = message_bytes.decode('ascii')
+    return message
 
 def send_to_device(integration_id, downlink_key, device_id = "", raw_message = "") -> Response:
     message_bytes = raw_message.encode('ascii')
