@@ -37,6 +37,8 @@ def device():
         payload_decoded = base64_to_text(payload)
         print("(%s) -> (%s): %s" % (data['name'], data['hotspots'][0]['name'], payload_decoded))
         tokens = payload_decoded.split(";")
+        if not tokens:
+            return ResponseError([APIError('NO PAYLOAD', 'no payload data')]).encode_json()
         nmea_strings = tokens[0].split(",")
         lat = latitude(nmea_strings[2], nmea_strings[3])
         long = longitude(nmea_strings[4], nmea_strings[5])
