@@ -33,7 +33,7 @@ def telemetry(device_id):
         if str(device_id) in cache.telemetrycache:
             resp = ResponseSuccess(cache.telemetrycache[device_id])
         else:
-            resp = ResponseError(["Device not in list"], 1)
+            resp = ResponseSuccess({"error":"Device not in list"})
         # For use with databases
         # conn = sqlite3.connect(DB_PATH)
         # cursor = conn.cursor()
