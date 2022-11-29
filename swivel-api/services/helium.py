@@ -36,8 +36,19 @@ def device():
         payload = data['payload']
         payload_decoded = base64_to_text(payload)
         print("(%s) -> (%s): %s" % (data['name'], data['hotspots'][0]['name'], payload_decoded))
+        tokens = payload_decoded.split(";")
+        nmea_strings = tokens[0].split(",")
+        latitude = latitude(nmea_strings[2], nmea_strings[3])
+        longitude = longitude(nmea_strings[4], nmea_strings[5])
+        state["lat"] = latitude
+        state["long"] = longitude
 
     return ResponseSuccess({ 'status': HTTPStatus.OK }).encode_json()
+
+@HeliumService.route("/app", methods = ["GET"])
+def app_telemetry():
+    resp = ResponseSuccess(state)
+    return resp.encode_json()
 
 @HeliumService.route("/device/sentry/<value_str>", methods=["POST"])
 def send_state(value_str: str):
@@ -67,6 +78,16 @@ def unlock():
         print(e)
         return ResponseError([APIError("HELIUM_NETWORK_FAIL_SEND", str(e))], HTTPStatus.INTERNAL_SERVER_ERROR).encode_json(), HTTPStatus.INTERNAL_SERVER_ERROR
     return ResponseSuccess({"message":"success"}).encode_json()
+
+def latitude(t: str, dir: str):
+    if dir == "W":
+        return -1*(float(t[0:2]) + float(t[2:11])/60)
+    return (float(t[0:2]) + float(t[2:11])/60)
+
+def longitude(t: str, dir: str):
+    if dir == "S":
+        return -1*(float(t[0:3]) + float(t[3:11])/60)
+    return (float(t[0:3]) + float(t[3:11])/60)
 
 
 def send_to_main(raw_message = "") -> Response:
