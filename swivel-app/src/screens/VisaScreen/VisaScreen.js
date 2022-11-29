@@ -8,13 +8,14 @@ import {
   Image,
   TextInput,
   ImageBackground,
+  Alert,
 } from 'react-native';
 
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 
 const VisaScreen = () => {
   const route = useRoute();
-  const {price} = route.params;
+  const {totalPrice} = route.params;
   const [cardnumber, setCardnumber] = useState('');
   const [fullName, setFullname] = useState('');
   const [month, setMonth] = useState('');
@@ -99,14 +100,19 @@ const VisaScreen = () => {
                   onChangeText={(cvv) => setCvv(cvv)}
                 />
               </View>
-              <Text style={visaStyles.totalPrice}>$ {price}</Text>
+              <Text style={visaStyles.totalPrice}>$ {totalPrice.toFixed(2)}</Text>
+              {console.log(totalPrice)}
             </View>
 
             <View style={visaStyles.bottom}>
               <View style={visaStyles.PayButton}>
                 <TouchableOpacity
                   style={visaStyles.PayButton}
-                  onPress={() => navigation.navigate(Alert())}
+                  onPress={() => {
+                    Alert.alert('In Progress', 'Bike Rented!', [
+                      { text: 'OK', onPress: () => console.log('User Payed') },
+                    ]);
+                  }}
                 >
                   <Text
                     style={{

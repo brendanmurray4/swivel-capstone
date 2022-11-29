@@ -6,10 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  ScrollView,
-  FlatList,
   ImageBackground,
-  ImageStore,
   Alert,
 } from 'react-native';
 
@@ -20,7 +17,6 @@ const CurrentBikeScreen = () => {
   const [telemetry, setTelemetry] = React.useState(undefined);
   const [tasks, setTasks] = React.useState(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [modalOpen, setModalOpen] = React.useState(false);
 
   useEffect(() => {
     const updateInterval = setInterval(() => {
@@ -135,7 +131,7 @@ const CurrentBikeScreen = () => {
           <View style={currentBikeStyles.top}>
             <Image
               style={{ resizeMode: 'cover', height: '100%', width: '100%' }}
-              source={require('../../../assets/bikeSelection/bike4.jpg')}
+              source={require('../../../assets/bikeSelection/actual_Bike.jpg')}
             />
           </View>
 
@@ -149,7 +145,7 @@ const CurrentBikeScreen = () => {
                 flex: 1,
               }}
             >
-              Emonda SLR
+              GT Aggressor
             </Text>
           </View>
 

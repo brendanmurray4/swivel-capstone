@@ -174,7 +174,7 @@ const PurchaseScreen = () => {
             <View style={purchaseStyles.bottom2}>
               <TouchableOpacity
                 style={purchaseStyles.confirmButton}
-                onPress={() => navigation.navigate('Visa', {price})}
+                onPress={() => navigation.navigate('Visa', {totalPrice})}
               >
                 <View style={purchaseStyles.confirmButton}>
                   <Text

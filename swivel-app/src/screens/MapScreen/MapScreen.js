@@ -6,9 +6,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Alert,
-  Image,
-  Modal,
   ImageBackground,
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';

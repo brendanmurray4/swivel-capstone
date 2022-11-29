@@ -234,30 +234,27 @@ function bikeGeneration(masterArray) {
           <View style={bikeGarageStyles.bottomButtonInner}>
             <TouchableOpacity
               style={bikeGarageStyles.button}
-              onPress={() =>
-                navigation.navigate('Purchase', {
-                  image,
-                  name,
-                  location,
-                  rating,
-                  price,
-                  time,
-                })
-              }
+              onPress={() => {
+                Alert.alert('In Progress', 'Bike Edited!', [
+                  { text: 'OK', onPress: () => console.log('Bike Added') },
+                ]);
+              }}
             >
-              <TouchableOpacity
-                style={bikeGarageStyles.button}
-                onPress={() => {
-                  Alert.alert('In Progress', 'This page will be updated soon!', [
-
-                    { text: 'OK', onPress: () => console.log('OK Pressed') },
-                  ]);
-                }}
-              >
-                <View style={bikeGarageStyles.button}>
-                  <Text style={bikeGarageStyles.buttonText}> Edit Listing </Text>
-                </View>
-              </TouchableOpacity>
+              <View style={bikeGarageStyles.button}>
+                <Text style={bikeGarageStyles.buttonText}> Edit </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={bikeGarageStyles.button}
+              onPress={() => {
+                Alert.alert('In Progress', 'Bike Removed!', [
+                  { text: 'OK', onPress: () => console.log('Bike Removed') },
+                ]);
+              }}
+            >
+              <View style={bikeGarageStyles.button}>
+                <Text style={bikeGarageStyles.buttonText}> Remove </Text>
+              </View>
             </TouchableOpacity>
           </View>
         </View>
@@ -352,6 +349,7 @@ const bikeGarageStyles = StyleSheet.create({
     justifyContent: 'space-between',
     // backgroundColor: 'yellow',
     // borderWidth: 1,
+    marginRight: '3%',
   },
 
   bikeTextTop: {
@@ -395,6 +393,7 @@ const bikeGarageStyles = StyleSheet.create({
     top: '0%',
     // bottom: '10%',
     borderWidth: 1,
+    borderColor: 'white',
     // marginBottom: '5%',
     // marginRight: '5%',
     borderRadius: 10,
