@@ -38,17 +38,23 @@ def device():
         print("(%s) -> (%s): %s" % (data['name'], data['hotspots'][0]['name'], payload_decoded))
         tokens = payload_decoded.split(";")
         nmea_strings = tokens[0].split(",")
-        latitude = latitude(nmea_strings[2], nmea_strings[3])
-        longitude = longitude(nmea_strings[4], nmea_strings[5])
-        state["lat"] = latitude
-        state["long"] = longitude
+        lat = latitude(nmea_strings[2], nmea_strings[3])
+        long = longitude(nmea_strings[4], nmea_strings[5])
+        state["lat"] = lat
+        state["long"] = long
 
     return ResponseSuccess({ 'status': HTTPStatus.OK }).encode_json()
 
-@HeliumService.route("/app", methods = ["GET"])
+@HeliumService.route("/app", methods = ["GET, POST"])
 def app_telemetry():
-    resp = ResponseSuccess(state)
-    return resp.encode_json()
+    if request.method == "GET":
+        resp = ResponseSuccess(state)
+        return resp.encode_json()
+    if request.method == "POST":
+        data = request.json
+        for item in data.keys():
+            state[item] = data[item]
+    return ResponseSuccess({ 'status': HTTPStatus.OK }).encode_json()
 
 @HeliumService.route("/device/sentry/<value_str>", methods=["POST"])
 def send_state(value_str: str):
