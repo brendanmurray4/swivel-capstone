@@ -14,4 +14,8 @@ def device():
         reqdata=request.json
         print(reqdata)
         resp = ResponseSuccess(reqdata)
+    if request.method =="GET":
+        reqdata=request.json
+        print(reqdata)
+        resp = ResponseSuccess(reqdata)
     return resp.encode_json()
