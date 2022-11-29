@@ -11,10 +11,8 @@ HeliumService = Blueprint("helium_service", __name__)
 @HeliumService.route("/device", methods=["GET", "POST"])
 def device():
     if request.method =="POST":
-        reqdata=request.data
-        stringdata = str(reqdata)
-        datadict = json.loads(stringdata)
-        if datadict['type'] == 'join':
+        reqdata=request.json
+        if reqdata['type'] == 'join':
             #resp = ResponseSuccess(cache.telemetrycache[0])
             #return ResponseSuccess(cache.telemetrycache[0]["state"]).encode_json()
             if cache.telemetrycache["0"]:
@@ -22,7 +20,7 @@ def device():
             else:
                 messagestring = "state:0"
             sendtodevice("76e573ed-d95c-422d-add7-896b62fe6995", "shJTLo6BC4waLuK_E67Uo1m5Z4tRBhlY", "76e573ed-d95c-422d-add7-896b62fe6995", messagestring)
-        elif datadict['type'] == 'uplink':
+        elif reqdata['type'] == 'uplink':
             #GPS data
             stringdata = str(reqdata)
             data = stringdata.split(';')
@@ -37,7 +35,7 @@ def device():
 @HeliumService.route("/unlock", methods=["POST"])
 def unlock():
     try:
-        sendtodevice("76e573ed-d95c-422d-add7-896b62fe6995", "shJTLo6BC4waLuK_E67Uo1m5Z4tRBhlY", "76e573ed-d95c-422d-add7-896b62fe6995", )
+        sendtodevice("76e573ed-d95c-422d-add7-896b62fe6995", "shJTLo6BC4waLuK_E67Uo1m5Z4tRBhlY", "76e573ed-d95c-422d-add7-896b62fe6995", "unlock")
     except Exception as e:
         print(e)
         return ResponseError([APIError("HELIUM_NETWORK_FAIL_SEND", str(e))], 500)
