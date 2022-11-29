@@ -3,7 +3,7 @@ import json
 import datetime
 from xmlrpc.client import ResponseError
 from flask import Blueprint, request, jsonify
-from requests import ResponseSuccess
+from common import ResponseSuccess
 from cache import cache
 
 DB_PATH = "swivel.db"
