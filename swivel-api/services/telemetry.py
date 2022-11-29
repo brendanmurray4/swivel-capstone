@@ -2,7 +2,7 @@ from http.client import REQUESTED_RANGE_NOT_SATISFIABLE
 import sqlite3
 import json
 from flask import Blueprint, request
-from requests import ResponseSuccess
+from requests import ResponseSuccess, ResponseError
 from cache import cache
 
 # Change this path to somewhere near root?
@@ -30,7 +30,10 @@ def telemetry(device_id):
         # resp = ResponseSuccess({"Success": "POST"})
         resp = ResponseSuccess(reqdata)
     if request.method == "GET":
-        resp = ResponseSuccess(cache.telemetrycache[device_id])
+        if str(device_id) in cache.telemetrycache:
+            resp = ResponseSuccess(cache.telemetrycache[device_id])
+        else:
+            resp = ResponseError("Device not in list")
         # For use with databases
         # conn = sqlite3.connect(DB_PATH)
         # cursor = conn.cursor()
