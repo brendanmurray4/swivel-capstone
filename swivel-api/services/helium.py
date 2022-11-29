@@ -47,7 +47,7 @@ def device():
 
     return ResponseSuccess({ 'status': HTTPStatus.OK }).encode_json()
 
-@HeliumService.route("/app", methods = ["GET, POST"])
+@HeliumService.route("/app", methods = ["GET", "POST"])
 def app_telemetry():
     if request.method == "GET":
         resp = ResponseSuccess(state)
