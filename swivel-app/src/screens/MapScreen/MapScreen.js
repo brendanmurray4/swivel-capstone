@@ -118,34 +118,6 @@ const MapScreen = () => {
   useEffect(() => {
     const updateInterval = setInterval(() => {
       getBike();
-      // if (bikeInfo != undefined && bikeInfo.name == 'GT Aggressor') {
-      //   console.log('MATCH!');
-      // } else if (initialized == false) {
-      //   if (bikeInfo != undefined) {
-      //     setInitialized(true);
-      //     initBike();
-      //     console.log('INIT');
-      //   }
-      //   console.log('Waiting');
-      //   console.log(bikeInfo);
-      // }
-      // fetch('http://iot.swivel.bike/telemetry/1')
-      //   .then((resp) => resp.json()) // PLEASE UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      //   .then((resp) => {
-      //     setTelemetry(resp.data);
-      //     // console.log("test2" + resp.data);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
-      // fetch('http://iot.swivel.bike/control/1')
-      //   .then((resp) => resp.json()) // PLEASE UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      //   .then((resp) => {
-      //     setTasks(resp.data);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
     }, 6000);
     return () => {
       window.clearInterval(updateInterval);
