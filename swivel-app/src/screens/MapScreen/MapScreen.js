@@ -3,9 +3,8 @@
 
 import { useNavigation } from '@react-navigation/native';
 import { Auth, selectInput } from 'aws-amplify';
-import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -34,6 +33,7 @@ const MapScreen = () => {
   const [SelectedBike, setSelectedBike] = React.useState(0);
   const [username, setUserName] = React.useState(false);
   const [initialized, setInitialized] = useState(false);
+  const [alertOccurred, setAlertOccurred] = useState(0);
   const [AvailableBikes] = useState([
     // replace this with an API Fetch
     {
@@ -109,14 +109,26 @@ const MapScreen = () => {
       navigation.navigate('BikeSelection');
     }
   };
-    //RUN THIS AXIOS POST TO SEND PUSH NOTIFICATIONS
-//   axios.post(`https://app.nativenotify.com/api/indie/notification`, {
-//       subID: 'SwivelUserId',
-//       appId: 5009,
-//       appToken: 'zLGSh3bkdXv2IweqrDbIFD',
-//       title: 'Theft Detected',
-//       message: 'The Swivel motion detector has been triggered '
-//  });
+  //RUN THIS AXIOS POST TO SEND PUSH NOTIFICATIONS
+  if (bikeInfo != undefined && bikeInfo.alert == 1 && alertOccurred == 0) { // bikeInfo real value + bikeInfo has alert + alertOccurred only triggered once
+    setAlertOccurred(1);
+    bikeInfo.alert = 0;
+    editBike(bikeInfo);
+
+    axios.post(`https://app.nativenotify.com/api/indie/notification`, {
+      subID: 'SwivelUserId',
+      appId: 5009,
+      appToken: 'zLGSh3bkdXv2IweqrDbIFD',
+      title: 'Theft Detected',
+      message: 'The Swivel motion detector has been triggered ',
+    });
+  }
+
+  if(bikeInfo != undefined){
+    console.log(bikeInfo);
+  } else {
+    console.log("nope");
+  }
 
   if (username == false) {
     Auth.currentUserInfo().then((userInfo) => {
@@ -302,7 +314,7 @@ const MapScreen = () => {
             <View style={styles.buttonArea}>
               <TouchableOpacity
                 style={styles.rentButton}
-                onPress={() => (SelectedBike == 0 ?  0 : onCheckoutPressed())}
+                onPress={() => (SelectedBike == 0 ? 0 : onCheckoutPressed())}
               >
                 <View style={styles.rentButton}>
                   <Text

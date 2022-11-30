@@ -37,7 +37,7 @@ const PurchaseScreen = () => {
     numHours = 3,
     tax = 0,
     totalPrice = 0,
-    swivelFee = 0.05,
+    swivelFee = 0.20,
     swivelFeeTotal = 0;
   totalHourly = (numMinutes/60) * price;
   swivelFeeTotal = totalHourly * swivelFee;
