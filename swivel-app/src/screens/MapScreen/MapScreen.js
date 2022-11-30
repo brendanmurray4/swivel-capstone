@@ -275,6 +275,7 @@ const MapScreen = () => {
                       latitudeDelta: 0.015,
                       longitudeDelta: 0.0121,
                     }}
+                    moveOnMarkerPress={false}
                     onPress={() => {
                       setSelectedBike(0);
                       console.log('Tapped off map');
