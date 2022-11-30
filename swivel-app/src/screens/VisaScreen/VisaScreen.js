@@ -1,4 +1,5 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
+import axios from 'axios';
 import React, { useState } from 'react';
 import {
   Text,
@@ -13,6 +14,10 @@ import {
 
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 
+
+const delay = ms => new Promise(
+  resolve => setTimeout(resolve, ms)
+);
 const VisaScreen = () => {
   const route = useRoute();
   const { totalPrice, name } = route.params;
@@ -23,9 +28,39 @@ const VisaScreen = () => {
   const [cvv, setCvv] = useState('');
   const [bikeInfo, setBikeInfo] = React.useState(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [alertOccurred, setAlertOccurred] = useState(false);
 
   console.log(name);
   const navigation = useNavigation();
+
+
+  function sendAlert() {
+    console.log('enter alert');
+    console.log(alertOccurred);
+    if (alertOccurred == false) {
+      // bikeInfo real value + bikeInfo has alert + alertOccurred only triggered once
+      setAlertOccurred(true);
+      bikeInfo.alert = 0;
+      editBike(bikeInfo);
+      console.log('\n\n\nALERTTTT\n\n\n');
+
+      axios.post(`https://app.nativenotify.com/api/indie/notification`, {
+        subID: 'SwivelUserId',
+        appId: 5009,
+        appToken: 'zLGSh3bkdXv2IweqrDbIFD',
+        title: 'Theft Detected',
+        message: 'The Swivel motion detector has been triggered ',
+      });
+    }
+  }
+  async function makeRequest() {
+    console.log('DELAY WAITING\n\n');
+
+    await delay(15000);
+    sendAlert();
+
+    console.log('DELAY COMPLETE\n\n');
+  }
 
   const getBike = () => {
     fetch('https://iot.swivel.bike/helium/app')
@@ -168,6 +203,7 @@ const VisaScreen = () => {
                         onPress: () => {
                           console.log('User Payed');
                           navigation.navigate('Map');
+                          makeRequest();
                         },
                         // name =
                       },

@@ -293,8 +293,8 @@ const MapScreen = () => {
                     >
                       <Marker
                         coordinate={{
-                          latitude: 49.2137364,
-                          longitude: -122.9250981,
+                          latitude: 49.2096,
+                          longitude: -122.9263,
                         }}
                         icon={require('../../../assets/user_location_map_enlarged.png')}
                       />
