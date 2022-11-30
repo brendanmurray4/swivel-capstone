@@ -2,7 +2,7 @@
 // Read username, if username matches they see the bike, otherwise they do NOT
 
 import { useNavigation } from '@react-navigation/native';
-import { Auth, selectInput } from 'aws-amplify';
+import { Auth, Geo, selectInput } from 'aws-amplify';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {
@@ -12,8 +12,10 @@ import {
   TouchableOpacity,
   ImageBackground,
   TouchableHighlight,
+  PermissionsAndroid,
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
+import Geolocation from 'react-native-geolocation-service';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { DebugInstructions } from 'react-native/Libraries/NewAppScreen';
 
@@ -21,6 +23,8 @@ import awsmobile from '../../aws-exports';
 import CustomButton from '../../components/CustomButton';
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 Geocoder.init('AIzaSyBmjnH37clBAaGKN4R6Ji-qqUM3w8Lk2Js');
+
+
 
 // Page to unlock delegator
 const MapScreen = () => {
@@ -34,6 +38,7 @@ const MapScreen = () => {
   const [username, setUserName] = React.useState(false);
   const [initialized, setInitialized] = useState(false);
   const [alertOccurred, setAlertOccurred] = useState(0);
+  const [userLocation, setUserLocation] = useState(false);
   const [AvailableBikes] = useState([
     // replace this with an API Fetch
     {
@@ -127,11 +132,60 @@ const MapScreen = () => {
     });
   }
 
-  if (bikeInfo != undefined) {
-    console.log(bikeInfo);
-  } else {
-    console.log('nope');
-  }
+  const requestLocationPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Geolocation Permission',
+          message: 'Can we access your location?',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        }
+      );
+      console.log('granted', granted);
+      if (granted === 'granted') {
+        console.log('You can use Geolocation');
+        return true;
+      } else {
+        console.log('You cannot use Geolocation');
+        return false;
+      }
+    } catch (err) {
+      return false;
+    }
+  };
+  // function to check permissions and get Location
+  // const getLocation = () => {
+  //   const result = requestLocationPermission();
+  //   result.then((res) => {
+  //     console.log('res is:', res);
+  //     if (res) {
+  //       Geolocation.getCurrentPosition(
+  //         (position) => {
+  //           console.log("success?\n\n\n");
+  //           console.log(position);
+  //           setUserLocation(position);
+  //         },
+  //         (error) => {
+  //           // See error code charts below.
+  //           console.log("ERROR\n\n\n");
+  //           console.log(error.code, error.message);
+  //           setUserLocation(false);
+  //         },
+  //         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+  //       );
+  //     }
+  //   });
+  //   console.log('LOCATION OUTPUT' + userLocation);
+  // };
+
+  // if (bikeInfo != undefined) {
+  //   // console.log(bikeInfo);
+  // } else {
+  //   console.log('nope');
+  // }
 
   if (username == false) {
     Auth.currentUserInfo().then((userInfo) => {
@@ -247,8 +301,8 @@ const MapScreen = () => {
           ', ' +
           loc.results[1].address_components[2].long_name;
       });
-    console.log('TEStlocation' + tempLocation);
-    console.log(temp);
+    // console.log('TEStlocation' + tempLocation);
+    // console.log(temp);
     setBikeInfo(temp);
     editBike(bikeInfo);
   }
@@ -286,9 +340,12 @@ const MapScreen = () => {
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
+                      
                       moveOnMarkerPress={false}
                       onPress={() => {
                         console.log('Tapped off map');
+                        // console.log(userLocation);
+                        // getLocation();
                       }}
                     >
                       <Marker
