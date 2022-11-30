@@ -322,6 +322,7 @@ const MapScreen = () => {
                             description={'★' + bike.rating + '\n' + '$' + bike.price + '/hour'}
                             icon={require('../../../assets/available_bike_map_enlarged.png')}
                             onPress={() => {
+                              console.log('Tapped on map');
                               setSelectedBike(bike);
                             }}
                             key={bike.key}
