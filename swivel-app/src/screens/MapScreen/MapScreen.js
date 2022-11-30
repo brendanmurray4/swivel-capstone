@@ -24,8 +24,6 @@ import CustomButton from '../../components/CustomButton';
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 Geocoder.init('AIzaSyBmjnH37clBAaGKN4R6Ji-qqUM3w8Lk2Js');
 
-
-
 // Page to unlock delegator
 const MapScreen = () => {
   const [telemetry, setTelemetry] = React.useState(undefined);
@@ -310,6 +308,8 @@ const MapScreen = () => {
   if (bikeInfo == undefined) {
     getBike();
     console.log('Init Bike');
+  } else {
+    console.log(bikeInfo);
   }
 
   if (bikeInfo == undefined) {
@@ -334,13 +334,12 @@ const MapScreen = () => {
                     <MapView
                       provider={PROVIDER_GOOGLE} // remove if not using Google Maps
                       style={styles.map}
-                      center={{
+                      initialRegion={{
                         latitude: 49.277748,
                         longitude: -122.90905,
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
-                      }
-                      }
+                      }}
                       
                       moveOnMarkerPress={false}
                       onPress={() => {
