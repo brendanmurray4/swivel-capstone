@@ -4,7 +4,14 @@
 import { useNavigation } from '@react-navigation/native';
 import { Auth, selectInput } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ImageBackground,
+  TouchableHighlight,
+} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { DebugInstructions } from 'react-native/Libraries/NewAppScreen';
@@ -323,43 +330,33 @@ const MapScreen = () => {
                             description={'★' + bike.rating + '\n' + '$' + bike.price + '/hour'}
                             icon={require('../../../assets/available_bike_map_enlarged.png')}
                             onPress={() => {
-                              console.log('Tapped on map');
+                              console.log('Tapped on icon');
                               setSelectedBike(bike);
                             }}
                             key={bike.key}
-                          />
+                          >
+                            <MapView.Callout tooltip style={styles.textBox}>
+                              <TouchableHighlight
+                                onPress={() => {
+                                  this.markerClick();
+                                  console.log('Tapped on marker');
+                                  setSelectedBike(bike);
+                                }}
+                                underlayColor="#fff"
+                              >
+                                <View style={styles.textBox}>
+                                  <Text>
+                                    {'★' + bike.rating + '\n' + '$' + bike.price + '/hour'}
+                                  </Text>
+                                </View>
+                              </TouchableHighlight>
+                            </MapView.Callout>
+                          </Marker>
                         ))
                       : null}
                   </MapView>
                 </>
               )}
-            </View>
-            <View style={styles.dataContainer}>
-              <View style={styles.dataContainerRow}>
-                <View>
-                  {/* {console.log(telemetry)} */}
-                  <Text style={styles.dataHeader}>Signal (RSSI)</Text>
-                  {/* <Text style={styles.dataValue}>{telemetry ? telemetry.grps.rssi : '0'} dBm</Text> UNCOMMMMMMMMMMMMMMMMENTTTTTTTTTTTTTTTTTTTTUNCOMMMMMMMMMMMMMMMMENTTTTTTTTTTTTTTTTTTTT*/}
-                </View>
-                <View>
-                  <Text style={styles.dataHeader}>Network</Text>
-                  {/* <Text style={styles.dataValue}>{getFriendlyNetworkStatus()}</Text> UNCOMMMMMMMMMMMMMMMMENTTTTTTTTTTTTTTTTTTTTUNCOMMMMMMMMMMMMMMMMENTTTTTTTTTTTTTTTTTTTT*/}
-                </View>
-              </View>
-              <View style={styles.dataContainerRow}>
-                <View>
-                  <Text style={styles.dataHeader}>Long</Text>
-                  {/* <Text style={styles.dataValue}>{telemetry ? telemetry.gps.longitude : '0'}</Text> */}
-                </View>
-                <View>
-                  <Text style={styles.dataHeader}>Lat</Text>
-                  {/* <Text style={styles.dataValue}>{telemetry ? telemetry.gps.latitude : '0'}</Text> */}
-                </View>
-                <View>
-                  <Text style={styles.dataHeader}>Alt</Text>
-                  {/* <Text style={styles.dataValue}>{telemetry ? telemetry.gps.altitude : '0'}</Text> */}
-                </View>
-              </View>
             </View>
 
             <View style={styles.buttonArea}>
@@ -423,7 +420,7 @@ const styles = StyleSheet.create({
   },
 
   dataContainer: {
-    // flex: 1,
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#ffffff',
@@ -445,6 +442,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 20,
+  },
+
+  textBox: {
+    width: 200,
+    height: 500,
+    backgroundColor: '#ffffff',
   },
 
   dataHeader: {
