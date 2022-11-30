@@ -45,6 +45,7 @@ def device():
         long = longitude(nmea_strings[4], nmea_strings[5])
         state["lat"] = lat
         state["long"] = long
+        state['alert'] = tokens[2]
 
     return ResponseSuccess({ 'status': HTTPStatus.OK }).encode_json()
 
