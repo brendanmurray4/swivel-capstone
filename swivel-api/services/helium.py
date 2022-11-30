@@ -7,13 +7,13 @@ from http import HTTPStatus
 HeliumService = Blueprint("helium_service", __name__)
 
 state = {
-    'lat': 0.,
-    'long': 0.,
+    'lat': 49.277748,
+    'long': -122.90905,
     'alert': 0,
-    'name': '',
+    'name': 'GT Aggressor',
     'location': '',
     'rating': '4.7/5',
-    'price': '4.60',
+    'price': '4.21',
     'time': '5d 2h',
     'image': 'http://imgur.com/',
     'theft_detection': True,
