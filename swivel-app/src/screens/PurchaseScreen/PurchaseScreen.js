@@ -187,7 +187,7 @@ const PurchaseScreen = () => {
                       // fontWeight: 'bold',
                     }}
                   >
-                    Pay Now
+                    Pay Later
                   </Text>
                 </View>
               </TouchableOpacity>

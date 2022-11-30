@@ -1,3 +1,6 @@
+// TODO: Alert = 1, then display alert
+// Read username, if username matches they see the bike, otherwise they do NOT
+
 import { useNavigation } from '@react-navigation/native';
 import { Auth, selectInput } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
@@ -5,52 +8,22 @@ import { Text, View, StyleSheet, TouchableOpacity, ImageBackground } from 'react
 import Geocoder from 'react-native-geocoding';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
+import awsmobile from '../../aws-exports';
 import CustomButton from '../../components/CustomButton';
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 Geocoder.init('AIzaSyBmjnH37clBAaGKN4R6Ji-qqUM3w8Lk2Js');
-const generateAvailableBikes = () => {
-  console.log('Parsing');
-  const json = '{"bike1": {"bikeName": "test", "battery": 22, "country": "United States", "isRented": "0"}}';
-  // const json2 = '{"bikeName": "test", "battery": 22, "country": "United States", "isRented": "0"}';
-  console.log("length " + json.length);
-
-  // Converting JSON-encoded string to JS object
-  const obj = JSON.parse(json);
-
-  // let j = 0;
-  // for (let i = 0; i < json.length; i++) {
-  if (obj.isRented == 0) {
-    const AvailableBikes = {
-      key: 0,
-      bikeName: 'Townie Original 7D',
-      location: {
-        longitude: -122.90730537910062,
-        latitude: 49.27997279477743,
-      },
-      rating: '4.7/5',
-      price: '4.60',
-      time: '5d 2h',
-      image: require('../../../assets/bikeSelection/bike1.jpg'),
-    };
-    console.log(AvailableBikes);
-  }
-  // }
-
-  // Accessing individual value from JS object
-  // alert(obj.name); // Outputs: Peter
-  // alert(obj.age); // Outputs: 22
-  // alert(obj.country); // Outputs: United States
-
-  return 0; // Outputs: Peter
-};
 
 // Page to unlock delegator
 const MapScreen = () => {
   const [telemetry, setTelemetry] = React.useState(undefined);
+  // const [state, setState] = React.useState(undefined);
+  const [bikeInfo, setBikeInfo] = React.useState(undefined);
   const [tasks, setTasks] = React.useState(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
   const navigation = useNavigation();
   const [SelectedBike, setSelectedBike] = React.useState(0);
+  const [username, setUserName] = React.useState(false);
+  const [initialized, setInitialized] = useState(false);
   const [AvailableBikes] = useState([
     // replace this with an API Fetch
     {
@@ -102,7 +75,7 @@ const MapScreen = () => {
       image: require('../../../assets/bikeSelection/bike4.jpg'),
     },
   ]);
-  const onCheckoutPressed = (props) => {
+  const onCheckoutPressed = () => {
     const image = SelectedBike.image;
     const name = SelectedBike.bikeName;
     const rating = SelectedBike.rating;
@@ -120,41 +93,52 @@ const MapScreen = () => {
             loc.results[1].address_components[1].long_name +
             ', ' +
             loc.results[1].address_components[2].long_name;
-
-          NavigateToNextPage(image, name, location, rating, price, time);
+          navigation.navigate('CurrentBike', { image, name, location, rating, price, time});
         });
     } else {
       navigation.navigate('BikeSelection');
     }
   };
 
-  function NavigateToNextPage(image, name, location, rating, price, time) {
-    const jsonTest =
-      '{"bikeName": "test", "battery": 22, "country": "United States", "isRented": "0"}';
-    navigation.navigate('Purchase', { jsonTest });
+  if (username == false) {
+    Auth.currentUserInfo().then((userInfo) => {
+      const { attributes = {} } = userInfo;
+      setUserName(attributes.preferred_username);
+    });
   }
 
   useEffect(() => {
     const updateInterval = setInterval(() => {
-      fetch('http://iot.swivel.bike/telemetry/1')
-        // .then((resp) => resp.json()) // PLEASE UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        .then((resp) => {
-          setTelemetry(resp.data);
-          // console.log("test2" + resp.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      fetch('http://iot.swivel.bike/control/1')
-        // .then((resp) => resp.json()) // PLEASE UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        .then((resp) => {
-          setTasks(resp.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, 2000);
+      // if (bikeInfo != undefined && bikeInfo.name == 'GT Aggressor') {
+      //   console.log('MATCH!');
+      // } else if (initialized == false) {
+      //   if (bikeInfo != undefined) {
+      //     setInitialized(true);
+      //     initBike();
+      //     console.log('INIT');
+      //   }
+      //   console.log('Waiting');
+      //   console.log(bikeInfo);
+      // }
+      getBike();
+      // fetch('http://iot.swivel.bike/telemetry/1')
+      //   .then((resp) => resp.json()) // PLEASE UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      //   .then((resp) => {
+      //     setTelemetry(resp.data);
+      //     // console.log("test2" + resp.data);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+      // fetch('http://iot.swivel.bike/control/1')
+      //   .then((resp) => resp.json()) // PLEASE UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      //   .then((resp) => {
+      //     setTasks(resp.data);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+    }, 6000);
     return () => {
       window.clearInterval(updateInterval);
     };
@@ -163,7 +147,7 @@ const MapScreen = () => {
   const addTask = (task) => {
     setIsLoading(true);
     fetch('http://iot.swivel.bike/control/1', {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -174,6 +158,7 @@ const MapScreen = () => {
       .then((resp) => resp.json())
       .then((resp) => {
         setTasks(resp.data);
+        console.log(resp.data);
       })
       .catch((err) => {
         console.log(err);
@@ -202,43 +187,71 @@ const MapScreen = () => {
       });
   };
 
-  const getFriendlyNetworkStatus = () => {
-    if (!telemetry) {
-      return 'Unknown';
-    }
-    const { grps } = telemetry;
-    const { network_status } = grps;
-    if (network_status === 0 || network_status === 2) {
-      return 'Searching (Operator)';
-    } else if (network_status === 1) {
-      return 'Registered (Home)';
-    } else if (network_status === 3) {
-      return 'Registration Denied';
-    } else if (network_status === 5) {
-      return 'Registered (Roaming)';
-    }
-    return 'Unknown';
+  const getBike = () => {
+    fetch('https://iot.swivel.bike/helium/app')
+      .then((resp) => resp.json())
+      .then((resp) => {
+        setBikeInfo(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }; 
+
+  const editBike = (task) => {
+    setIsLoading(true);
+    fetch('https://iot.swivel.bike/helium/app', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(task),
+    })
+      .then((resp) => resp.json())
+      .then((resp) => {
+        setBikeInfo(resp.data);
+        console.log(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
-  const isUnlockable = () => {
-    if (isLoading) {
-      return false;
-    }
-    if (!telemetry) {
-      return false;
-    }
-    if (!tasks) {
-      return false;
-    }
-    if (tasks && tasks.includes('UNLOCK')) {
-      return false;
-    }
-    return true;
-  };
+  function initBike() {
+    getBike();
+    const temp = {
+      lat: 49.277748,
+      long: -122.90905,
+      location: tempLocation,
+      name: 'GT Aggressor',
+      price: 4.21,
+      rating: '4.7/5',
+      time: '5d 2h',
+    };
+    let tempLocation = null;
+    Geocoder.from(49.277748, -122.90905)
+      .catch((error) => console.log(error))
+      .then((loc) => {
+        tempLocation =
+          loc.results[1].address_components[0].long_name +
+          ' ' +
+          loc.results[1].address_components[1].long_name +
+          ', ' +
+          loc.results[1].address_components[2].long_name;
+      });
+      console.log("TEStlocation" + tempLocation);
+    console.log(temp);
+    setBikeInfo(temp);
+    editBike(bikeInfo);
+  }
 
-  const signOut = () => {
-    Auth.signOut();
-  };
+  if (bikeInfo == undefined) {
+    getBike();
+    console.log('Init Bike');
+  }
 
   return (
     <View style={styles.container}>
@@ -263,8 +276,27 @@ const MapScreen = () => {
                     }}
                     onPress={() => {
                       setSelectedBike(0);
-                      generateAvailableBikes();
-                      // {console.log("tele" + telemetry)}
+                      console.log('Tapped off map');
+                      // if (bikeInfo.rented == true) {
+                      //   bikeInfo.username = username;
+                      //   editBike(bikeInfo);
+                      // }
+                      // console.log(bikeInfo);
+                      {
+                        // console.log('Test bikeInfo is ' + bikeInfo.lat);
+                        // console.log('Testing bike\n' + bikeInfo);
+                        console.log(bikeInfo);
+                        // if(bikeInfo.name == 'GT Aggressor'){
+                        //   console.log("MATCH!");
+                        // } else{
+                        //   console.log("NO MATCH!");
+                        //   initBike();
+                        // }
+                        // bikeInfo.rented = true;
+                        // editBike(bikeInfo);
+                        // bikeInfo.username = username;
+                        // getBike();
+                      }
                     }}
                   >
                     <Marker
@@ -298,7 +330,7 @@ const MapScreen = () => {
             <View style={styles.dataContainer}>
               <View style={styles.dataContainerRow}>
                 <View>
-                  {console.log(telemetry)}
+                  {/* {console.log(telemetry)} */}
                   <Text style={styles.dataHeader}>Signal (RSSI)</Text>
                   {/* <Text style={styles.dataValue}>{telemetry ? telemetry.grps.rssi : '0'} dBm</Text> UNCOMMMMMMMMMMMMMMMMENTTTTTTTTTTTTTTTTTTTTUNCOMMMMMMMMMMMMMMMMENTTTTTTTTTTTTTTTTTTTT*/}
                 </View>
@@ -310,21 +342,23 @@ const MapScreen = () => {
               <View style={styles.dataContainerRow}>
                 <View>
                   <Text style={styles.dataHeader}>Long</Text>
-                  <Text style={styles.dataValue}>{telemetry ? telemetry.gps.longitude : '0'}</Text>
+                  {/* <Text style={styles.dataValue}>{telemetry ? telemetry.gps.longitude : '0'}</Text> */}
                 </View>
                 <View>
                   <Text style={styles.dataHeader}>Lat</Text>
-                  <Text style={styles.dataValue}>{telemetry ? telemetry.gps.latitude : '0'}</Text>
+                  {/* <Text style={styles.dataValue}>{telemetry ? telemetry.gps.latitude : '0'}</Text> */}
                 </View>
                 <View>
                   <Text style={styles.dataHeader}>Alt</Text>
-                  <Text style={styles.dataValue}>{telemetry ? telemetry.gps.altitude : '0'}</Text>
+                  {/* <Text style={styles.dataValue}>{telemetry ? telemetry.gps.altitude : '0'}</Text> */}
                 </View>
               </View>
             </View>
 
             <View style={styles.buttonArea}>
-              <TouchableOpacity style={styles.rentButton} onPress={() => onCheckoutPressed()}>
+              <TouchableOpacity style={styles.rentButton} onPress={() => onCheckoutPressed(
+
+              )}>
                 <View style={styles.rentButton}>
                   <Text
                     style={{

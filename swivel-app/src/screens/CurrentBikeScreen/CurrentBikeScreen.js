@@ -1,4 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { Auth } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import {
   Text,
@@ -11,48 +12,45 @@ import {
 } from 'react-native';
 
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
+import PurchaseScreen from '../PurchaseScreen/PurchaseScreen';
 
 const CurrentBikeScreen = () => {
+  const route = useRoute();
+  const { image, name, location, rating, price, time } = route.params;
   const navigation = useNavigation();
-  const [telemetry, setTelemetry] = React.useState(undefined);
   const [tasks, setTasks] = React.useState(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [username, setUserName] = React.useState(false);
+  const [bikeInfo, setBikeInfo] = React.useState(undefined);
+
+  Auth.currentUserInfo().then((userInfo) => {
+    const { attributes = {} } = userInfo;
+    setUserName(attributes.preferred_username);
+  });
 
   useEffect(() => {
     const updateInterval = setInterval(() => {
-      fetch('http://iot.swivel.bike/telemetry/1')
-        // .then((resp) => resp.json()) // PLEASE UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      fetch('https://iot.swivel.bike/helium/app')
+        .then((resp) => resp.json())
         .then((resp) => {
-          setTelemetry(resp.data);
+          // setBikeInfo(resp.data);
         })
         .catch((err) => {
           console.log(err);
         });
-
-      fetch('http://iot.swivel.bike/control/1')
-        // .then((resp) => resp.json()) // PLEASE UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        .then((resp) => {
-          setTasks(resp.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, 2000);
+    }, 30000);
     return () => {
       window.clearInterval(updateInterval);
     };
   }, []);
 
-  const addTask = (task) => {
+  const unlockBike = () => {
     setIsLoading(true);
-    fetch('http://iot.swivel.bike/control/1', {
+    fetch('https://iot.swivel.bike/helium/device/unlock', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        actions: [task],
-      }),
     })
       .then((resp) => resp.json())
       .then((resp) => {
@@ -84,103 +82,162 @@ const CurrentBikeScreen = () => {
         console.log(err);
       });
   };
-
-  const getFriendlyNetworkStatus = () => {
-    if (!telemetry) {
-      return 'Unknown';
-    }
-    const { grps } = telemetry;
-    const { network_status } = grps;
-    if (network_status === 0 || network_status === 2) {
-      return 'Searching (Operator)';
-    } else if (network_status === 1) {
-      return 'Registered (Home)';
-    } else if (network_status === 3) {
-      return 'Registration Denied';
-    } else if (network_status === 5) {
-      return 'Registered (Roaming)';
-    }
-    return 'Unknown';
+  const getBike = () => {
+    fetch('https://iot.swivel.bike/helium/app')
+      .then((resp) => resp.json())
+      .then((resp) => {
+        setBikeInfo(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const isUnlockable = () => {
-    if (isLoading) {
-      return false;
-    }
-    if (!telemetry) {
-      return false;
-    }
-    if (!tasks) {
-      return false;
-    }
-    if (tasks && tasks.includes('UNLOCK')) {
-      return false;
-    }
-    return true;
+  const editBike = (task) => {
+    setIsLoading(true);
+    fetch('https://iot.swivel.bike/helium/app', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(task),
+    })
+      .then((resp) => resp.json())
+      .then((resp) => {
+        setBikeInfo(resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
-  return (
-    <View style={currentBikeStyles.container}>
-      <ImageBackground
-        style={{ flex: 1 }}
-        source={require('../../../assets/swivel_login_background.jpg')}
-      >
+  if (bikeInfo == undefined) {
+    // const temp = { username: 'test', rented: 'temp' };
+    // setBikeInfo(temp);
+    getBike();
+  }
+
+  if (bikeInfo == undefined) {
+    return (
+      <View style={currentBikeStyles.container}>
         <View style={headerFooterStyles.header}>{generateHeader()}</View>
+        <Text> LOADING!</Text>
+        <View style={headerFooterStyles.footer}>{generateFooter()}</View>
+      </View>
+    );
+  } else {
+    return (
+      <View style={currentBikeStyles.container}>
+        <ImageBackground
+          style={{ flex: 1 }}
+          source={require('../../../assets/swivel_login_background.jpg')}
+        >
+          <View style={headerFooterStyles.header}>{generateHeader()}</View>
 
-        <View style={headerFooterStyles.body}>
-          <View style={currentBikeStyles.top}>
-            <Image
-              style={{ resizeMode: 'cover', height: '100%', width: '100%' }}
-              source={require('../../../assets/bikeSelection/actual_Bike.jpg')}
-            />
-          </View>
-
-          <View style={currentBikeStyles.topText}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                textAlign: 'center',
-                textAlignVertical: 'center',
-                fontSize: 26,
-                flex: 1,
-              }}
-            >
-              GT Aggressor
-            </Text>
-          </View>
-
-          <View style={currentBikeStyles.middle}>
-            <View style={currentBikeStyles.textBoxColumn}>
-              <Text style={currentBikeStyles.greyText}> Rental Time </Text>
-              <Text style={currentBikeStyles.greyText}> Battery Life </Text>
-              <Text style={currentBikeStyles.greyText}> Location </Text>
-              <Text style={currentBikeStyles.greyText}> Delegator </Text>
-              <Text style={currentBikeStyles.greyText}> Hourly Price </Text>
+          <View style={headerFooterStyles.body}>
+            <View style={currentBikeStyles.top}>
+              <Image
+                style={{ resizeMode: 'cover', height: '100%', width: '100%' }}
+                source={image}
+              />
             </View>
-            <View style={currentBikeStyles.textBoxColumn}>
-              <Text style={currentBikeStyles.defaultText}> 52 minutes left </Text>
-              <Text style={currentBikeStyles.defaultText}> 38% </Text>
-              <Text style={currentBikeStyles.defaultText}> Seymour Drive </Text>
-              <Text style={currentBikeStyles.defaultText}> Locked </Text>
-              <Text style={currentBikeStyles.defaultText}> $ 4.21 </Text>
-            </View>
-          </View>
 
-          <View style={currentBikeStyles.bottom}>
-            <TouchableOpacity
-              style={
-                isUnlockable()
-                  ? currentBikeStyles.unlockButton
-                  : currentBikeStyles.unlockButtonDisabled
-              }
-              onPress={() => {
-                if (isUnlockable()) {
-                  addTask('UNLOCK');
-                } else {
-                  Alert.alert(
-                    'Reset Delegator State?',
-                    'Would you like to reset the list of tasks for the delegator?',
-                    [
+            <View style={currentBikeStyles.topText}>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                  fontSize: 26,
+                  flex: 1,
+                }}
+              >
+                {name}
+              </Text>
+            </View>
+
+            <View style={currentBikeStyles.middle}>
+              <View style={currentBikeStyles.textBoxColumn}>
+                <Text style={currentBikeStyles.greyText}> Rental Time </Text>
+                <Text style={currentBikeStyles.greyText}> Battery Life </Text>
+                <Text style={currentBikeStyles.greyText}> Location </Text>
+                <Text style={currentBikeStyles.greyText}> Delegator </Text>
+                <Text style={currentBikeStyles.greyText}> Hourly Price </Text>
+              </View>
+              <View style={currentBikeStyles.textBoxColumn}>
+                <Text style={currentBikeStyles.defaultText}> Currently at 52 </Text>
+                <Text style={currentBikeStyles.defaultText}> 38% </Text>
+                <Text style={currentBikeStyles.defaultText} ellipsizeMode="tail" numberOfLines={2}>
+                  {location}
+                </Text>
+                <Text style={currentBikeStyles.defaultText}> Locked </Text>
+                <Text style={currentBikeStyles.defaultText}> $ 4.21 </Text>
+              </View>
+            </View>
+
+            <View style={currentBikeStyles.bottom}>
+              <TouchableOpacity
+                style={
+                  username == bikeInfo.username
+                    ? currentBikeStyles.unlockButtonDisabled
+                    : currentBikeStyles.unlockButton
+                }
+                onPress={() => {
+                  if (username == bikeInfo.username) {
+                    unlockBike();
+                    Alert.alert('Unlock Request Sent', 'Please wait while the delegator unlocks', [
+                      {
+                        text: 'Okay',
+                        style: 'destructive',
+                        onPress: () => {},
+                      },
+                    ]);
+                  } else {
+                    Alert.alert(
+                      'Sorry, you are not currently renting this bike',
+                      'Please request a suitable bike to rent',
+                      [
+                        {
+                          text: 'Okay',
+                          style: 'destructive',
+                          onPress: () => {},
+                        },
+                      ]
+                    );
+                  }
+                }}
+              >
+                <Text style={currentBikeStyles.buttonUnlockDelegatorText}>Unlock</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  username == bikeInfo.username
+                    ? currentBikeStyles.unlockButtonDisabled
+                    : currentBikeStyles.unlockButton
+                }
+                onPress={() => {
+                  if (bikeInfo.rented == true) {
+                    Alert.alert(
+                      'Bike is already rented',
+                      'Sorry for the inconvenience, please try another bike',
+                      [
+                        {
+                          text: 'Cancel',
+                          style: 'cancel',
+                          onPress: () => {},
+                        },
+                        {
+                          text: 'Okay',
+                          style: 'destructive',
+                          onPress: () => {},
+                        },
+                      ]
+                    );
+                  } else {
+                    Alert.alert('Bike is Available to Rent', 'Would you like to rent it?', [
                       {
                         text: 'Cancel',
                         style: 'cancel',
@@ -190,23 +247,34 @@ const CurrentBikeScreen = () => {
                         text: 'Okay',
                         style: 'destructive',
                         onPress: () => {
-                          removeTask('UNLOCK');
+                          if(bikeInfo.username == name);
+                          // navigation.navigate('Purchase', {
+                          //   image,
+                          //   name,
+                          //   location,
+                          //   rating,
+                          //   price,
+                          //   time,
+                          // });
+
                         },
                       },
-                    ]
-                  );
-                }
-              }}
-            >
-              <Text style={currentBikeStyles.buttonUnlockDelegatorText}>Unlock Bike</Text>
-            </TouchableOpacity>
+                    ]);
+                  }
+                }}
+              >
+                <Text style={currentBikeStyles.buttonUnlockDelegatorText}>
+                  {bikeInfo.rented == false ? 'Rent' : 'Pay'}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
 
-        <View style={headerFooterStyles.footer}>{generateFooter()}</View>
-      </ImageBackground>
-    </View>
-  );
+          <View style={headerFooterStyles.footer}>{generateFooter()}</View>
+        </ImageBackground>
+      </View>
+    );
+  }
 };
 
 const currentBikeStyles = StyleSheet.create({
@@ -233,6 +301,7 @@ const currentBikeStyles = StyleSheet.create({
   // Button
   bottom: {
     flex: 0.1,
+    flexDirection: 'row',
     backgroundColor: '#eff',
   },
 
@@ -294,12 +363,14 @@ const currentBikeStyles = StyleSheet.create({
     backgroundColor: '#BFC0BD',
     color: '#aaa',
     flex: 1,
+    borderWidth: 1,
   },
 
   unlockButtonDisabled: {
     backgroundColor: '#B4FF39',
     color: '#000',
     flex: 1,
+    borderWidth: 1,
   },
 });
 export default CurrentBikeScreen;

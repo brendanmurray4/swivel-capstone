@@ -191,25 +191,19 @@ function bikeGeneration(masterArray) {
 
   const views = [];
   for (let i = 0; i < numBikes; i++) {
-    const image = masterArray[i].map(({ image }) => image).toString();
-    const name = masterArray[i].map(({ bikeName }) => bikeName);
-    const location = masterArray[i].map(({ location }) => location);
-    const rating = masterArray[i].map(({ rating }) => rating);
-    const price = masterArray[i].map(({ price }) => price);
-    const time = masterArray[i].map(({ time }) => time);
-    views.push(
-      <View style={bikeGarageStyles.bikeBox}>
-        <Image style={bikeGarageStyles.bikeImage} source={image} />
+    views[i] = masterArray[i].map((arr) => (
+      <View style={bikeGarageStyles.bikeBox} key={arr.image}>
+        <Image style={bikeGarageStyles.bikeImage} source={arr.image} />
         <View style={bikeGarageStyles.bikeTextBox}>
           <View style={bikeGarageStyles.bikeTextBoxInnerTop}>
-            <Text style={bikeGarageStyles.bikeTextTop}>{name}</Text>
+            <Text style={bikeGarageStyles.bikeTextTop}>{arr.bikeName}</Text>
             <Text
               adjustsFontSizeToFit
               numberOfLines={1}
               allowFontScaling
               style={bikeGarageStyles.bikeTextMiddle}
             >
-              {location}
+              {arr.location}
             </Text>
           </View>
 
@@ -218,17 +212,17 @@ function bikeGeneration(masterArray) {
               style={bikeGarageStyles.bikeInnerImage}
               source={require('../../../assets/star.png')}
             />
-            <Text style={bikeGarageStyles.bikeTextBottom}>{rating}</Text>
+            <Text style={bikeGarageStyles.bikeTextBottom}>{arr.rating}</Text>
             <Image
               style={bikeGarageStyles.bikeInnerImagePrice}
               source={require('../../../assets/dollar2.png')}
             />
-            <Text style={bikeGarageStyles.bikeTextBottomPrice}>{price}</Text>
+            <Text style={bikeGarageStyles.bikeTextBottomPrice}>{arr.price}</Text>
             <Image
               style={bikeGarageStyles.bikeInnerImage}
               source={require('../../../assets/battery.png')}
             />
-            <Text style={bikeGarageStyles.bikeTextBottom}>{time}</Text>
+            <Text style={bikeGarageStyles.bikeTextBottom}>{arr.time}</Text>
           </View>
 
           <View style={bikeGarageStyles.bottomButtonInner}>
@@ -259,10 +253,11 @@ function bikeGeneration(masterArray) {
           </View>
         </View>
       </View>
-    );
+    ));
   }
   return views;
 }
+
 
 const bikeGarageStyles = StyleSheet.create({
   container: {

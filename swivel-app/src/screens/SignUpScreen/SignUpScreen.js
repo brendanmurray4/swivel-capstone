@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert, ImageBackground } from 'react-native';
-import CustomInput from '../../components/CustomInput';
-import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-import { useForm } from 'react-hook-form';
 import { Auth } from 'aws-amplify';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { View, Text, StyleSheet, ScrollView, Alert, ImageBackground } from 'react-native';
+
+import CustomButton from '../../components/CustomButton';
+import CustomInput from '../../components/CustomInput';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 

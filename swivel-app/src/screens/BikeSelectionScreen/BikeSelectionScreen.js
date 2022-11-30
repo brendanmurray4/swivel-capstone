@@ -102,68 +102,62 @@ function bikeGeneration() {
 
   const views = [];
   for (let i = 0; i < numBikes; i++) {
-    const image = masterArray[i].map(({ image }) => image).toString();
-    const name = masterArray[i].map(({ bikeName }) => bikeName);
-    const location = masterArray[i].map(({ location }) => location);
-    const rating = masterArray[i].map(({ rating }) => rating);
-    const price = masterArray[i].map(({ price }) => price);
-    const time = masterArray[i].map(({ time }) => time);
-    views.push(
-      <View style={bikeSelectionStyles.bikeBox} key={masterArray[i].name}>
-        <Image style={bikeSelectionStyles.bikeImage} source={image} />
-        <View style={bikeSelectionStyles.bikeTextBox} key={masterArray[i].name}>
-          <View style={bikeSelectionStyles.bikeTextBoxInnerTop} key={masterArray[i].name}>
-            <Text style={bikeSelectionStyles.bikeTextTop}>{name}</Text>
+    views[i] = masterArray[i].map((arr) => (
+      <View style={bikeSelectionStyles.bikeBox} key={arr.key}>
+        <Image style={bikeSelectionStyles.bikeImage} source={arr.image} />
+        <View style={bikeSelectionStyles.bikeTextBox}>
+          <View style={bikeSelectionStyles.bikeTextBoxInnerTop}>
+            <Text style={bikeSelectionStyles.bikeTextTop}>{arr.bikeName}</Text>
             <Text
               adjustsFontSizeToFit
               numberOfLines={1}
               allowFontScaling
               style={bikeSelectionStyles.bikeTextMiddle}
             >
-              {location}
+              {arr.location}
             </Text>
           </View>
 
-          <View style={bikeSelectionStyles.bikeTextBoxInnerBottom} key={masterArray[i].name}>
+          <View style={bikeSelectionStyles.bikeTextBoxInnerBottom}>
             <Image
               style={bikeSelectionStyles.bikeInnerImage}
               source={require('../../../assets/star.png')}
             />
-            <Text style={bikeSelectionStyles.bikeTextBottom}>{rating}</Text>
+            <Text style={bikeSelectionStyles.bikeTextBottom}>{arr.rating}</Text>
             <Image
               style={bikeSelectionStyles.bikeInnerImagePrice}
               source={require('../../../assets/dollar2.png')}
             />
-            <Text style={bikeSelectionStyles.bikeTextBottomPrice}>{price}</Text>
+            <Text style={bikeSelectionStyles.bikeTextBottomPrice}>{arr.price}</Text>
             <Image
               style={bikeSelectionStyles.bikeInnerImage}
               source={require('../../../assets/battery.png')}
             />
-            <Text style={bikeSelectionStyles.bikeTextBottom}>{time}</Text>
+            <Text style={bikeSelectionStyles.bikeTextBottom}>{arr.time}</Text>
           </View>
 
-          <View style={bikeSelectionStyles.bottomButtonInner} key={masterArray[i].name}>
+          <View style={bikeSelectionStyles.bottomButtonInner}>
             <TouchableOpacity
               style={bikeSelectionStyles.button}
               onPress={() =>
                 navigation.navigate('Purchase', {
-                  image,
-                  name,
-                  location,
-                  rating,
-                  price,
-                  time,
+                  image: arr.image,
+                  name: arr.bikeName,
+                  location: arr.location,
+                  rating: arr.rating,
+                  price: arr.price,
+                  time: arr.time,
                 })
               }
             >
-              <View style={bikeSelectionStyles.button} key={masterArray[i].name}>
+              <View style={bikeSelectionStyles.button}>
                 <Text style={bikeSelectionStyles.buttonText}> Rent Bike </Text>
               </View>
             </TouchableOpacity>
           </View>
         </View>
       </View>
-    );
+    ));
   }
   return views;
 }
