@@ -37,6 +37,7 @@ const MapScreen = () => {
   const [initialized, setInitialized] = useState(false);
   const [alertOccurred, setAlertOccurred] = useState(0);
   const [userLocation, setUserLocation] = useState(false);
+  const [currBikeName, setCurrBikeName] = useState(false);
   const [AvailableBikes] = useState([
     // replace this with an API Fetch
     {
@@ -340,7 +341,6 @@ const MapScreen = () => {
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
-                      
                       moveOnMarkerPress={false}
                       onPress={() => {
                         console.log('Tapped off map');
@@ -367,7 +367,8 @@ const MapScreen = () => {
                               icon={require('../../../assets/available_bike_map_enlarged.png')}
                               onPress={() => {
                                 // console.log('Tapped on map');
-                                // setSelectedBike(bike);
+                                setSelectedBike(bike);
+                                setCurrBikeName(bike.bikeName);
                                 // bikeInfo.lock_state = true;
                                 // bikeInfo.rented = false;
                                 // bikeInfo.username = '';
@@ -387,7 +388,9 @@ const MapScreen = () => {
                         title={bikeInfo.name}
                         description={'★' + bikeInfo.rating + '\n' + '$' + bikeInfo.price + '/hour'}
                         icon={require('../../../assets/available_demo_bike_map_enlarged.png')}
-                        onPress={() => {}}
+                        onPress={() => {
+                          setCurrBikeName(bikeInfo.name);
+                        }}
                         key={bikeInfo.name}
                       />
                     </MapView>
@@ -411,7 +414,7 @@ const MapScreen = () => {
                         flexShrink: 1,
                       }}
                     >
-                      {SelectedBike == 0 ? 'Select Bike' : 'Rent: ' + SelectedBike.bikeName}
+                      {SelectedBike == 0 ? 'Select Bike' : 'Rent: ' + currBikeName}
                     </Text>
                   </View>
                 </TouchableOpacity>
