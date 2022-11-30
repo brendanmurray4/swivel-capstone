@@ -14,7 +14,6 @@ import {
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 import PurchaseScreen from '../PurchaseScreen/PurchaseScreen';
 
-let test = 0;
 const CurrentBikeScreen = () => {
   const route = useRoute();
   // const { image, name, location, rating, price, time } = route.params;
@@ -166,9 +165,9 @@ const CurrentBikeScreen = () => {
                 {name}
               </Text>
             </View>
-            {console.log('\ntest' + test++)}
+            {/* {console.log('\ntest' + test++)}
             {console.log('CBS locked: \n' + bikeInfo.lock_state)}
-            {console.log('CBS rented: \n' + bikeInfo.rented)}
+            {console.log('CBS rented: \n' + bikeInfo.rented)} */}
             <View style={currentBikeStyles.middle}>
               <View style={currentBikeStyles.textBoxColumn}>
                 <Text style={currentBikeStyles.greyText}> Rental Time </Text>
@@ -197,7 +196,6 @@ const CurrentBikeScreen = () => {
                 }
                 onPress={() => {
                   if (username == bikeInfo.username && bikeInfo.lock_state == true) {
-                    unlockBike();
                     Alert.alert('Unlock Request Sent', 'Please wait while the delegator unlocks', [
                       {
                         text: 'Cancel',
@@ -218,7 +216,7 @@ const CurrentBikeScreen = () => {
                   } else {
                     Alert.alert(
                       'Locking the Bike',
-                      'Please keep your fingers away from the lock. and ensure that the bike is locked securely.',
+                      'Please keep your fingers away from the lock and ensure that the bike is locked securely.',
                       [
                         {
                           text: 'Cancel',

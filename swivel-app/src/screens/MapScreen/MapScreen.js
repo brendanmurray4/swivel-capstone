@@ -258,116 +258,135 @@ const MapScreen = () => {
     console.log('Init Bike');
   }
 
-  return (
-    <View style={styles.container}>
-      <ImageBackground
-        style={{ flex: 1 }}
-        source={require('../../../assets/swivel_login_background.jpg')}
-      >
-        <View style={headerFooterStyles.header}>{generateHeader()}</View>
-        <View style={headerFooterStyles.body}>
-          <View style={styles.container}>
-            <View style={styles.mapArea}>
-              {true && (
-                <>
-                  <MapView
-                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                    style={styles.map}
-                    region={{
-                      latitude: telemetry ? telemetry.gps.latitude : 49.277748,
-                      longitude: telemetry ? telemetry.gps.longitude : -122.90905,
-                      latitudeDelta: 0.015,
-                      longitudeDelta: 0.0121,
-                    }}
-                    moveOnMarkerPress={false}
-                    onPress={() => {
-                      console.log('Tapped off map');
-                    }}
-                  >
-                    <Marker
-                      coordinate={{
-                        latitude: 49.277748,
-                        longitude: -122.90905,
+  if (bikeInfo == undefined) {
+    return (
+      <View>
+        <Text> Loading... </Text>
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.container}>
+        <ImageBackground
+          style={{ flex: 1 }}
+          source={require('../../../assets/swivel_login_background.jpg')}
+        >
+          <View style={headerFooterStyles.header}>{generateHeader()}</View>
+          <View style={headerFooterStyles.body}>
+            <View style={styles.container}>
+              <View style={styles.mapArea}>
+                {true && (
+                  <>
+                    <MapView
+                      provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                      style={styles.map}
+                      region={{
+                        latitude: telemetry ? telemetry.gps.latitude : 49.277748,
+                        longitude: telemetry ? telemetry.gps.longitude : -122.90905,
+                        latitudeDelta: 0.015,
+                        longitudeDelta: 0.0121,
                       }}
-                      icon={require('../../../assets/user_location_map_enlarged.png')}
-                    />
-                    {AvailableBikes
-                      ? AvailableBikes.map((bike) => (
-                          <Marker
-                            coordinate={{
-                              latitude: bike.location.latitude,
-                              longitude: bike.location.longitude,
-                            }}
-                            title={bike.bikeName}
-                            description={'★' + bike.rating + '\n' + '$' + bike.price + '/hour'}
-                            icon={require('../../../assets/available_bike_map_enlarged.png')}
-                            onPress={() => {
-                              console.log('Tapped on map');
-                              setSelectedBike(bike);
-                              bikeInfo.lock_state = true;
-                              bikeInfo.rented = false;
-                              bikeInfo.username = '';
-                              setBikeInfo(bikeInfo);
-                              editBike(bikeInfo);
-                              getBike();
-                            }}
-                            key={bike.key}
-                          />
-                        ))
-                      : null}
-                  </MapView>
-                </>
-              )}
-            </View>
+                      moveOnMarkerPress={false}
+                      onPress={() => {
+                        console.log('Tapped off map');
+                      }}
+                    >
+                      <Marker
+                        coordinate={{
+                          latitude: 49.277748,
+                          longitude: -122.90905,
+                        }}
+                        icon={require('../../../assets/user_location_map_enlarged.png')}
+                      />
+                      {AvailableBikes
+                        ? AvailableBikes.map((bike) => (
+                            <Marker
+                              coordinate={{
+                                latitude: bike.location.latitude,
+                                longitude: bike.location.longitude,
+                              }}
+                              title={bike.bikeName}
+                              description={'★' + bike.rating + '\n' + '$' + bike.price + '/hour'}
+                              icon={require('../../../assets/available_bike_map_enlarged.png')}
+                              onPress={() => {
+                                // console.log('Tapped on map');
+                                // setSelectedBike(bike);
+                                // bikeInfo.lock_state = true;
+                                // bikeInfo.rented = false;
+                                // bikeInfo.username = '';
+                                // setBikeInfo(bikeInfo);
+                                // editBike(bikeInfo);
+                                // getBike();
+                              }}
+                              key={bike.key}
+                            />
+                          ))
+                        : null}
+                      <Marker
+                        coordinate={{
+                          latitude: bikeInfo.lat,
+                          longitude: bikeInfo.long,
+                        }}
+                        title={bikeInfo.name}
+                        description={'★' + bikeInfo.rating + '\n' + '$' + bikeInfo.price + '/hour'}
+                        icon={require('../../../assets/available_demo_bike_map_enlarged.png')}
+                        onPress={() => {}}
+                        key={bikeInfo.name}
+                      />
+                    </MapView>
+                  </>
+                )}
+              </View>
 
-            <View style={styles.buttonArea}>
-              <TouchableOpacity
-                style={styles.rentButton}
-                onPress={() => (SelectedBike == 0 ? 0 : onCheckoutPressed(1))}
-              >
-                <View style={styles.rentButton}>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      color: '#300000',
-                      fontSize: 26,
-                      textAlign: 'center',
-                      // fontWeight: 'bold',
-                      flexShrink: 1,
-                    }}
-                  >
-                    {SelectedBike == 0 ? 'Select Bike' : 'Rent: ' + SelectedBike.bikeName}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.rentButton}
-                onPress={() => {
-                  onCheckoutPressed(0);
-                }}
-              >
-                <View style={styles.rentButton}>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      color: '#300000',
-                      fontSize: 26,
-                      textAlign: 'center',
-                      // fontWeight: 'bold',
-                      flexShrink: 1,
-                    }}
-                  >
-                    List of Bikes
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              <View style={styles.buttonArea}>
+                <TouchableOpacity
+                  style={styles.rentButton}
+                  onPress={() => (SelectedBike == 0 ? 0 : onCheckoutPressed(1))}
+                >
+                  <View style={styles.rentButton}>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#300000',
+                        fontSize: 26,
+                        textAlign: 'center',
+                        // fontWeight: 'bold',
+                        flexShrink: 1,
+                      }}
+                    >
+                      {SelectedBike == 0 ? 'Select Bike' : 'Rent: ' + SelectedBike.bikeName}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.rentButton}
+                  onPress={() => {
+                    onCheckoutPressed(0);
+                  }}
+                >
+                  <View style={styles.rentButton}>
+                    <Text
+                      style={{
+                        fontWeight: 'bold',
+                        color: '#300000',
+                        fontSize: 26,
+                        textAlign: 'center',
+                        // fontWeight: 'bold',
+                        flexShrink: 1,
+                      }}
+                    >
+                      List of Bikes
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
-        <View style={headerFooterStyles.footer}>{generateFooter()}</View>
-      </ImageBackground>
-    </View>
-  );
+          <View style={headerFooterStyles.footer}>{generateFooter()}</View>
+        </ImageBackground>
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
