@@ -14,14 +14,29 @@ import {
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 import PurchaseScreen from '../PurchaseScreen/PurchaseScreen';
 
+let test = 0;
 const CurrentBikeScreen = () => {
   const route = useRoute();
-  const { image, name, location, rating, price, time } = route.params;
+  // const { image, name, location, rating, price, time } = route.params;
+  const image = require('../../../assets/bikeSelection/actual_Bike.jpg');
+  const name = 'GT Aggressor';
+  const location = 'Seymour Drive';
+  const rating = 4.7;
+  const price = 4.21;
+  let time = 1;
   const navigation = useNavigation();
   const [tasks, setTasks] = React.useState(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
   const [username, setUserName] = React.useState(false);
   const [bikeInfo, setBikeInfo] = React.useState(undefined);
+  var [startDate, setStartDate] = React.useState(undefined);
+  var [endDate, setEndDate] = React.useState(undefined);
+
+  function getMinutesBetweenDates(startDate, endDate) {
+    console.log(startDate, "PLS",endDate)
+    const diff = endDate.getTime() - startDate.getTime();
+    return diff / 60000;
+  }
 
   Auth.currentUserInfo().then((userInfo) => {
     const { attributes = {} } = userInfo;
@@ -30,15 +45,8 @@ const CurrentBikeScreen = () => {
 
   useEffect(() => {
     const updateInterval = setInterval(() => {
-      fetch('https://iot.swivel.bike/helium/app')
-        .then((resp) => resp.json())
-        .then((resp) => {
-          // setBikeInfo(resp.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, 30000);
+      getBike();
+    }, 6000);
     return () => {
       window.clearInterval(updateInterval);
     };
@@ -158,7 +166,9 @@ const CurrentBikeScreen = () => {
                 {name}
               </Text>
             </View>
-
+            {console.log('\ntest' + test++)}
+            {console.log('CBS locked: \n' + bikeInfo.lock_state)}
+            {console.log('CBS rented: \n' + bikeInfo.rented)}
             <View style={currentBikeStyles.middle}>
               <View style={currentBikeStyles.textBoxColumn}>
                 <Text style={currentBikeStyles.greyText}> Rental Time </Text>
@@ -181,48 +191,34 @@ const CurrentBikeScreen = () => {
             <View style={currentBikeStyles.bottom}>
               <TouchableOpacity
                 style={
-                  username == bikeInfo.username
+                  bikeInfo.rented == true
                     ? currentBikeStyles.unlockButtonDisabled
                     : currentBikeStyles.unlockButton
                 }
                 onPress={() => {
-                  if (username == bikeInfo.username) {
+                  if (username == bikeInfo.username && bikeInfo.lock_state == true) {
                     unlockBike();
                     Alert.alert('Unlock Request Sent', 'Please wait while the delegator unlocks', [
                       {
+                        text: 'Cancel',
+                        style: 'cancel',
+                        onPress: () => {},
+                      },
+                      {
                         text: 'Okay',
                         style: 'destructive',
-                        onPress: () => {},
+                        onPress: () => {
+                          unlockBike();
+                          bikeInfo.lock_state = false; //if locked, lock_state = true
+                          editBike(bikeInfo);
+                          getBike();
+                        },
                       },
                     ]);
                   } else {
                     Alert.alert(
-                      'Sorry, you are not currently renting this bike',
-                      'Please request a suitable bike to rent',
-                      [
-                        {
-                          text: 'Okay',
-                          style: 'destructive',
-                          onPress: () => {},
-                        },
-                      ]
-                    );
-                  }
-                }}
-              >
-                <Text style={currentBikeStyles.buttonUnlockDelegatorText}>Unlock</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={
-                  username == bikeInfo.username
-                    ? currentBikeStyles.unlockButtonDisabled
-                    : currentBikeStyles.unlockButton
-                }
-                onPress={() => {
-                  if (bikeInfo.rented == true) {
-                    Alert.alert(
-                      'Bike is already rented',
-                      'Sorry for the inconvenience, please try another bike',
+                      'Locking the Bike',
+                      'Please keep your fingers away from the lock. and ensure that the bike is locked securely.',
                       [
                         {
                           text: 'Cancel',
@@ -232,11 +228,56 @@ const CurrentBikeScreen = () => {
                         {
                           text: 'Okay',
                           style: 'destructive',
-                          onPress: () => {},
+                          onPress: () => {
+                            bikeInfo.lock_state = true; //if locked, lock_state = true
+                            editBike(bikeInfo);
+                            getBike();
+                          },
                         },
                       ]
                     );
-                  } else {
+                  }
+                }}
+              >
+                <Text style={currentBikeStyles.buttonUnlockDelegatorText}>
+                  {bikeInfo.lock_state == true ? 'Unlock' : 'Lock'}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  bikeInfo.lock_state == true
+                    ? currentBikeStyles.unlockButtonDisabled
+                    : currentBikeStyles.unlockButton
+                }
+                onPress={() => {
+                  if (bikeInfo.rented == true) {
+                    Alert.alert('Pay for the Bike', 'Thank you for using Swivel!', [
+                      {
+                        text: 'Cancel',
+                        style: 'cancel',
+                        onPress: () => {},
+                      },
+                      {
+                        text: 'Okay',
+                        style: 'destructive',
+                        onPress: () => {
+                          bikeInfo.username = '';
+                          bikeInfo.rented = false;
+                          editBike(bikeInfo);
+                          getBike();
+                          time = getMinutesBetweenDates(startDate, new Date());
+                          navigation.navigate('Purchase', {
+                            image,
+                            name,
+                            location,
+                            rating,
+                            price,
+                            time,
+                          });
+                        },
+                      },
+                    ]);
+                  } else if (bikeInfo.rented == false) {
                     Alert.alert('Bike is Available to Rent', 'Would you like to rent it?', [
                       {
                         text: 'Cancel',
@@ -247,16 +288,12 @@ const CurrentBikeScreen = () => {
                         text: 'Okay',
                         style: 'destructive',
                         onPress: () => {
-                          if(bikeInfo.username == name);
-                          // navigation.navigate('Purchase', {
-                          //   image,
-                          //   name,
-                          //   location,
-                          //   rating,
-                          //   price,
-                          //   time,
-                          // });
-
+                          console.log('Rented');
+                          bikeInfo.username = username;
+                          bikeInfo.rented = true;
+                          editBike(bikeInfo);
+                          getBike();
+                          setStartDate(new Date());
                         },
                       },
                     ]);

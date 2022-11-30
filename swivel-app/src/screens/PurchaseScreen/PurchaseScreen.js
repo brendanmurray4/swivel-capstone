@@ -32,13 +32,14 @@ const PurchaseScreen = () => {
     'Dec',
   ];
   const today = new Date();
+  let numMinutes = time;
   let totalHourly = 0,
-    numHours = 1,
+    numHours = 3,
     tax = 0,
     totalPrice = 0,
     swivelFee = 0.05,
     swivelFeeTotal = 0;
-  totalHourly = numHours * price;
+  totalHourly = (numMinutes/60) * price;
   swivelFeeTotal = totalHourly * swivelFee;
   totalHourly = totalHourly * (1 + swivelFee);
   tax = totalHourly * 0.12;
@@ -166,8 +167,8 @@ const PurchaseScreen = () => {
                   </Text>
                 </View>
                 <View style={purchaseStyles.bottom_text}>
-                  <Text style={purchaseStyles.greyTextStyleLeft}> Number of Hours</Text>
-                  <Text style={purchaseStyles.greyTextStyleRight}> {numHours}</Text>
+                  <Text style={purchaseStyles.greyTextStyleLeft}> Number of Minutes</Text>
+                  <Text style={purchaseStyles.greyTextStyleRight}> {numMinutes.toFixed(2)}</Text>
                 </View>
               </ScrollView>
             </View>
@@ -187,7 +188,7 @@ const PurchaseScreen = () => {
                       // fontWeight: 'bold',
                     }}
                   >
-                    Pay Later
+                    Purchase
                   </Text>
                 </View>
               </TouchableOpacity>

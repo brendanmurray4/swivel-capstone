@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { DebugInstructions } from 'react-native/Libraries/NewAppScreen';
 
 import awsmobile from '../../aws-exports';
 import CustomButton from '../../components/CustomButton';
@@ -93,7 +94,7 @@ const MapScreen = () => {
             loc.results[1].address_components[1].long_name +
             ', ' +
             loc.results[1].address_components[2].long_name;
-          navigation.navigate('CurrentBike', { image, name, location, rating, price, time});
+          navigation.navigate('CurrentBike', { image, name, location, rating, price, time });
         });
     } else {
       navigation.navigate('BikeSelection');
@@ -109,6 +110,7 @@ const MapScreen = () => {
 
   useEffect(() => {
     const updateInterval = setInterval(() => {
+      getBike();
       // if (bikeInfo != undefined && bikeInfo.name == 'GT Aggressor') {
       //   console.log('MATCH!');
       // } else if (initialized == false) {
@@ -120,7 +122,6 @@ const MapScreen = () => {
       //   console.log('Waiting');
       //   console.log(bikeInfo);
       // }
-      getBike();
       // fetch('http://iot.swivel.bike/telemetry/1')
       //   .then((resp) => resp.json()) // PLEASE UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       //   .then((resp) => {
@@ -196,7 +197,7 @@ const MapScreen = () => {
       .catch((err) => {
         console.log(err);
       });
-  }; 
+  };
 
   const editBike = (task) => {
     setIsLoading(true);
@@ -242,7 +243,7 @@ const MapScreen = () => {
           ', ' +
           loc.results[1].address_components[2].long_name;
       });
-      console.log("TEStlocation" + tempLocation);
+    console.log('TEStlocation' + tempLocation);
     console.log(temp);
     setBikeInfo(temp);
     editBike(bikeInfo);
@@ -285,7 +286,11 @@ const MapScreen = () => {
                       {
                         // console.log('Test bikeInfo is ' + bikeInfo.lat);
                         // console.log('Testing bike\n' + bikeInfo);
-                        console.log(bikeInfo);
+                        // console.log(bikeInfo);
+                        // bikeInfo.rented = false;
+                        // bikeInfo.lock_state = true; // bike IS locked
+                        // console.log(bikeInfo);
+                        // editBike(bikeInfo);
                         // if(bikeInfo.name == 'GT Aggressor'){
                         //   console.log("MATCH!");
                         // } else{
@@ -356,9 +361,7 @@ const MapScreen = () => {
             </View>
 
             <View style={styles.buttonArea}>
-              <TouchableOpacity style={styles.rentButton} onPress={() => onCheckoutPressed(
-
-              )}>
+              <TouchableOpacity style={styles.rentButton} onPress={() => onCheckoutPressed()}>
                 <View style={styles.rentButton}>
                   <Text
                     style={{
