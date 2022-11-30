@@ -32,6 +32,10 @@ const CurrentBikeScreen = () => {
   var [endDate, setEndDate] = React.useState(undefined);
 
   function getMinutesBetweenDates(startDate, endDate) {
+    if(startDate == undefined){
+      return 0;
+    }
+    endDate = new Date();
     console.log(startDate, "PLS",endDate)
     const diff = endDate.getTime() - startDate.getTime();
     return diff / 60000;
@@ -177,7 +181,7 @@ const CurrentBikeScreen = () => {
                 <Text style={currentBikeStyles.greyText}> Hourly Price </Text>
               </View>
               <View style={currentBikeStyles.textBoxColumn}>
-                <Text style={currentBikeStyles.defaultText}> Currently at 52 </Text>
+                <Text style={currentBikeStyles.defaultText}> {getMinutesBetweenDates(startDate, endDate).toFixed(1)} Minutes </Text>
                 <Text style={currentBikeStyles.defaultText}> 38% </Text>
                 <Text style={currentBikeStyles.defaultText} ellipsizeMode="tail" numberOfLines={2}>
                   {location}
