@@ -90,6 +90,7 @@ const CurrentBikeScreen = () => {
                 loc.results[1].address_components[2].long_name
             );
             bikeInfo.location = bikeLocation;
+            editBike(bikeInfo);
           });
       }
     }, 6000);
