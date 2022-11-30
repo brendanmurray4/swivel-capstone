@@ -15,14 +15,14 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
-import Geolocation from 'react-native-geolocation-service';
+Geocoder.init('AIzaSyBmjnH37clBAaGKN4R6Ji-qqUM3w8Lk2Js');
+
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { DebugInstructions } from 'react-native/Libraries/NewAppScreen';
 
 import awsmobile from '../../aws-exports';
 import CustomButton from '../../components/CustomButton';
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
-Geocoder.init('AIzaSyBmjnH37clBAaGKN4R6Ji-qqUM3w8Lk2Js');
 
 // Page to unlock delegator
 const MapScreen = () => {

@@ -10,16 +10,17 @@ import {
   ImageBackground,
   Alert,
 } from 'react-native';
+import Geocoder from 'react-native-geocoding';
 
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 import PurchaseScreen from '../PurchaseScreen/PurchaseScreen';
+Geocoder.init('AIzaSyBmjnH37clBAaGKN4R6Ji-qqUM3w8Lk2Js');
 
 const CurrentBikeScreen = () => {
   const route = useRoute();
   // const { image, name, location, rating, price, time } = route.params;
   const image = require('../../../assets/bikeSelection/actual_Bike.jpg');
   const name = 'GT Aggressor';
-  const location = 'Seymour Drive';
   const rating = 4.7;
   const price = 4.21;
   let time = 1;
@@ -28,15 +29,16 @@ const CurrentBikeScreen = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [username, setUserName] = React.useState(false);
   const [bikeInfo, setBikeInfo] = React.useState(undefined);
-  var [startDate, setStartDate] = React.useState(undefined);
-  var [endDate, setEndDate] = React.useState(undefined);
+  const [endDate, setEndDate] = React.useState(undefined);
+  const [bikeLocation, setBikeLocation] = React.useState('Loading');
 
   function getMinutesBetweenDates(startDate, endDate) {
-    if(startDate == undefined){
+    if (startDate == undefined) {
       return 0;
     }
+    console.log('TEST' + startDate);
     endDate = new Date();
-    console.log(startDate, "PLS",endDate)
+    startDate = new Date(startDate);
     const diff = endDate.getTime() - startDate.getTime();
     return diff / 60000;
   }
@@ -49,6 +51,20 @@ const CurrentBikeScreen = () => {
   useEffect(() => {
     const updateInterval = setInterval(() => {
       getBike();
+      if (bikeInfo != undefined) {
+        Geocoder.from(bikeInfo.lat, bikeInfo.long)
+          .catch((error) => console.log(error))
+          .then((loc) => {
+            setBikeLocation(
+              loc.results[1].address_components[0].long_name +
+                ' ' +
+                loc.results[1].address_components[1].long_name +
+                ', ' +
+                loc.results[1].address_components[2].long_name
+            );
+            bikeInfo.location = bikeLocation;
+          });
+      }
     }, 6000);
     return () => {
       window.clearInterval(updateInterval);
@@ -181,12 +197,17 @@ const CurrentBikeScreen = () => {
                 <Text style={currentBikeStyles.greyText}> Hourly Price </Text>
               </View>
               <View style={currentBikeStyles.textBoxColumn}>
-                <Text style={currentBikeStyles.defaultText}> {getMinutesBetweenDates(startDate, endDate).toFixed(1)} Minutes </Text>
-                <Text style={currentBikeStyles.defaultText}> 38% </Text>
-                <Text style={currentBikeStyles.defaultText} ellipsizeMode="tail" numberOfLines={2}>
-                  {location}
+                <Text style={currentBikeStyles.defaultText}>
+                  {getMinutesBetweenDates(bikeInfo.time, endDate).toFixed(1)} Minutes
                 </Text>
-                <Text style={currentBikeStyles.defaultText}> Locked </Text>
+                <Text style={currentBikeStyles.defaultText}> {bikeInfo.battery} </Text>
+                <Text style={currentBikeStyles.defaultText} ellipsizeMode="tail" numberOfLines={2}>
+                  {bikeInfo.location}
+                </Text>
+                <Text style={currentBikeStyles.defaultText}>
+                  {' '}
+                  {bikeInfo.lock_state == true ? 'Locked' : 'Unlocked'}{' '}
+                </Text>
                 <Text style={currentBikeStyles.defaultText}> $ 4.21 </Text>
               </View>
             </View>
@@ -267,11 +288,11 @@ const CurrentBikeScreen = () => {
                           bikeInfo.rented = false;
                           editBike(bikeInfo);
                           getBike();
-                          time = getMinutesBetweenDates(startDate, new Date());
+                          time = getMinutesBetweenDates(bikeInfo.time, new Date());
                           navigation.navigate('Purchase', {
                             image,
                             name,
-                            location,
+                            location: bikeInfo.location,
                             rating,
                             price,
                             time,
@@ -293,9 +314,9 @@ const CurrentBikeScreen = () => {
                           console.log('Rented');
                           bikeInfo.username = username;
                           bikeInfo.rented = true;
+                          bikeInfo.time = new Date();
                           editBike(bikeInfo);
                           getBike();
-                          setStartDate(new Date());
                         },
                       },
                     ]);
