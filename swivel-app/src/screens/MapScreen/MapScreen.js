@@ -2,7 +2,7 @@
 // Read username, if username matches they see the bike, otherwise they do NOT
 
 import { useNavigation } from '@react-navigation/native';
-import { Auth, Geo, selectInput } from 'aws-amplify';
+import { Auth,Geo,selectInput } from 'aws-amplify';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {
@@ -12,17 +12,15 @@ import {
   TouchableOpacity,
   ImageBackground,
   TouchableHighlight,
-  PermissionsAndroid,
 } from 'react-native';
 import Geocoder from 'react-native-geocoding';
-Geocoder.init('AIzaSyBmjnH37clBAaGKN4R6Ji-qqUM3w8Lk2Js');
-
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { DebugInstructions } from 'react-native/Libraries/NewAppScreen';
 
 import awsmobile from '../../aws-exports';
 import CustomButton from '../../components/CustomButton';
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
+Geocoder.init('AIzaSyBmjnH37clBAaGKN4R6Ji-qqUM3w8Lk2Js');
 
 // Page to unlock delegator
 const MapScreen = () => {
@@ -36,16 +34,14 @@ const MapScreen = () => {
   const [username, setUserName] = React.useState(false);
   const [initialized, setInitialized] = useState(false);
   const [alertOccurred, setAlertOccurred] = useState(0);
-  const [userLocation, setUserLocation] = useState(false);
-  const [currBikeName, setCurrBikeName] = useState(false);
   const [AvailableBikes] = useState([
     // replace this with an API Fetch
     {
       key: 0,
       bikeName: 'Townie Original 7D',
       location: {
-        longitude: -122.90730537910062,
-        latitude: 49.27997279477743,
+        longitude: -122.92683112296389,
+        latitude: 49.21252448182181,
       },
       rating: '4.7/5',
       price: '4.60',
@@ -56,8 +52,8 @@ const MapScreen = () => {
       key: 1,
       bikeName: 'Domane+ ALR',
       location: {
-        longitude: -122.90858136763505,
-        latitude: 49.27832317062849,
+        longitude: -122.92301986354128,
+        latitude: 49.215203617787076,
       },
       rating: '4.1/5',
       price: '3.61',
@@ -68,8 +64,8 @@ const MapScreen = () => {
       key: 2,
       bikeName: 'Boone 6',
       location: {
-        longitude: -122.9042562339713,
-        latitude: 49.27823110281287,
+        longitude: -122.92642293689471,
+        latitude: 49.21748350869642,
       },
       rating: '4.9/5',
       price: '6.81',
@@ -80,8 +76,8 @@ const MapScreen = () => {
       key: 3,
       bikeName: 'Checkpoint ALR 5 Driftless',
       location: {
-        longitude: -122.91382570898952,
-        latitude: 49.27651388289689,
+        longitude: -122.92588104594287,
+        latitude: 49.215035775154206,
       },
       rating: '3.7/5',
       price: '12.52',
@@ -123,7 +119,7 @@ const MapScreen = () => {
     editBike(bikeInfo);
 
     axios.post(`https://app.nativenotify.com/api/indie/notification`, {
-      subID: 'SwivelUserId',
+      subID: 'SwivelUserId', //hardcoded 
       appId: 5009,
       appToken: 'zLGSh3bkdXv2IweqrDbIFD',
       title: 'Theft Detected',
@@ -131,60 +127,11 @@ const MapScreen = () => {
     });
   }
 
-  const requestLocationPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: 'Geolocation Permission',
-          message: 'Can we access your location?',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        }
-      );
-      console.log('granted', granted);
-      if (granted === 'granted') {
-        console.log('You can use Geolocation');
-        return true;
-      } else {
-        console.log('You cannot use Geolocation');
-        return false;
-      }
-    } catch (err) {
-      return false;
-    }
-  };
-  // function to check permissions and get Location
-  // const getLocation = () => {
-  //   const result = requestLocationPermission();
-  //   result.then((res) => {
-  //     console.log('res is:', res);
-  //     if (res) {
-  //       Geolocation.getCurrentPosition(
-  //         (position) => {
-  //           console.log("success?\n\n\n");
-  //           console.log(position);
-  //           setUserLocation(position);
-  //         },
-  //         (error) => {
-  //           // See error code charts below.
-  //           console.log("ERROR\n\n\n");
-  //           console.log(error.code, error.message);
-  //           setUserLocation(false);
-  //         },
-  //         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-  //       );
-  //     }
-  //   });
-  //   console.log('LOCATION OUTPUT' + userLocation);
-  // };
-
-  // if (bikeInfo != undefined) {
-  //   // console.log(bikeInfo);
-  // } else {
-  //   console.log('nope');
-  // }
+  if (bikeInfo != undefined) {
+    console.log(bikeInfo);
+  } else {
+    console.log('nope');
+  }
 
   if (username == false) {
     Auth.currentUserInfo().then((userInfo) => {
@@ -300,8 +247,8 @@ const MapScreen = () => {
           ', ' +
           loc.results[1].address_components[2].long_name;
       });
-    // console.log('TEStlocation' + tempLocation);
-    // console.log(temp);
+    console.log('TEStlocation' + tempLocation);
+    console.log(temp);
     setBikeInfo(temp);
     editBike(bikeInfo);
   }
@@ -309,8 +256,6 @@ const MapScreen = () => {
   if (bikeInfo == undefined) {
     getBike();
     console.log('Init Bike');
-  } else {
-    console.log(bikeInfo);
   }
 
   if (bikeInfo == undefined) {
@@ -335,23 +280,21 @@ const MapScreen = () => {
                     <MapView
                       provider={PROVIDER_GOOGLE} // remove if not using Google Maps
                       style={styles.map}
-                      initialRegion={{
-                        latitude: 49.277748,
-                        longitude: -122.90905,
+                      region={{
+                        latitude: telemetry ? telemetry.gps.latitude : 49.2137364,
+                        longitude: telemetry ? telemetry.gps.longitude : -122.9250981,
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
                       }}
                       moveOnMarkerPress={false}
                       onPress={() => {
                         console.log('Tapped off map');
-                        // console.log(userLocation);
-                        // getLocation();
                       }}
                     >
                       <Marker
                         coordinate={{
-                          latitude: 49.277748,
-                          longitude: -122.90905,
+                          latitude: 49.2137364,
+                          longitude: -122.9250981,
                         }}
                         icon={require('../../../assets/user_location_map_enlarged.png')}
                       />
@@ -367,8 +310,7 @@ const MapScreen = () => {
                               icon={require('../../../assets/available_bike_map_enlarged.png')}
                               onPress={() => {
                                 // console.log('Tapped on map');
-                                setSelectedBike(bike);
-                                setCurrBikeName(bike.bikeName);
+                                // setSelectedBike(bike);
                                 // bikeInfo.lock_state = true;
                                 // bikeInfo.rented = false;
                                 // bikeInfo.username = '';
@@ -388,9 +330,7 @@ const MapScreen = () => {
                         title={bikeInfo.name}
                         description={'★' + bikeInfo.rating + '\n' + '$' + bikeInfo.price + '/hour'}
                         icon={require('../../../assets/available_demo_bike_map_enlarged.png')}
-                        onPress={() => {
-                          setCurrBikeName(bikeInfo.name);
-                        }}
+                        onPress={() => {}}
                         key={bikeInfo.name}
                       />
                     </MapView>
@@ -414,7 +354,7 @@ const MapScreen = () => {
                         flexShrink: 1,
                       }}
                     >
-                      {SelectedBike == 0 ? 'Select Bike' : 'Rent: ' + currBikeName}
+                      {SelectedBike == 0 ? 'Select Bike' : 'Rent: ' + SelectedBike.bikeName}
                     </Text>
                   </View>
                 </TouchableOpacity>
