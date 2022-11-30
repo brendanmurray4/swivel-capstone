@@ -1,5 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Auth } from 'aws-amplify';
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {
   Text,
@@ -14,6 +15,7 @@ import Geocoder from 'react-native-geocoding';
 
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 import PurchaseScreen from '../PurchaseScreen/PurchaseScreen';
+
 Geocoder.init('AIzaSyBmjnH37clBAaGKN4R6Ji-qqUM3w8Lk2Js');
 
 const CurrentBikeScreen = () => {
@@ -31,12 +33,36 @@ const CurrentBikeScreen = () => {
   const [bikeInfo, setBikeInfo] = React.useState(undefined);
   const [endDate, setEndDate] = React.useState(undefined);
   const [bikeLocation, setBikeLocation] = React.useState('Loading');
+  const [alertOccurred, setAlertOccurred] = useState(false);
+  const [alertTriggered, setAlertTriggered] = useState(false);
+
+  //RUN THIS AXIOS POST TO SEND PUSH NOTIFICATIONS
+  function sendAlert() {
+    console.log("enter alert");
+    console.log(alertOccurred);
+    console.log(alertTriggered);
+    if (alertOccurred == false && alertTriggered == true) {
+      // bikeInfo real value + bikeInfo has alert + alertOccurred only triggered once
+      setAlertOccurred(true);
+      setAlertTriggered(false);
+      bikeInfo.alert = 0;
+      editBike(bikeInfo);
+      console.log("alert within\n\n\n\n\n\n\n");
+
+      axios.post(`https://app.nativenotify.com/api/indie/notification`, {
+        subID: 'SwivelUserId',
+        appId: 5009,
+        appToken: 'zLGSh3bkdXv2IweqrDbIFD',
+        title: 'Theft Detected',
+        message: 'The Swivel motion detector has been triggered ',
+      });
+    }
+  }
 
   function getMinutesBetweenDates(startDate, endDate) {
     if (startDate == undefined) {
       return 0;
     }
-    console.log('TEST' + startDate);
     endDate = new Date();
     startDate = new Date(startDate);
     const diff = endDate.getTime() - startDate.getTime();
@@ -51,6 +77,7 @@ const CurrentBikeScreen = () => {
   useEffect(() => {
     const updateInterval = setInterval(() => {
       getBike();
+      sendAlert();
       if (bikeInfo != undefined) {
         Geocoder.from(bikeInfo.lat, bikeInfo.long)
           .catch((error) => console.log(error))
@@ -288,6 +315,7 @@ const CurrentBikeScreen = () => {
                           bikeInfo.rented = false;
                           editBike(bikeInfo);
                           getBike();
+                          setAlertTriggered(true);
                           time = getMinutesBetweenDates(bikeInfo.time, new Date());
                           navigation.navigate('Purchase', {
                             image,
