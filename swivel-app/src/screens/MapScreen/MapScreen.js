@@ -284,7 +284,7 @@ const MapScreen = () => {
                     }}
                     moveOnMarkerPress={false}
                     onPress={() => {
-                      setSelectedBike(0);
+                      // setSelectedBike(0);
                       console.log('Tapped off map');
                       // if (bikeInfo.rented == true) {
                       //   bikeInfo.username = username;
@@ -330,28 +330,11 @@ const MapScreen = () => {
                             description={'★' + bike.rating + '\n' + '$' + bike.price + '/hour'}
                             icon={require('../../../assets/available_bike_map_enlarged.png')}
                             onPress={() => {
-                              console.log('Tapped on icon');
+                              console.log('Tapped on map');
                               setSelectedBike(bike);
                             }}
                             key={bike.key}
-                          >
-                            <MapView.Callout tooltip style={styles.textBox}>
-                              <TouchableHighlight
-                                onPress={() => {
-                                  this.markerClick();
-                                  console.log('Tapped on marker');
-                                  setSelectedBike(bike);
-                                }}
-                                underlayColor="#fff"
-                              >
-                                <View style={styles.textBox}>
-                                  <Text>
-                                    {'★' + bike.rating + '\n' + '$' + bike.price + '/hour'}
-                                  </Text>
-                                </View>
-                              </TouchableHighlight>
-                            </MapView.Callout>
-                          </Marker>
+                          />
                         ))
                       : null}
                   </MapView>
@@ -360,7 +343,10 @@ const MapScreen = () => {
             </View>
 
             <View style={styles.buttonArea}>
-              <TouchableOpacity style={styles.rentButton} onPress={() => onCheckoutPressed()}>
+              <TouchableOpacity
+                style={styles.rentButton}
+                onPress={() => (SelectedBike == 0 ?  0 : onCheckoutPressed())}
+              >
                 <View style={styles.rentButton}>
                   <Text
                     style={{
@@ -372,13 +358,28 @@ const MapScreen = () => {
                       flexShrink: 1,
                     }}
                   >
-                    {SelectedBike == 0
-                      ? 'List of Bikes'
-                      : 'Tap to Rent: ' +
-                        SelectedBike.bikeName +
-                        ' for $' +
-                        SelectedBike.price +
-                        '/hr'}
+                    {SelectedBike == 0 ? 'Select Bike' : 'Rent: ' + SelectedBike.bikeName}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.rentButton}
+                onPress={() => {
+                  setSelectedBike(0), onCheckoutPressed();
+                }}
+              >
+                <View style={styles.rentButton}>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      color: '#300000',
+                      fontSize: 26,
+                      textAlign: 'center',
+                      // fontWeight: 'bold',
+                      flexShrink: 1,
+                    }}
+                  >
+                    List of Bikes
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -415,8 +416,9 @@ const styles = StyleSheet.create({
   },
   buttonArea: {
     flex: 0.1,
-    backgroundColor: 'blue',
-    flexDirection: 'column',
+    flexDirection: 'row',
+    backgroundColor: 'green',
+    borderWidth: 1,
   },
 
   dataContainer: {
@@ -442,12 +444,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 20,
-  },
-
-  textBox: {
-    width: 200,
-    height: 500,
-    backgroundColor: '#ffffff',
   },
 
   dataHeader: {
@@ -479,11 +475,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#B4FF39',
     color: '#000',
-    textAlign: 'center',
-    display: 'flex',
+    // textAlign: 'center',
+    // display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: '1%',
+    // alignItems: 'center',
+    // paddingHorizontal: '1%',
+    borderWidth: 0.5,
   },
 });
 export default MapScreen;
