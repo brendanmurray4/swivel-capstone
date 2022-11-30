@@ -39,10 +39,10 @@ def device():
         print("(%s) -> (%s): %s" % (data['name'], data['hotspots'][0]['name'], payload_decoded))
         tokens = payload_decoded.split(";")
         if not tokens:
-            return ResponseError([APIError('NO PAYLOAD', 'no payload data')]).encode_json()
+            return ResponseError([APIError('NO PAYLOAD', 'no payload data')], HTTPStatus.INTERNAL_SERVER_ERROR).encode_json()
         nmea_strings = tokens[0].split(",")
         if len(nmea_strings) < 6:
-            return ResponseError([APIError('IMPROPER GPS DATA', 'improper gps data')]).encode_json()
+            return ResponseError([APIError('IMPROPER GPS DATA', 'improper gps data')], HTTPStatus.INTERNAL_SERVER_ERROR).encode_json()
         lat = latitude(nmea_strings[2], nmea_strings[3])
         long = longitude(nmea_strings[4], nmea_strings[5])
         state["lat"] = lat
