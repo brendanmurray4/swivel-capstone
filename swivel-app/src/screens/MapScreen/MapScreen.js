@@ -4,14 +4,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Auth, selectInput } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  ImageBackground,
-  TouchableHighlight,
-} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { DebugInstructions } from 'react-native/Libraries/NewAppScreen';
@@ -284,7 +277,7 @@ const MapScreen = () => {
                     }}
                     moveOnMarkerPress={false}
                     onPress={() => {
-                      // setSelectedBike(0);
+                      setSelectedBike(0);
                       console.log('Tapped off map');
                       // if (bikeInfo.rented == true) {
                       //   bikeInfo.username = username;
@@ -329,8 +322,8 @@ const MapScreen = () => {
                             title={bike.bikeName}
                             description={'★' + bike.rating + '\n' + '$' + bike.price + '/hour'}
                             icon={require('../../../assets/available_bike_map_enlarged.png')}
-                            onPress={() => {
-                              console.log('Tapped on map');
+                            onSelect={() => {
+                              console.log('Tapped on icon');
                               setSelectedBike(bike);
                             }}
                             key={bike.key}
@@ -342,11 +335,10 @@ const MapScreen = () => {
               )}
             </View>
 
+
+
             <View style={styles.buttonArea}>
-              <TouchableOpacity
-                style={styles.rentButton}
-                onPress={() => (SelectedBike == 0 ?  0 : onCheckoutPressed())}
-              >
+              <TouchableOpacity style={styles.rentButton} onPress={() => onCheckoutPressed()}>
                 <View style={styles.rentButton}>
                   <Text
                     style={{
@@ -358,28 +350,13 @@ const MapScreen = () => {
                       flexShrink: 1,
                     }}
                   >
-                    {SelectedBike == 0 ? 'Select Bike' : 'Rent: ' + SelectedBike.bikeName}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.rentButton}
-                onPress={() => {
-                  setSelectedBike(0), onCheckoutPressed();
-                }}
-              >
-                <View style={styles.rentButton}>
-                  <Text
-                    style={{
-                      fontWeight: 'bold',
-                      color: '#300000',
-                      fontSize: 26,
-                      textAlign: 'center',
-                      // fontWeight: 'bold',
-                      flexShrink: 1,
-                    }}
-                  >
-                    List of Bikes
+                    {SelectedBike == 0
+                      ? 'List of Bikes'
+                      : 'Tap to Rent: ' +
+                        SelectedBike.bikeName +
+                        ' for $' +
+                        SelectedBike.price +
+                        '/hr'}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -416,13 +393,12 @@ const styles = StyleSheet.create({
   },
   buttonArea: {
     flex: 0.1,
-    flexDirection: 'row',
-    backgroundColor: 'green',
-    borderWidth: 1,
+    backgroundColor: 'blue',
+    flexDirection: 'column',
   },
 
   dataContainer: {
-    flex: 1,
+    // flex: 1,
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#ffffff',
@@ -475,12 +451,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#B4FF39',
     color: '#000',
-    // textAlign: 'center',
-    // display: 'flex',
+    textAlign: 'center',
+    display: 'flex',
     justifyContent: 'center',
-    // alignItems: 'center',
-    // paddingHorizontal: '1%',
-    borderWidth: 0.5,
+    alignItems: 'center',
+    paddingHorizontal: '1%',
   },
 });
 export default MapScreen;
