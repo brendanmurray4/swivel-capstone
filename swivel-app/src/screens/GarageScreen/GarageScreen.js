@@ -1,5 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
+import { AntDesign } from '@expo/vector-icons';
+
 import {
   Text,
   View,
@@ -13,7 +15,9 @@ import {
   SafeAreaView,
   TextInput,
   Alert,
+  Platform
 } from 'react-native';
+
 
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 
@@ -28,6 +32,8 @@ const GarageScreen = () => {
   const [defaultBike, defaultPrice] = ['null', 666];
   const [bikeName, onChangeBikeName] = useState('null');
   const [price, onChangePrice] = useState(666);
+  const [image, setImage] = useState(null);
+  const addImage=()=>{};
 
   return (
     <View style={bikeGarageStyles.container}>
@@ -73,12 +79,25 @@ const GarageScreen = () => {
                 placeholder="Bike Name"
                 keyboardType="ascii-capable"
               />
+              <View style={imageUploaderStyles.container}>
+                {
+                    image  && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+                }
+                    <View style={imageUploaderStyles.uploadBtnContainer}>
+                        <TouchableOpacity onPress={addImage} style={imageUploaderStyles.uploadBtn} >
+                            <Text>{image ? 'Edit' : 'Upload'} Image</Text>
+                            <AntDesign name="camera" size={20} color="black" />
+                        </TouchableOpacity>
+                    </View>
+            </View>
               <TextInput
                 style={styles.textBox}
                 onChangeText={onChangePrice}
                 placeholder="Hourly Price"
                 keyboardType="numeric"
               />
+              
+              
               <TouchableOpacity
                 style={bikeGarageStyles.button}
                 onPress={() => {
@@ -93,6 +112,8 @@ const GarageScreen = () => {
                   }
                 }}
               >
+                
+
                 <View style={bikeGarageStyles.buttonAddBike}>
                   <Text style={bikeGarageStyles.buttonAddBikeText}> Add Listing </Text>
                 </View>
@@ -491,3 +512,34 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+const imageUploaderStyles=StyleSheet.create({
+    container:{
+        elevation:2,
+        height:200,
+        width:200,
+        backgroundColor:'#efefef',
+        position:'relative',
+        borderRadius:999,
+        overflow:'hidden',
+        justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: '17.5%',
+    opacity: 1,
+    },
+    uploadBtnContainer:{
+        opacity:0.7,
+        position:'absolute',
+        right:0,
+        bottom:0,
+        backgroundColor:'lightgrey',
+        width:'100%',
+        height:'25%',
+        justifyContent:'center'
+    },
+    uploadBtn:{
+        display:'flex',
+        alignItems:"center",
+        justifyContent:'center'
+    }
+})
