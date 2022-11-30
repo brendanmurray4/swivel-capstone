@@ -334,12 +334,13 @@ const MapScreen = () => {
                     <MapView
                       provider={PROVIDER_GOOGLE} // remove if not using Google Maps
                       style={styles.map}
-                      region={{
-                        latitude: telemetry ? telemetry.gps.latitude : 49.277748,
-                        longitude: telemetry ? telemetry.gps.longitude : -122.90905,
+                      center={{
+                        latitude: 49.277748,
+                        longitude: -122.90905,
                         latitudeDelta: 0.015,
                         longitudeDelta: 0.0121,
-                      }}
+                      }
+                      }
                       
                       moveOnMarkerPress={false}
                       onPress={() => {
