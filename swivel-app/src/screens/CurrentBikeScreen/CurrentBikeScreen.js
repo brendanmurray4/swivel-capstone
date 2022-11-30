@@ -77,7 +77,7 @@ const CurrentBikeScreen = () => {
   useEffect(() => {
     const updateInterval = setInterval(() => {
       getBike();
-      sendAlert();
+      // sendAlert();
       if (bikeInfo != undefined) {
         Geocoder.from(bikeInfo.lat, bikeInfo.long)
           .catch((error) => console.log(error))
