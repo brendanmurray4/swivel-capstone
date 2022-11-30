@@ -19,7 +19,8 @@ state = {
     'theft_detection': True,
     'rented': False,
     'on_platform': False,
-    'username': ''
+    'username': '',
+    'lock_state': False
 }
 
 @HeliumService.route("/device", methods=["POST"])
@@ -49,6 +50,13 @@ def device():
         state["long"] = long
         state['alert'] = tokens[2]
 
+    return ResponseSuccess({ 'status': HTTPStatus.OK }).encode_json()
+
+@HeliumService.route("/gps", methods = ["POST"])
+def post_gps():
+    data = request.json
+    state["lat"] = data["lat"]
+    state["long"] = data["long"]
     return ResponseSuccess({ 'status': HTTPStatus.OK }).encode_json()
 
 @HeliumService.route("/app", methods = ["GET", "POST"])
