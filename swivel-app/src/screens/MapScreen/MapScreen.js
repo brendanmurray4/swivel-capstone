@@ -4,6 +4,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { Auth, selectInput } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import {
   Text,
   View,
@@ -107,6 +109,14 @@ const MapScreen = () => {
       navigation.navigate('BikeSelection');
     }
   };
+    //RUN THIS AXIOS POST TO SEND PUSH NOTIFICATIONS
+//   axios.post(`https://app.nativenotify.com/api/indie/notification`, {
+//       subID: 'SwivelUserId',
+//       appId: 5009,
+//       appToken: 'zLGSh3bkdXv2IweqrDbIFD',
+//       title: 'Theft Detected',
+//       message: 'The Swivel motion detector has been triggered '
+//  });
 
   if (username == false) {
     Auth.currentUserInfo().then((userInfo) => {
