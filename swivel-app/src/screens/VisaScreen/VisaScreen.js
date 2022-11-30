@@ -162,10 +162,13 @@ const VisaScreen = () => {
                 <TouchableOpacity
                   style={visaStyles.PayButton}
                   onPress={() => {
-                    Alert.alert('In Progress', 'Bike Rented!', [
+                    Alert.alert('Thank you', 'Payment Succesful!', [
                       {
                         text: 'OK',
-                        onPress: () => console.log('User Payed'),
+                        onPress: () => {
+                          console.log('User Payed');
+                          navigation.navigate('Map');
+                        },
                         // name =
                       },
                     ]);

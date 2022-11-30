@@ -14,6 +14,7 @@ import {
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 import PurchaseScreen from '../PurchaseScreen/PurchaseScreen';
 
+let test = 0;
 const CurrentBikeScreen = () => {
   const route = useRoute();
   // const { image, name, location, rating, price, time } = route.params;
@@ -165,6 +166,9 @@ const CurrentBikeScreen = () => {
                 {name}
               </Text>
             </View>
+            {console.log('\ntest' + test++)}
+            {console.log('CBS locked: \n' + bikeInfo.lock_state)}
+            {console.log('CBS rented: \n' + bikeInfo.rented)}
             <View style={currentBikeStyles.middle}>
               <View style={currentBikeStyles.textBoxColumn}>
                 <Text style={currentBikeStyles.greyText}> Rental Time </Text>

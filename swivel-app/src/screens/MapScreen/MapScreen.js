@@ -85,32 +85,35 @@ const MapScreen = () => {
       image: require('../../../assets/bikeSelection/bike4.jpg'),
     },
   ]);
-  const onCheckoutPressed = () => {
-    const image = SelectedBike.image;
-    const name = SelectedBike.bikeName;
-    const rating = SelectedBike.rating;
-    const price = SelectedBike.price;
-    const time = SelectedBike.time;
-    let location = '';
-
-    if (SelectedBike != 0) {
-      Geocoder.from(SelectedBike.location.latitude, SelectedBike.location.longitude)
-        .catch((error) => console.log(error))
-        .then((loc) => {
-          location =
-            loc.results[1].address_components[0].long_name +
-            ' ' +
-            loc.results[1].address_components[1].long_name +
-            ', ' +
-            loc.results[1].address_components[2].long_name;
-          navigation.navigate('CurrentBike', { image, name, location, rating, price, time });
-        });
-    } else {
+  function onCheckoutPressed(selBike) {
+    if (selBike == 0) {
       navigation.navigate('BikeSelection');
+    } else {
+      const image = SelectedBike.image;
+      const name = SelectedBike.bikeName;
+      const rating = SelectedBike.rating;
+      const price = SelectedBike.price;
+      const time = SelectedBike.time;
+      let location = '';
+
+      if (SelectedBike != 0) {
+        Geocoder.from(SelectedBike.location.latitude, SelectedBike.location.longitude)
+          .catch((error) => console.log(error))
+          .then((loc) => {
+            location =
+              loc.results[1].address_components[0].long_name +
+              ' ' +
+              loc.results[1].address_components[1].long_name +
+              ', ' +
+              loc.results[1].address_components[2].long_name;
+            navigation.navigate('CurrentBike', { image, name, location, rating, price, time });
+          });
+      }
     }
-  };
+  }
   //RUN THIS AXIOS POST TO SEND PUSH NOTIFICATIONS
-  if (bikeInfo != undefined && bikeInfo.alert == 1 && alertOccurred == 0) { // bikeInfo real value + bikeInfo has alert + alertOccurred only triggered once
+  if (bikeInfo != undefined && bikeInfo.alert == 1 && alertOccurred == 0) {
+    // bikeInfo real value + bikeInfo has alert + alertOccurred only triggered once
     setAlertOccurred(1);
     bikeInfo.alert = 0;
     editBike(bikeInfo);
@@ -124,10 +127,10 @@ const MapScreen = () => {
     });
   }
 
-  if(bikeInfo != undefined){
+  if (bikeInfo != undefined) {
     console.log(bikeInfo);
   } else {
-    console.log("nope");
+    console.log('nope');
   }
 
   if (username == false) {
@@ -301,6 +304,12 @@ const MapScreen = () => {
                             onPress={() => {
                               console.log('Tapped on map');
                               setSelectedBike(bike);
+                              bikeInfo.lock_state = true;
+                              bikeInfo.rented = false;
+                              bikeInfo.username = '';
+                              setBikeInfo(bikeInfo);
+                              editBike(bikeInfo);
+                              getBike();
                             }}
                             key={bike.key}
                           />
@@ -314,7 +323,7 @@ const MapScreen = () => {
             <View style={styles.buttonArea}>
               <TouchableOpacity
                 style={styles.rentButton}
-                onPress={() => (SelectedBike == 0 ? 0 : onCheckoutPressed())}
+                onPress={() => (SelectedBike == 0 ? 0 : onCheckoutPressed(1))}
               >
                 <View style={styles.rentButton}>
                   <Text
@@ -334,7 +343,7 @@ const MapScreen = () => {
               <TouchableOpacity
                 style={styles.rentButton}
                 onPress={() => {
-                  setSelectedBike(0), onCheckoutPressed();
+                  onCheckoutPressed(0);
                 }}
               >
                 <View style={styles.rentButton}>
