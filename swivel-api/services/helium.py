@@ -20,7 +20,8 @@ state = {
     'rented': False,
     'on_platform': False,
     'username': '',
-    'lock_state': False
+    'lock_state': False,
+    'battery': 95.
 }
 
 @HeliumService.route("/device", methods=["POST"])
@@ -49,6 +50,7 @@ def device():
         long = longitude(nmea_strings[4], nmea_strings[5])
         state["lat"] = lat
         state["long"] = long
+        state["battery"] =  tokens[1]
         state['alert'] = tokens[2]
 
     return ResponseSuccess({ 'status': HTTPStatus.OK }).encode_json()
@@ -69,6 +71,10 @@ def app_telemetry():
         data = request.json
         for item in data.keys():
             state[item] = data[item]
+        if state['rented'] == True:
+            set_theft_detection(0)
+        else:
+            set_theft_detection(1)
     return ResponseSuccess({ 'status': HTTPStatus.OK }).encode_json()
 
 @HeliumService.route("/device/sentry/<value_str>", methods=["POST"])
@@ -95,6 +101,15 @@ def send_state(value_str: str):
 def unlock():
     try:
         send_to_main("unlock")
+    except Exception as e:
+        print(e)
+        return ResponseError([APIError("HELIUM_NETWORK_FAIL_SEND", str(e))], HTTPStatus.INTERNAL_SERVER_ERROR).encode_json(), HTTPStatus.INTERNAL_SERVER_ERROR
+    return ResponseSuccess({"message":"success"}).encode_json()
+
+#Takes a 0 or a 1, 0 for theft off, 1 for theft on
+def set_theft_detection(state):
+    try:
+        send_to_main("state:%d" %(state))
     except Exception as e:
         print(e)
         return ResponseError([APIError("HELIUM_NETWORK_FAIL_SEND", str(e))], HTTPStatus.INTERNAL_SERVER_ERROR).encode_json(), HTTPStatus.INTERNAL_SERVER_ERROR
