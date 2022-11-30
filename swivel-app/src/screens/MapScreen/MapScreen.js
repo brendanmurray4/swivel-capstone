@@ -284,32 +284,7 @@ const MapScreen = () => {
                     }}
                     moveOnMarkerPress={false}
                     onPress={() => {
-                      // setSelectedBike(0);
                       console.log('Tapped off map');
-                      // if (bikeInfo.rented == true) {
-                      //   bikeInfo.username = username;
-                      //   editBike(bikeInfo);
-                      // }
-                      // console.log(bikeInfo);
-                      {
-                        // console.log('Test bikeInfo is ' + bikeInfo.lat);
-                        // console.log('Testing bike\n' + bikeInfo);
-                        // console.log(bikeInfo);
-                        // bikeInfo.rented = false;
-                        // bikeInfo.lock_state = true; // bike IS locked
-                        // console.log(bikeInfo);
-                        // editBike(bikeInfo);
-                        // if(bikeInfo.name == 'GT Aggressor'){
-                        //   console.log("MATCH!");
-                        // } else{
-                        //   console.log("NO MATCH!");
-                        //   initBike();
-                        // }
-                        // bikeInfo.rented = true;
-                        // editBike(bikeInfo);
-                        // bikeInfo.username = username;
-                        // getBike();
-                      }
                     }}
                   >
                     <Marker
