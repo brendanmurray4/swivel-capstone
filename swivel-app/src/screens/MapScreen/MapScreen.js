@@ -1,19 +1,48 @@
 import { useNavigation } from '@react-navigation/native';
 import { Auth, selectInput } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import Geocoder from 'react-native-geocoding';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 import CustomButton from '../../components/CustomButton';
 import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Footer/HeaderFooter';
 Geocoder.init('AIzaSyBmjnH37clBAaGKN4R6Ji-qqUM3w8Lk2Js');
+const generateAvailableBikes = () => {
+  console.log('Parsing');
+  const json = '{"bike1": {"bikeName": "test", "battery": 22, "country": "United States", "isRented": "0"}}';
+  // const json2 = '{"bikeName": "test", "battery": 22, "country": "United States", "isRented": "0"}';
+  console.log("length " + json.length);
+
+  // Converting JSON-encoded string to JS object
+  const obj = JSON.parse(json);
+
+  // let j = 0;
+  // for (let i = 0; i < json.length; i++) {
+  if (obj.isRented == 0) {
+    const AvailableBikes = {
+      key: 0,
+      bikeName: 'Townie Original 7D',
+      location: {
+        longitude: -122.90730537910062,
+        latitude: 49.27997279477743,
+      },
+      rating: '4.7/5',
+      price: '4.60',
+      time: '5d 2h',
+      image: require('../../../assets/bikeSelection/bike1.jpg'),
+    };
+    console.log(AvailableBikes);
+  }
+  // }
+
+  // Accessing individual value from JS object
+  // alert(obj.name); // Outputs: Peter
+  // alert(obj.age); // Outputs: 22
+  // alert(obj.country); // Outputs: United States
+
+  return 0; // Outputs: Peter
+};
 
 // Page to unlock delegator
 const MapScreen = () => {
@@ -100,14 +129,9 @@ const MapScreen = () => {
   };
 
   function NavigateToNextPage(image, name, location, rating, price, time) {
-    navigation.navigate('Purchase', {
-      image,
-      name,
-      location,
-      rating,
-      price,
-      time,
-    });
+    const jsonTest =
+      '{"bikeName": "test", "battery": 22, "country": "United States", "isRented": "0"}';
+    navigation.navigate('Purchase', { jsonTest });
   }
 
   useEffect(() => {
@@ -116,6 +140,7 @@ const MapScreen = () => {
         // .then((resp) => resp.json()) // PLEASE UNCOMMENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         .then((resp) => {
           setTelemetry(resp.data);
+          // console.log("test2" + resp.data);
         })
         .catch((err) => {
           console.log(err);
@@ -238,6 +263,8 @@ const MapScreen = () => {
                     }}
                     onPress={() => {
                       setSelectedBike(0);
+                      generateAvailableBikes();
+                      // {console.log("tele" + telemetry)}
                     }}
                   >
                     <Marker
@@ -271,12 +298,13 @@ const MapScreen = () => {
             <View style={styles.dataContainer}>
               <View style={styles.dataContainerRow}>
                 <View>
+                  {console.log(telemetry)}
                   <Text style={styles.dataHeader}>Signal (RSSI)</Text>
-                  <Text style={styles.dataValue}>{telemetry ? telemetry.grps.rssi : '0'} dBm</Text>
+                  {/* <Text style={styles.dataValue}>{telemetry ? telemetry.grps.rssi : '0'} dBm</Text> UNCOMMMMMMMMMMMMMMMMENTTTTTTTTTTTTTTTTTTTTUNCOMMMMMMMMMMMMMMMMENTTTTTTTTTTTTTTTTTTTT*/}
                 </View>
                 <View>
                   <Text style={styles.dataHeader}>Network</Text>
-                  <Text style={styles.dataValue}>{getFriendlyNetworkStatus()}</Text>
+                  {/* <Text style={styles.dataValue}>{getFriendlyNetworkStatus()}</Text> UNCOMMMMMMMMMMMMMMMMENTTTTTTTTTTTTTTTTTTTTUNCOMMMMMMMMMMMMMMMMENTTTTTTTTTTTTTTTTTTTT*/}
                 </View>
               </View>
               <View style={styles.dataContainerRow}>

@@ -15,6 +15,7 @@ import { headerFooterStyles, generateHeader, generateFooter } from '../Header_Fo
 const PurchaseScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
+  console.log(route);
   const { image, name, location, rating, price, time } = route.params;
   const monthNames = [
     'Jan',
