@@ -18,7 +18,8 @@ state = {
     'image': 'http://imgur.com/',
     'theft_detection': True,
     'rented': False,
-    'on_platform': False
+    'on_platform': False,
+    'username': ''
 }
 
 @HeliumService.route("/device", methods=["POST"])
