@@ -61,4 +61,10 @@ POST /telemetry/<DEVICE_ID>/ #Allows device to post its telemetry
 GET /control/current/<DEVICE_ID>/ #returns current control information of device
 POST /control/<DEVICE_ID>/ #Allows app to post the actions it wants the device to take. Request should provide a json body containing device_id, action, time of submittal
 POST /control/complete/<DEVICE_ID> #Allows device to post successful completion of action. No body requirements. Success is assumed
+=======
+GET /status/ping/
+GET /telemetry/<DEVICE_ID>/
+POST /telemetry/<DEVICE_ID>/
+GET /control/current/<DEVICE_ID>/
+POST /control/<DEVICE_ID>/
 ```

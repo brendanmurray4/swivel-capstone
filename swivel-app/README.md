@@ -28,13 +28,21 @@ Install all of required dependencies
 yarn install
 ```
 
+Now that amplify has been added, you will have to go through a setup process for the amplify account to use authentication.
+- Run (`npm install -g @aws-amplify/cli`)
+- Run (`amplify configure`) in your current folder
+- Next sign in to the IAM account
+    - Account Alias: 107360558748
+    - Username: swivel-admin
+    - Password: swivel-admin1
+-Ctrl-C out of the console and run (`amplify pull --appId dgig2aaj3mb7m --envName staging`)
+- Once complete the app should run with auth
+
 To run the app locally, follow the instructions below. You will see a QRCode pop up which you will scan on your phone to preview the app.
 
 ```
-yarn start
+expo start
 
-
-yarn run v1.22.17
 $ expo start
 Starting project at /home/nafana/src/swivel/swivel-app
 Starting Metro Bundler
@@ -79,4 +87,4 @@ yarn lint:fix
 
 If you encounter any errors please fix them. Eslint integrates with VSCode and you will see all these errors in your editor directly without having to run this command. If you cannot see these errors, your configuration is not setup properly.
 
-
+For all future development uphold to the standard of creating new screens in respective folders and setting them to be exported as components as the other screens are. All navigation will be done through the central navigation .js file as well.
