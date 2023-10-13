@@ -1,0 +1,3 @@
+telemetrycache = {}
+controlcache = { "actions": set()}
+

@@ -1,6 +1,7 @@
 from flask import Blueprint
-from requests import ResponseSuccess
+from common import ResponseSuccess
 
+DB_PATH = "swivel.db"
 StatusService = Blueprint("status_service", __name__)
 
 
